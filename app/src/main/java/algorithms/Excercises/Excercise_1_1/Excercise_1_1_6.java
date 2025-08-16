@@ -1,0 +1,42 @@
+package algorithms.Excercises.Excercise_1_1;
+
+import edu.princeton.cs.algs4.StdOut;
+
+/**
+ * Excercise 1.1.6
+ * 
+ * <p>
+ * What does the following program print?
+ * </p>
+ * 
+ * {@snippet :
+ * int f = 0;
+ * int g = 1;
+ * for (int i = 0; i <= 15; i++) {
+ *     StdOut.println(f);
+ *     f = f + g;
+ *     g = f - g;
+ * }
+ * }
+ * 
+ */
+public class Excercise_1_1_6 {
+    private static int fib(int N) {
+        int f = 0;
+        int g = 1;
+
+        for (int i = 0; i <= N; i++) {
+            f = f + g;
+            g = f - g;
+        }
+
+        return g;
+    }
+
+    public static void main() {
+        StdOut.println("Excercise 1.1.6");
+        for (int i = 0; i <= 10; i += 1) {
+            StdOut.println(fib(i));
+        }
+    }
+}

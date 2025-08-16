@@ -48,7 +48,7 @@ java {
 
 application {
     // Define the main class for the application.
-    mainClass = "algorithms.BinarySearch"
+    mainClass = "algorithms.App"
 }
 
 tasks.named<JavaExec>("run") {
