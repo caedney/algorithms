@@ -108,7 +108,7 @@ public class Excercise_1_1_35 {
      * 
      * @return double[] dist
      */
-    public static double[] calculateProbabilityDistribution() {
+    public static double[] calculateDistribution() {
         int SIDES = 6;
         double POSSIBLE_OUTCOMES = SIDES * SIDES;
         double[] dist = new double[2 * SIDES + 1];
@@ -118,12 +118,29 @@ public class Excercise_1_1_35 {
             for (int j = 1; j <= SIDES; j++)
                 dist[i + j] += 1.0; // counts how many pairs sum to a particular value
 
-        StdOut.println("dist " + Arrays.toString(dist));
-
         for (int k = 2; k <= 2 * SIDES; k++)
             dist[k] = round(dist[k] / POSSIBLE_OUTCOMES, 3);
 
-        StdOut.println("probability " + Arrays.toString(dist));
+        return dist;
+    }
+
+    public static double[] simulateDistribution(int dice, int sides, int trials) {
+        int maxSum = dice * sides;
+        double[] dist = new double[maxSum + 1];
+
+        Random rand = new Random();
+
+        for (int t = 0; t < trials; t++) {
+            int sum = 0;
+
+            for (int d = 0; d < dice; d++)
+                sum += rand.nextInt(sides) + 1;
+
+            dist[sum] += 1.0;
+        }
+
+        for (int i = dice; i <= maxSum; i++)
+            dist[i] = round(dist[i] / trials, 3);
 
         return dist;
     }
@@ -141,31 +158,10 @@ public class Excercise_1_1_35 {
     public static void main() {
         StdOut.println("Excercise 1.1.35");
 
-        calculateProbabilityDistribution();
+        double[] exact = calculateDistribution();
+        StdOut.println("exact " + Arrays.toString(exact));
 
-        int SIDES = 6;
-        double[] freq = new double[2 * SIDES + 1];
-
-        Random rand = new Random();
-
-        int N = 1000000; // number of simulations
-        for (int t = 0; t < N; t++) {
-            int die1 = rand.nextInt(SIDES) + 1; // 1..6
-            int die2 = rand.nextInt(SIDES) + 1; // 1..6
-            freq[die1 + die2] += 1.0;
-        }
-
-        double[] empirical = new double[2 * SIDES + 1];
-
-        StdOut.println("freq " + Arrays.toString(freq));
-
-        for (int k = 2; k <= 2 * SIDES; k++) {
-            empirical[k] = round(freq[k] / N, 3);
-
-            // StdOut.printf("Sum %d: Empirical = %s, Exact = %s%n", k, empirical[k],
-            // dist[k]);
-        }
-
+        double[] empirical = simulateDistribution(2, 6, 1000000);
         StdOut.println("empirical " + Arrays.toString(empirical));
 
     }
