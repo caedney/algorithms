@@ -47,8 +47,9 @@ java {
 }
 
 application {
-    // Define the main class for the application.
-    mainClass = "algorithms.App"
+    val basePackage = "algorithms"
+    val simpleName = project.findProperty("mainClass") ?: "App"
+    mainClass.set("$basePackage.$simpleName")
 }
 
 tasks.named<JavaExec>("run") {
