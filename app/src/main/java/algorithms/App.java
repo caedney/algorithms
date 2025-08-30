@@ -3,9 +3,8 @@
  */
 package algorithms;
 
+import java.io.FileInputStream;
 import java.io.IOException;
-
-import algorithms.Excercises.Excercise_1_1.Excercise_1_1_35;
 
 public class App {
     public static String getGreeting() {
@@ -13,16 +12,8 @@ public class App {
     }
 
     public static void main(String[] args) throws IOException {
-        // Excercises
-        // System.setIn(new FileInputStream("src/main/resources/baseball-players.txt"));
-        // Excercise_1_1_21.main();
-        // String[] binarySearchArgs = { "src/data/algs4/tinyW.txt", "-" };
-        // System.setIn(new FileInputStream("src/data/algs4/tinyT.txt"));
-        // Excercise_1_1_23.main(binarySearchArgs);
-        // Excercise_1_1_24.main(new String[] { "1111111", "1234567" });
-        // Excercise_1_1_25.main();
-        // Excercise_1_1_11.main();
-        // Excercise_1_1_31.main();
-        Excercise_1_1_35.main();
+        String[] binarySearchArgs = { "src/data/algs4/tinyW.txt" };
+        System.setIn(new FileInputStream("src/data/algs4/tinyT.txt"));
+        BinarySearch.main(binarySearchArgs);
     }
 }
