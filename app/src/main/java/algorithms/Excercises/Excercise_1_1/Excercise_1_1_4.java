@@ -15,7 +15,6 @@ import edu.princeton.cs.algs4.StdOut;
  * <li>if (a > b) c = 0;</li>
  * <li>if (a > b) c = 0 else b = 0;</li>
  * </ol>
- * 
  */
 public class Excercise_1_1_4 {
     public static void main() {

@@ -14,7 +14,6 @@ import edu.princeton.cs.algs4.StdOut;
  * second argument: + to print numbers from standard input that <i>are not</i>
  * in the whitelist, - to print numbers that <i>are</i> in the whitelist.
  * </p>
- * 
  */
 public class Excercise_1_1_23 {
     public static int rank(int key, int[] a) {

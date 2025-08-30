@@ -8,7 +8,6 @@ import edu.princeton.cs.algs4.StdOut;
  * <p>
  * Write a recursive static method that computes the value of ln(N!)
  * </p>
- * 
  */
 public class Excercise_1_1_20 {
     /**

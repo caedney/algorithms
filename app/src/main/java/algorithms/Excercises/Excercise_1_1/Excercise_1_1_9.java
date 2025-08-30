@@ -21,7 +21,6 @@ import edu.princeton.cs.algs4.StdOut;
  * for (int n = N; n > 0; n /= 2)
  *     s = (n % 2) + s;
  * }
- * 
  */
 public class Excercise_1_1_9 {
     private static String toBinaryString(int N) {

@@ -13,7 +13,6 @@ import edu.princeton.cs.algs4.StdOut;
  * circumference of a circle, and then, with probability {@code p} for each pair
  * of points, draws a gray line connecting them.
  * </p>
- * 
  */
 public class Excercise_1_1_31 {
     /**

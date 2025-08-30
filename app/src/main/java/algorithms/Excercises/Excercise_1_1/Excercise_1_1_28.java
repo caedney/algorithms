@@ -15,7 +15,6 @@ import edu.princeton.cs.algs4.StdOut;
  * <i>Remove duplicates</i>. Modify the test client in {@code BinarySearch} to
  * remove any duplicate keys in the whitelist after the sort.
  * </p>
- * 
  */
 public class Excercise_1_1_28 {
     public static int rank(int key, int[] a) {

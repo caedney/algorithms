@@ -77,7 +77,6 @@ import edu.princeton.cs.algs4.StdOut;
  * follows from the invariant gcd(𝑝, 𝑞) = gcd(𝑞, 𝑝 % 𝑞) plus strong
  * induction on 𝑞.
  * </p>
- * 
  */
 public class Excercise_1_1_25 {
     public static void main() {

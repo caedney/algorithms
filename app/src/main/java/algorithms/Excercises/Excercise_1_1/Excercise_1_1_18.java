@@ -25,7 +25,6 @@ import edu.princeton.cs.algs4.StdOut;
  * {@code mystery(a, b)} computes. Answer the same question, but replace + with
  * * and replace {@code return 0} with {@code return 1}.
  * </p>
- * 
  */
 public class Excercise_1_1_18 {
     public static int multiply(int a, int b) {

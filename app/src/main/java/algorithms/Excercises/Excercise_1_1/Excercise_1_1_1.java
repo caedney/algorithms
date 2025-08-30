@@ -14,7 +14,6 @@ import edu.princeton.cs.algs4.StdOut;
  * <li>2.0e-6 * 100000000.1</li>
  * <li>true && false || true && false</li>
  * </ol>
- * 
  */
 public class Excercise_1_1_1 {
     public static void main() {

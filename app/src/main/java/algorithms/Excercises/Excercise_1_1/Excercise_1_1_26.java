@@ -31,7 +31,6 @@ import edu.princeton.cs.algs4.StdOut;
  *     c = t;
  * }
  * }
- * 
  */
 public class Excercise_1_1_26 {
     private static void sortNumbers(int a, int b, int c) {

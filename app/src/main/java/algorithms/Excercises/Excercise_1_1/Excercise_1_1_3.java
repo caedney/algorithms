@@ -9,7 +9,6 @@ import edu.princeton.cs.algs4.StdOut;
  * Write a program that takes three integer command-line arguments and prints
  * equal if all three are equal, and not equal otherwise.
  * </p>
- * 
  */
 public class Excercise_1_1_3 {
     private static String checkEquality(int x, int y, int z) {

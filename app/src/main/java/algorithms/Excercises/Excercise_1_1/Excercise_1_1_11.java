@@ -10,7 +10,6 @@ import edu.princeton.cs.algs4.StdOut;
  * array, using * to represet {@code true} ans space to represent {@code false}.
  * Include row and column numbers.
  * </p>
- * 
  */
 public class Excercise_1_1_11 {
     public static void main() {

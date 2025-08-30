@@ -14,7 +14,6 @@ import edu.princeton.cs.algs4.StdOut;
  * {@code hi}, indented by the depth of the recursion. <i>Hint</i>: Add an
  * argument to the recursive method that keeps track of the depth.
  * </p>
- * 
  */
 public class Excercise_1_1_22 {
     public static int rank(int key, int[] a, int lo, int hi, int depth) {

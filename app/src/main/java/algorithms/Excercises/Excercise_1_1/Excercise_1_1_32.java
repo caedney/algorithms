@@ -14,7 +14,6 @@ import edu.princeton.cs.algs4.StdOut;
  * standard input stream that fall in each of the 𝑁 intervals defined by
  * dividing (𝑙, 𝑟) into 𝑁 equal-sized intervals.
  * </p>
- * 
  */
 public class Excercise_1_1_32 {
     public static void histogram(int N, double l, double r) {

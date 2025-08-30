@@ -12,7 +12,6 @@ import edu.princeton.cs.algs4.StdOut;
  * likely to be one of the 𝑁! possibilities. Run the test of the previous
  * exercise for this version.
  * </p>
- * 
  */
 public class Excercise_1_1_37 {
     public static void main() {

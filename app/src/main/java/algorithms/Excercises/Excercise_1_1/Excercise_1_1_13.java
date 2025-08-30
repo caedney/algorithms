@@ -9,7 +9,6 @@ import edu.princeton.cs.algs4.StdOut;
  * Write a code fragment to print the <i>transposition</i> (rows and columns
  * changed) of a two-dimensional array with 𝑀 rows and 𝑁 columns.
  * </p>
- * 
  */
 public class Excercise_1_1_13 {
     public static void main() {

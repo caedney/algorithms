@@ -14,7 +14,6 @@ import edu.princeton.cs.algs4.StdOut;
  * method. Use your program to compute the greatest common divisor or 1111111
  * and 1234567.
  * </p>
- * 
  */
 public class Excercise_1_1_24 {
     public static int gcd(int p, int q) {

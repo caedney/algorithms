@@ -12,7 +12,6 @@ import edu.princeton.cs.algs4.StdOut;
  * 1 hour to compute the value of {@code F(N)}? Develop a better implementation
  * of {@code F(N)} that saves computed values in an array.
  * </p>
- * 
  */
 public class Excercise_1_1_19 {
     public static long fib(int N) {

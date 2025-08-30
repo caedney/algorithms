@@ -27,7 +27,6 @@ import edu.princeton.cs.algs4.StdOut;
  * to compute {@code binomial(100, 50)}. Develop a better implementation that is
  * based on saving computed values in an array.
  * </p>
- * 
  */
 public class Excercise_1_1_27 {
     /**

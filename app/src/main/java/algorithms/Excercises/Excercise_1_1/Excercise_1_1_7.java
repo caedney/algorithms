@@ -37,7 +37,6 @@ import edu.princeton.cs.algs4.StdOut;
  * }
  * </li>
  * </ol>
- * 
  */
 public class Excercise_1_1_7 {
     private static double a() {

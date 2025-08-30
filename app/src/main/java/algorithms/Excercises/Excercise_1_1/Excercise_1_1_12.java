@@ -18,7 +18,6 @@ import edu.princeton.cs.algs4.StdOut;
  * for (int i = 0; i < 10; i++)
  *     StdOut.println(i);
  * }
- * 
  */
 public class Excercise_1_1_12 {
     public static void main() {

@@ -13,7 +13,6 @@ import edu.princeton.cs.algs4.StdOut;
  * all between {@code 0} and {@code M-1}, the sum of the values in the returned
  * array should be equal to {@code a.length}.
  * </p>
- * 
  */
 public class Excercise_1_1_15 {
     private static int[] histogram(int[] a, int M) {

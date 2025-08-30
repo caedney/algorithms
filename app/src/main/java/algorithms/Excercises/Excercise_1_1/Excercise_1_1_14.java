@@ -10,7 +10,6 @@ import edu.princeton.cs.algs4.StdOut;
  * argument and returns the largest {@code int} not larger than the base-2
  * logarithm of {@code N}. Do <i>not</i> use {@code Math}.
  * </p>
- * 
  */
 public class Excercise_1_1_14 {
     private static int lg(int N) {

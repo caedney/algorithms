@@ -11,7 +11,6 @@ import edu.princeton.cs.algs4.StdOut;
  * page 48 and compare its running time on your computer with that of {@code
  * BinarySearch} for {@code largew.txt} and {@code largeT.txt}.
  * </p>
- * 
  */
 public class Excercise_1_1_38 {
     public static void main() {

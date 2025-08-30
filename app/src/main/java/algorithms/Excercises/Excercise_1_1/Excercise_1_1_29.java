@@ -14,7 +14,6 @@ import edu.princeton.cs.algs4.StdOut;
  * {@code rank(key, a)} and {@code count(key, a)} respectively, then a [i
  * ..i+j-1] are the values in the array that are equal to key.
  * </p>
- * 
  */
 public class Excercise_1_1_29 {
     public static int rank(int key, int[] a) {

@@ -14,7 +14,6 @@ import edu.princeton.cs.algs4.StdOut;
  * for (int i = 0; i < 10; i++)
  *     a[i] = i * i;
  * }
- * 
  */
 public class Excercise_1_1_10 {
     public static void main() {

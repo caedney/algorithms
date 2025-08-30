@@ -18,7 +18,6 @@ import edu.princeton.cs.algs4.StdOut;
  *     g = f - g;
  * }
  * }
- * 
  */
 public class Excercise_1_1_6 {
     private static int fib(int N) {

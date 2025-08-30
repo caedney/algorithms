@@ -23,7 +23,6 @@ import edu.princeton.cs.algs4.StdOut;
  * will result in calls to {@code exR2(0)}, {@code exR2 (-3)}, {@code exR3(-6)},
  * and so forth until a {@code StackOverflowError} occurs.
  * </p>
- * 
  */
 public class Excercise_1_1_17 {
     public static String exR2(int n) {

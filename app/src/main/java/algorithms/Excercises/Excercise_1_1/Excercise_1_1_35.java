@@ -35,8 +35,6 @@ import edu.princeton.cs.algs4.StdOut;
  * before your empirical results match the exact results to three decimal
  * places?
  * </p>
- * 
- * 
  */
 public class Excercise_1_1_35 {
     /**

@@ -9,7 +9,6 @@ import edu.princeton.cs.algs4.StdOut;
  * Write a code fragment that prints true if the double variables {@code x} and
  * {@code y} are both strictly between 0 and 1 and {@code false} otherwise.
  * </p>
- * 
  */
 public class Excercise_1_1_5 {
     private static boolean betweenZeroAndOne(double x, double y) {

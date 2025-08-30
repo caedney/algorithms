@@ -14,7 +14,6 @@ import edu.princeton.cs.algs4.StdOut;
  * gives the number of times {@code i} wound up in position {@code j} for all
  * {@code j}. All entries in the array should be close to 𝑁/𝑀.
  * </p>
- * 
  */
 public class Excercise_1_1_36 {
     public static void main() {

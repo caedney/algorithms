@@ -15,7 +15,6 @@ import edu.princeton.cs.algs4.StdOut;
  * <li>4.1 >= 4</li>
  * <li>1 + 2 + "3"</li>
  * </ol>
- * 
  */
 public class Excercise_1_1_2 {
     public static void main() {

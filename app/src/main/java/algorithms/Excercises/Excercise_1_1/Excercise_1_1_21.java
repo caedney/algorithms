@@ -15,7 +15,6 @@ import edu.princeton.cs.algs4.StdOut;
  * program like this to tabulate batting averages for baseball players or grades
  * for students.
  * </p>
- * 
  */
 public class Excercise_1_1_21 {
     public static void main() {

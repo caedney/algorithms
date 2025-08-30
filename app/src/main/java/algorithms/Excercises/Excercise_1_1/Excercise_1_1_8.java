@@ -18,7 +18,6 @@ import edu.princeton.cs.algs4.StdOut;
  * <p>
  * Explain each outcome.
  * </p>
- * 
  */
 public class Excercise_1_1_8 {
     public static void main() {

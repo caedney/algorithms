@@ -45,7 +45,6 @@ import edu.princeton.cs.algs4.StdOut;
  * </tr>
  * </tbody>
  * </table>
- * 
  */
 public class Excercise_1_1_33 {
     /**

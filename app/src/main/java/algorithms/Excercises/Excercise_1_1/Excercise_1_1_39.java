@@ -14,7 +14,6 @@ import edu.princeton.cs.algs4.StdOut;
  * values that appear in both arrays. Print a table giving the average value of
  * this quantity over the 𝑇 trials for each value of 𝑁.
  * </p>
- * 
  */
 public class Excercise_1_1_39 {
     public static void main() {

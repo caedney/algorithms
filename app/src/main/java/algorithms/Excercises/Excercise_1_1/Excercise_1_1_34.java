@@ -23,7 +23,6 @@ import edu.princeton.cs.algs4.StdOut;
  * <li>Print the N numbers in increasing order</li>
  * <li>Print the N numbers in random order</li>
  * </ul>
- * 
  */
 public class Excercise_1_1_34 {
     public static void main() {

@@ -10,7 +10,6 @@ import edu.princeton.cs.algs4.StdOut;
  * array a[][] such that a[i][j] is {@code true} if i and j are relatively prime
  * (have no common factors), and {@code false} otherwise.
  * </p>
- * 
  */
 public class Excercise_1_1_30 {
     public static int gcd(int p, int q) {
