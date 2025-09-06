@@ -11,36 +11,32 @@ import edu.princeton.cs.algs4.StdOut;
  * <i>Matrix library</i>. Write a library Matrix that implements the following
  * API:
  * </p>
- * 
+ * {@code public class Matrix}
  * <table>
- * <thead>
+ * <tbody>
  * <tr>
- * <th colspan="3">Public Class {@code Matrix}</th>
- * </tr>
- * </thead><tbody>
- * <tr>
- * <td>static</td>
- * <td>double dot(double[] x, double[] y)</td>
+ * <td>{@code static}</td>
+ * <td>{@code double dot(double[] x, double[] y)}</td>
  * <td><i>Vector Dot Product</i></td>
  * </tr>
  * <tr>
- * <td>static</td>
- * <td>double[] mult(double[] y, double[][] a)</td>
+ * <td>{@code static}</td>
+ * <td>{@code double[] mult(double[] y, double[][] a)}</td>
  * <td><i>Vector-Matrix product</i></td>
  * </tr>
  * <tr>
- * <td>static</td>
- * <td>double[] mult(double[][] a, double[] x)</td>
+ * <td>{@code static}</td>
+ * <td>{@code double[] mult(double[][] a, double[] x)}</td>
  * <td><i>Matrix-Vector Product</i></td>
  * </tr>
  * <tr>
- * <td>static</td>
- * <td>double[][] mult(double[][] a, double[][] b)</td>
+ * <td>{@code static}</td>
+ * <td>{@code double[][] mult(double[][] a, double[][] b)}</td>
  * <td><i>Matrix-Matrix Product</i></td>
  * </tr>
  * <tr>
- * <td>static</td>
- * <td>double[][] transpose(double[][] a)</td>
+ * <td>{@code static}</td>
+ * <td>{@code double[][] transpose(double[][] a)}</td>
  * <td><i>Transpose</i></td>
  * </tr>
  * </tbody>
