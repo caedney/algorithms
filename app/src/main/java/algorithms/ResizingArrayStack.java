@@ -18,6 +18,10 @@ public class ResizingArrayStack<Item> implements Iterable<Item> {
         return N;
     }
 
+    public int capacity() {
+        return a.length;
+    }
+
     // move stack to new array of size max
     private void resize(int max) {
         Item[] temp = (Item[]) new Object[max];
