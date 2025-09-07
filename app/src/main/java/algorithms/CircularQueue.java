@@ -1,19 +1,25 @@
 package algorithms;
 
-public class CircularQueue<Item> {
-    private Node back;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+import java.util.StringJoiner;
+
+import edu.princeton.cs.algs4.StdOut;
+
+public class CircularQueue<Item> implements Iterable<Item> {
+    private Node<Item> tail;
     private int size;
 
     public CircularQueue() {
-        back = null;
-        size = 0;
+        this.tail = null;
+        this.size = 0;
     }
 
-    private class Node {
+    private static class Node<Item> {
         private Item item;
-        private Node next;
+        private Node<Item> next;
 
-        Node(Item item, Node next) {
+        Node(Item item, Node<Item> next) {
             this.item = item;
             this.next = next;
         }
@@ -28,44 +34,94 @@ public class CircularQueue<Item> {
     }
 
     public Item peek() {
-        if (isEmpty()) {
-            throw new RuntimeException("Queue underflow");
-        }
+        if (isEmpty())
+            throw new NoSuchElementException("Queue underflow");
 
-        return back.next.item;
+        return tail.next.item;
     }
 
     public void enqueue(Item item) {
-        Node newNode = new Node(item, null);
+        Node<Item> newNode = new Node<Item>(item, null);
 
         if (isEmpty()) {
             newNode.next = newNode; // point to self
-            back = newNode; // update back
+            tail = newNode; // update tail
         } else {
-            newNode.next = back.next; // point to front
-            back.next = newNode; // point front to new node
-            back = newNode; // update back
+            newNode.next = tail.next; // point to head
+            tail.next = newNode; // point head to new node
+            tail = newNode; // update tail
         }
 
         size++;
     }
 
     public Item dequeue() {
-        if (isEmpty()) {
-            throw new RuntimeException("Queue underflow");
-        }
+        if (isEmpty())
+            throw new NoSuchElementException("Queue underflow");
 
-        Node first = back.next;
-        Item item = first.item;
+        Node<Item> head = tail.next;
 
         if (size == 1) {
-            back = null;
+            tail = null; // empty list
         } else {
-            back.next = first.next; // bypass first
+            tail.next = head.next; // bypass head
         }
 
+        head.next = null; // avoid loitering
         size--;
 
-        return item;
+        return head.item;
+    }
+
+    public String toString() {
+        StringJoiner joiner = new StringJoiner(", ", "[", "]");
+
+        for (Item value : this)
+            joiner.add(String.valueOf(value));
+
+        return joiner.toString();
+    }
+
+    public Iterator<Item> iterator() {
+        return new CircularQueueIterator(tail.next);
+    }
+
+    private class CircularQueueIterator implements Iterator<Item> {
+        private Node<Item> current;
+        private int index;
+
+        public CircularQueueIterator(Node<Item> current) {
+            this.current = current;
+            this.index = 0;
+        }
+
+        public boolean hasNext() {
+            return index < size;
+        }
+
+        public Item next() {
+            if (!hasNext())
+                throw new NoSuchElementException();
+
+            Item item = current.item;
+            current = current.next;
+            index++;
+
+            return item;
+        }
+    }
+
+    public static void main(String[] args) {
+        CircularQueue<String> queue = new CircularQueue<>();
+        queue.enqueue("A");
+        queue.enqueue("B");
+        queue.enqueue("C");
+        queue.enqueue("D");
+        queue.enqueue("E");
+        queue.enqueue("F");
+        queue.dequeue();
+        queue.dequeue();
+
+        StdOut.println(queue.toString()); // [C, D, E, F]
     }
 }

@@ -6,11 +6,11 @@ import java.util.StringJoiner;
 
 import edu.princeton.cs.algs4.StdOut;
 
-public class CircularStack<Item> implements Iterable<Item> {
+public class CatenableStack<Item> implements Iterable<Item> {
     private Node<Item> tail;
     private int size;
 
-    public CircularStack() {
+    public CatenableStack() {
         this.tail = null;
         this.size = 0;
     }
@@ -66,9 +66,31 @@ public class CircularStack<Item> implements Iterable<Item> {
             tail.next = head.next; // bypass head
         }
 
+        head.next = null; // avoid loitering
         size--;
 
         return head.item;
+    }
+
+    public void catenate(CatenableStack<Item> that) {
+        if (that.isEmpty())
+            return;
+
+        if (this.isEmpty()) {
+            this.tail = that.tail;
+            this.size = that.size;
+            return;
+        }
+
+        Node<Item> thisHead = this.tail.next; // head of this
+        Node<Item> thatHead = that.tail.next; // head of that
+
+        this.tail.next = thatHead; // last node of 'this' points to head of 'that' for circular link
+        that.tail.next = thisHead; // last node of 'that' points to head of 'this'
+        this.size += that.size;
+
+        that.tail = null;
+        that.size = 0;
     }
 
     public String toString() {
@@ -81,14 +103,14 @@ public class CircularStack<Item> implements Iterable<Item> {
     }
 
     public Iterator<Item> iterator() {
-        return new CircularStackIterator(tail.next);
+        return new CatenableStackIterator(tail.next);
     }
 
-    private class CircularStackIterator implements Iterator<Item> {
+    private class CatenableStackIterator implements Iterator<Item> {
         private Node<Item> current;
         private int index;
 
-        public CircularStackIterator(Node<Item> current) {
+        public CatenableStackIterator(Node<Item> current) {
             this.current = current;
             this.index = 0;
         }
@@ -110,7 +132,7 @@ public class CircularStack<Item> implements Iterable<Item> {
     }
 
     public static void main(String[] args) {
-        CircularStack<String> stack = new CircularStack<>();
+        CatenableStack<String> stack = new CatenableStack<>();
         stack.push("A");
         stack.push("B");
         stack.push("C");

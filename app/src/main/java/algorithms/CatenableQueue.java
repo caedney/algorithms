@@ -6,11 +6,11 @@ import java.util.StringJoiner;
 
 import edu.princeton.cs.algs4.StdOut;
 
-public class CircularStack<Item> implements Iterable<Item> {
+public class CatenableQueue<Item> implements Iterable<Item> {
     private Node<Item> tail;
     private int size;
 
-    public CircularStack() {
+    public CatenableQueue() {
         this.tail = null;
         this.size = 0;
     }
@@ -35,12 +35,12 @@ public class CircularStack<Item> implements Iterable<Item> {
 
     public Item peek() {
         if (isEmpty())
-            throw new NoSuchElementException("Stack underflow");
+            throw new NoSuchElementException("Queue underflow");
 
         return tail.next.item;
     }
 
-    public void push(Item item) {
+    public void enqueue(Item item) {
         Node<Item> newNode = new Node<Item>(item, null);
 
         if (isEmpty()) {
@@ -48,15 +48,16 @@ public class CircularStack<Item> implements Iterable<Item> {
             tail = newNode; // update tail
         } else {
             newNode.next = tail.next; // point to head
-            tail.next = newNode; // point head to new node
+            tail.next = newNode; // point front to new node
+            tail = newNode; // update tail
         }
 
         size++;
     }
 
-    public Item pop() {
+    public Item dequeue() {
         if (isEmpty())
-            throw new NoSuchElementException("Stack underflow");
+            throw new NoSuchElementException("Queue underflow");
 
         Node<Item> head = tail.next;
 
@@ -66,9 +67,32 @@ public class CircularStack<Item> implements Iterable<Item> {
             tail.next = head.next; // bypass head
         }
 
+        head.next = null; // avoid loitering
         size--;
 
         return head.item;
+    }
+
+    public void catenate(CatenableQueue<Item> that) {
+        if (that.isEmpty())
+            return;
+
+        if (this.isEmpty()) {
+            this.tail = that.tail;
+            this.size = that.size;
+            return;
+        }
+
+        Node<Item> thisHead = this.tail.next;
+        Node<Item> thatHead = that.tail.next;
+
+        this.tail.next = thatHead;
+        that.tail.next = thisHead;
+        this.tail = that.tail;
+        this.size += that.size;
+
+        that.tail = null;
+        that.size = 0;
     }
 
     public String toString() {
@@ -81,14 +105,14 @@ public class CircularStack<Item> implements Iterable<Item> {
     }
 
     public Iterator<Item> iterator() {
-        return new CircularStackIterator(tail.next);
+        return new CatenableQueueIterator(tail.next);
     }
 
-    private class CircularStackIterator implements Iterator<Item> {
+    private class CatenableQueueIterator implements Iterator<Item> {
         private Node<Item> current;
         private int index;
 
-        public CircularStackIterator(Node<Item> current) {
+        public CatenableQueueIterator(Node<Item> current) {
             this.current = current;
             this.index = 0;
         }
@@ -110,16 +134,19 @@ public class CircularStack<Item> implements Iterable<Item> {
     }
 
     public static void main(String[] args) {
-        CircularStack<String> stack = new CircularStack<>();
-        stack.push("A");
-        stack.push("B");
-        stack.push("C");
-        stack.push("D");
-        stack.push("E");
-        stack.push("F");
-        stack.pop();
-        stack.pop();
+        CatenableQueue<String> q = new CatenableQueue<>();
+        q.enqueue("A");
+        q.enqueue("B");
+        q.enqueue("C");
 
-        StdOut.println(stack.toString()); // [D, C, B, A]
+        CatenableQueue<String> r = new CatenableQueue<>();
+        r.enqueue("D");
+        r.enqueue("E");
+        r.enqueue("F");
+        q.catenate(r);
+        q.dequeue();
+        q.dequeue();
+
+        StdOut.println(q.toString()); // [C, D, E, F]
     }
 }
