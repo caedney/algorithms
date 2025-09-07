@@ -1,67 +1,60 @@
 package algorithms;
 
+import java.math.BigInteger;
+
 import edu.princeton.cs.algs4.StdOut;
 
 public class Rational {
-    private final long numerator;
-    private final long denominator;
+    private final BigInteger numerator;
+    private final BigInteger denominator;
 
     public Rational(int numerator, int denominator) {
-        this((long) numerator, (long) denominator);
+        this(BigInteger.valueOf(numerator), BigInteger.valueOf(denominator));
     }
 
-    public Rational(long numerator, long denominator) {
-        if (denominator == 0)
+    public Rational(BigInteger numerator, BigInteger denominator) {
+        if (denominator.equals(BigInteger.ZERO))
             throw new ArithmeticException("denominator is zero");
 
         // Normalize sign so denominator is always positive
-        if (denominator < 0) {
-            numerator = -numerator;
-            denominator = -denominator;
+        if (denominator.signum() < 0) {
+            numerator = numerator.negate();
+            denominator = denominator.negate();
         }
 
         // Reduce fraction
-        long gcd = gcd(Math.abs(numerator), denominator);
-        this.numerator = numerator / gcd;
-        this.denominator = denominator / gcd;
+        BigInteger gcd = numerator.gcd(denominator);
+        this.numerator = numerator.divide(gcd);
+        this.denominator = denominator.divide(gcd);
 
-        assert this.denominator > 0 : "Denominator must be positive";
-        assert gcd(Math.abs(this.numerator), this.denominator) == 1 : "Rational not in lowest terms";
-    }
-
-    private static long gcd(long a, long b) {
-        while (b != 0) {
-            long temp = b;
-            b = a % b;
-            a = temp;
-        }
-        return a;
+        assert this.denominator.signum() > 0 : "Denominator must be positive";
+        assert numerator.gcd(denominator).equals(BigInteger.ONE) : "Rational not in lowest terms";
     }
 
     public Rational plus(Rational other) {
-        long num = this.numerator * other.denominator + other.numerator * this.denominator;
-        long den = this.denominator * other.denominator;
+        BigInteger num = this.numerator.multiply(other.denominator).add(other.numerator.multiply(this.denominator));
+        BigInteger den = this.denominator.multiply(other.denominator);
         return new Rational(num, den);
     }
 
     public Rational minus(Rational other) {
-        long num = this.numerator * other.denominator - other.numerator * this.denominator;
-        long den = this.denominator * other.denominator;
+        BigInteger num = this.numerator.multiply(other.denominator)
+                .subtract(other.numerator.multiply(this.denominator));
+        BigInteger den = this.denominator.multiply(other.denominator);
         return new Rational(num, den);
     }
 
     public Rational times(Rational other) {
-        long num = this.numerator * other.numerator;
-        long den = this.denominator * other.denominator;
+        BigInteger num = this.numerator.multiply(other.numerator);
+        BigInteger den = this.denominator.multiply(other.denominator);
         return new Rational(num, den);
     }
 
     public Rational divides(Rational other) {
-        if (other.numerator == 0)
-            throw new ArithmeticException("Division by zero");
+        assert !other.numerator.equals(BigInteger.ZERO) : "Division by zero";
 
-        long num = this.numerator * other.denominator;
-        long den = this.denominator * other.numerator;
+        BigInteger num = this.numerator.multiply(other.denominator);
+        BigInteger den = this.denominator.multiply(other.numerator);
         return new Rational(num, den);
     }
 
@@ -71,13 +64,13 @@ public class Rational {
             return false;
 
         Rational r = (Rational) other;
-        return numerator == r.numerator && denominator == r.denominator;
+        return numerator.equals(r.numerator) && denominator.equals(r.denominator);
     }
 
     @Override
     public String toString() {
-        if (denominator == 1)
-            return Long.toString(numerator);
+        if (denominator.equals(BigInteger.ONE))
+            return numerator.toString();
         return numerator + "/" + denominator;
     }
 
