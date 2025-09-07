@@ -1,23 +1,26 @@
 package algorithms;
 
+import edu.princeton.cs.algs4.In;
+import edu.princeton.cs.algs4.StdOut;
+
 public class Date implements Comparable<Date> {
     private final int day;
     private final int month;
     private final int year;
 
-    public Date(int d, int m, int y) {
-        day = d;
-        month = m;
-        year = y;
+    public Date(int day, int month, int year) {
+        this.day = day;
+        this.month = month;
+        this.year = year;
     }
 
     public Date(String str) {
         String[] date = str.split("/");
 
         try {
-            day = Integer.parseInt(date[0]);
-            month = Integer.parseInt(date[1]);
-            year = Integer.parseInt(date[2]);
+            this.day = Integer.parseInt(date[0]);
+            this.month = Integer.parseInt(date[1]);
+            this.year = Integer.parseInt(date[2]);
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException("Date must of format DD/MM/YYYY");
         }
@@ -69,5 +72,10 @@ public class Date implements Comparable<Date> {
     @Override
     public String toString() {
         return day() + "/" + month() + "/" + year();
+    }
+
+    public static void main(String[] args) {
+        Date date = new Date("22/05/1939");
+        StdOut.println(date);
     }
 }
