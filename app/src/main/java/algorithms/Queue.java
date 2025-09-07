@@ -2,8 +2,8 @@ package algorithms;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.StringJoiner;
 
-import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
 
 public class Queue<Item> implements Iterable<Item> {
@@ -106,16 +106,20 @@ public class Queue<Item> implements Iterable<Item> {
     }
 
     public static void main(String[] args) {
-        Queue<String> queue = new Queue<String>();
+        Queue<String> queue = new Queue<>();
+        queue.enqueue("A");
+        queue.enqueue("B");
+        queue.enqueue("C");
+        queue.enqueue("D");
+        queue.enqueue("E");
+        queue.enqueue("F");
+        queue.dequeue();
+        queue.dequeue();
 
-        while (!StdIn.isEmpty()) {
-            String item = StdIn.readString();
-            if (!item.equals("-"))
-                queue.enqueue(item);
-            else if (!queue.isEmpty())
-                StdOut.print(queue.dequeue() + " ");
-        }
+        StringJoiner joiner = new StringJoiner(", ", "[", "]");
+        for (String value : queue)
+            joiner.add(String.valueOf(value));
 
-        StdOut.println("(" + queue.size() + " left on queue)");
+        StdOut.println(joiner.toString()); // [C, D, E, F]
     }
 }

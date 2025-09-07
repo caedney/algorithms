@@ -2,8 +2,8 @@ package algorithms;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.StringJoiner;
 
-import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
 
 public class Stack<Item> implements Iterable<Item> {
@@ -96,16 +96,20 @@ public class Stack<Item> implements Iterable<Item> {
     }
 
     public static void main(String[] args) {
-        Stack<String> stack = new Stack<String>();
+        Stack<String> stack = new Stack<>();
+        stack.push("A");
+        stack.push("B");
+        stack.push("C");
+        stack.push("D");
+        stack.push("E");
+        stack.push("F");
+        stack.pop();
+        stack.pop();
 
-        while (!StdIn.isEmpty()) {
-            String item = StdIn.readString();
-            if (!item.equals("-"))
-                stack.push(item);
-            else if (!stack.isEmpty())
-                StdOut.print(stack.pop() + " ");
-        }
+        StringJoiner joiner = new StringJoiner(", ", "[", "]");
+        for (String value : stack)
+            joiner.add(String.valueOf(value));
 
-        StdOut.println("(" + stack.size() + " left on stack)");
+        StdOut.println(joiner.toString()); // [D, C, B, A]
     }
 }

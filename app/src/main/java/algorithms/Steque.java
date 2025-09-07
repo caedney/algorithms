@@ -2,29 +2,29 @@ package algorithms;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.StringJoiner;
 
-import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
 
 public class Steque<Item> implements Iterable<Item> {
+    private Node<Item> first;
+    private Node<Item> last;
     private int size;
-    private Node first;
-    private Node last;
 
-    class Node {
+    public Steque() {
+        first = null;
+        last = null;
+        size = 0;
+    }
+
+    private static class Node<Item> {
         Item item;
-        Node next;
+        Node<Item> next;
 
-        Node(Item item, Node next) {
+        Node(Item item, Node<Item> next) {
             this.item = item;
             this.next = next;
         }
-    }
-
-    public Steque() {
-        size = 0;
-        first = null;
-        last = null;
     }
 
     public boolean isEmpty() {
@@ -43,7 +43,7 @@ public class Steque<Item> implements Iterable<Item> {
     }
 
     public void push(Item item) {
-        Node newNode = new Node(item, first);
+        Node<Item> newNode = new Node<Item>(item, first);
         first = newNode;
 
         if (last == null)
@@ -68,7 +68,7 @@ public class Steque<Item> implements Iterable<Item> {
     }
 
     public void enqueue(Item item) {
-        Node newNode = new Node(item, null);
+        Node<Item> newNode = new Node<Item>(item, null);
 
         if (isEmpty()) {
             first = newNode;
@@ -82,11 +82,11 @@ public class Steque<Item> implements Iterable<Item> {
     }
 
     public Iterator<Item> iterator() {
-        return new LinkedIterator();
+        return new StequeIterator();
     }
 
-    private class LinkedIterator implements Iterator<Item> {
-        private Node current = first;
+    private class StequeIterator implements Iterator<Item> {
+        private Node<Item> current = first;
 
         public boolean hasNext() {
             return current != null;
@@ -104,14 +104,20 @@ public class Steque<Item> implements Iterable<Item> {
     }
 
     public static void main(String[] args) {
-        Steque<String> list = new Steque<String>();
+        Steque<String> steque = new Steque<>();
+        steque.push("C");
+        steque.push("D");
+        steque.push("E");
+        steque.push("F");
+        steque.pop();
+        steque.pop();
+        steque.enqueue("B");
+        steque.enqueue("A");
 
-        while (!StdIn.isEmpty()) {
-            String item = StdIn.readString();
-            if (!item.equals("-"))
-                list.enqueue(item);
-        }
+        StringJoiner joiner = new StringJoiner(", ", "[", "]");
+        for (String value : steque)
+            joiner.add(String.valueOf(value));
 
-        StdOut.println("(" + list.size() + " left on list)");
+        StdOut.println(joiner.toString()); // [D, C, B, A]
     }
 }
