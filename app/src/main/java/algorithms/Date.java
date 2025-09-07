@@ -1,5 +1,7 @@
 package algorithms;
 
+import edu.princeton.cs.algs4.In;
+
 public class Date implements Comparable<Date> {
     private final int day;
     private final int month;
@@ -33,6 +35,23 @@ public class Date implements Comparable<Date> {
 
     public int year() {
         return year;
+    }
+
+    public static Date[] readDates(String name) {
+        In in = new In(name);
+        Queue<Date> q = new Queue<Date>();
+
+        while (!in.isEmpty()) {
+            q.enqueue(new Date(in.readString()));
+        }
+
+        int n = q.size();
+        Date[] dates = new Date[n];
+
+        for (int i = 0; i < n; i++)
+            dates[i] = q.dequeue();
+
+        return dates;
     }
 
     @Override
