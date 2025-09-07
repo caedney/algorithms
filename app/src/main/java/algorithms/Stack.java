@@ -60,6 +60,13 @@ public class Stack<Item> implements Iterable<Item> {
         return joiner.toString();
     }
 
+    public Item peek() {
+        if (isEmpty())
+            throw new NoSuchElementException("Stack underflow");
+
+        return head.item;
+    }
+
     public Iterator<Item> iterator() {
         return new StackIterator(head);
     }
