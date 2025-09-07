@@ -96,6 +96,28 @@ public class LinkedList<Item> implements Iterable<Item> {
         }
     }
 
+    public int max() {
+        if (first.item instanceof Integer) {
+            if (isEmpty()) {
+                return 0;
+            }
+
+            int maxVal = (Integer) first.item;
+            Node current = first.next;
+
+            while (current != null) {
+                if ((Integer) current.item > maxVal) {
+                    maxVal = (Integer) current.item;
+                }
+                current = current.next;
+            }
+
+            return maxVal;
+        }
+
+        return 0;
+    }
+
     public Iterator<Item> iterator() {
         return new LinkedIterator();
     }
