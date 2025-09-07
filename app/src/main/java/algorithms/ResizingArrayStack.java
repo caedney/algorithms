@@ -1,48 +1,57 @@
 package algorithms;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
 
 @SuppressWarnings("unchecked")
 public class ResizingArrayStack<Item> implements Iterable<Item> {
-    private Item[] a = (Item[]) new Object[1]; // stack items
-    private int N = 0; // number of items
+    private static final int INIT_CAPACITY = 1;
+    private Item[] array;
+    private int size;
+
+    public ResizingArrayStack() {
+        array = (Item[]) new Object[INIT_CAPACITY];
+        size = 0;
+    }
 
     public boolean isEmpty() {
-        return N == 0;
+        return size == 0;
     }
 
     public int size() {
-        return N;
+        return size;
     }
 
-    // move stack to new array of size max
+    public int capacity() {
+        return array.length;
+    }
+
     private void resize(int max) {
-        Item[] temp = (Item[]) new Object[max];
+        Item[] newArray = (Item[]) new Object[max];
 
-        for (int i = 0; i < N; i++)
-            temp[i] = a[i];
+        for (int i = 0; i < size; i++)
+            newArray[i] = array[i];
 
-        a = temp;
+        array = newArray;
     }
 
-    // add item to top of stack
     public void push(Item item) {
-        if (N == a.length)
-            resize(2 * a.length);
-        a[N++] = item;
+        if (size == array.length)
+            resize(2 * array.length);
+
+        array[size++] = item;
     }
 
-    // remove item from top of stack
     public Item pop() {
-        Item item = a[--N];
+        Item item = array[--size];
 
-        a[N] = null; // avoid loitering
+        array[size] = null; // avoid loitering
 
-        if (N > 0 && N == a.length / 4)
-            resize(a.length / 2);
+        if (size > 0 && size == array.length / 4)
+            resize(array.length / 2);
 
         return item;
     }
@@ -51,19 +60,18 @@ public class ResizingArrayStack<Item> implements Iterable<Item> {
         return new ReverseArrayIterator();
     }
 
-    // support LIFO iteration
     private class ReverseArrayIterator implements Iterator<Item> {
-        private int i = N;
+        private int i = size - 1;
 
         public boolean hasNext() {
-            return i > 0;
+            return i >= 0;
         }
 
         public Item next() {
-            return a[--i];
-        }
+            if (!hasNext())
+                throw new NoSuchElementException();
 
-        public void remove() {
+            return array[i--];
         }
     }
 
