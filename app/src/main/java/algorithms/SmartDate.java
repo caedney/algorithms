@@ -46,6 +46,27 @@ public class SmartDate {
         return y % 4 == 0;
     }
 
+    public String dayOfTheWeek() {
+        int day = day();
+        int month = month();
+        int year = year();
+
+        if (month < 3) {
+            month += 12;
+            year -= 1;
+        }
+
+        int K = year % 100;
+        int J = year / 100;
+
+        int h = (day + (13 * (month + 1)) / 5 + K + (K / 4) + (J / 4) + (5 * J)) % 7; // Zeller’s Congruence
+
+        String[] days = { "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" };
+        int index = (h + 5) % 7;
+
+        return days[index];
+    }
+
     @Override
     public String toString() {
         return day() + "/" + month() + "/" + year();
