@@ -44,6 +44,13 @@ public class Stack<Item> implements Iterable<Item> {
         return size;
     }
 
+    public Item peek() {
+        if (isEmpty())
+            throw new NoSuchElementException("Stack underflow");
+
+        return head.item;
+    }
+
     public void push(Item item) {
         Node<Item> oldHead = head;
         head = new Node<Item>(item, oldHead);
