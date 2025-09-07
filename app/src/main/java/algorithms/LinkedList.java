@@ -127,6 +127,27 @@ public class LinkedList<Item> implements Iterable<Item> {
         return false;
     }
 
+    public int max() {
+        if (head.item instanceof Integer) {
+            if (isEmpty())
+                return 0;
+
+            int maxVal = (Integer) head.item;
+            Node<Item> current = head.next;
+
+            while (current != null) {
+                if ((Integer) current.item > maxVal)
+                    maxVal = (Integer) current.item;
+
+                current = current.next;
+            }
+
+            return maxVal;
+        }
+
+        return 0;
+    }
+
     public String toString() {
         StringJoiner joiner = new StringJoiner(", ", "[", "]");
 
