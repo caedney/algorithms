@@ -1,18 +1,20 @@
 package algorithms;
 
+import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
-import java.util.StringJoiner;
 
 import edu.princeton.cs.algs4.StdOut;
 
-public class Stack<Item> implements Iterable<Item> {
+public class StackFailFast<Item> implements Iterable<Item> {
     private Node<Item> head;
     private int size;
+    private int modificationCounter;
 
-    public Stack() {
+    public StackFailFast() {
         head = null;
         size = 0;
+        modificationCounter = 0;
     }
 
     private static class Node<Item> {
@@ -37,6 +39,7 @@ public class Stack<Item> implements Iterable<Item> {
         Node<Item> oldHead = head;
         head = new Node<Item>(item, oldHead);
 
+        modificationCounter++;
         size++;
     }
 
@@ -46,6 +49,8 @@ public class Stack<Item> implements Iterable<Item> {
 
         Item item = head.item; // save item to return
         head = head.next; // delete head node
+
+        modificationCounter++;
         size--;
 
         return item; // return the saved item
@@ -75,16 +80,28 @@ public class Stack<Item> implements Iterable<Item> {
 
     private class StackIterator implements Iterator<Item> {
         private Node<Item> current;
+        private int count;
 
         public StackIterator(Node<Item> head) {
             current = head;
+            count = modificationCounter;
+        }
+
+        public void checkComodification() {
+            if (count != modificationCounter) {
+                throw new ConcurrentModificationException();
+            }
         }
 
         public boolean hasNext() {
+            checkComodification();
+
             return current != null;
         }
 
         public Item next() {
+            checkComodification();
+
             if (!hasNext())
                 throw new NoSuchElementException();
 
@@ -96,20 +113,25 @@ public class Stack<Item> implements Iterable<Item> {
     }
 
     public static void main(String[] args) {
-        Stack<String> stack = new Stack<>();
+        StackFailFast<String> stack = new StackFailFast<>();
         stack.push("A");
         stack.push("B");
         stack.push("C");
+
+        StdOut.println("Iterating over stack...");
+        var iterator = stack.iterator();
+        StdOut.println(iterator.next()); // C
+        StdOut.println(iterator.next()); // B
+
+        // Modify stack during iteration
+        StdOut.println("Pushing new element...");
         stack.push("D");
-        stack.push("E");
-        stack.push("F");
-        stack.pop();
-        stack.pop();
 
-        StringJoiner joiner = new StringJoiner(", ", "[", "]");
-        for (String value : stack)
-            joiner.add(String.valueOf(value));
-
-        StdOut.println(joiner.toString()); // [D, C, B, A]
+        try {
+            // Next call should fail
+            StdOut.println(iterator.next());
+        } catch (ConcurrentModificationException e) {
+            StdOut.println("Caught expected ConcurrentModificationException!");
+        }
     }
 }
