@@ -81,6 +81,24 @@ public class LinkedList<Item> implements Iterable<Item> {
         size--;
     }
 
+    public void remove(String key) {
+        while (head != null && head.item.equals(key)) {
+            head = head.next;
+            size--;
+        }
+
+        Node<Item> current = head;
+
+        while (current != null && current.next != null) {
+            if (current.next.item.equals(key)) {
+                current.next = current.next.next;
+                size--;
+            } else {
+                current = current.next;
+            }
+        }
+    }
+
     public void delete(int k) {
         if (k <= 0 || k > size)
             throw new ArrayIndexOutOfBoundsException("No item found");
