@@ -1,6 +1,7 @@
 package algorithms;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
@@ -35,6 +36,18 @@ public class Stack<Item> implements Iterable<Item> {
         first = first.next;
         N--;
         return item;
+    }
+
+    /**
+     * Returns (but does not remove) the item most recently added to this stack.
+     *
+     * @return the item most recently added to this stack
+     * @throws NoSuchElementException if this stack is empty
+     */
+    public Item peek() {
+        if (isEmpty())
+            throw new NoSuchElementException("Stack underflow");
+        return first.item;
     }
 
     public Iterator<Item> iterator() {
