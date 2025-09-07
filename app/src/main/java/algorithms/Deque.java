@@ -2,28 +2,31 @@ package algorithms;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.StringJoiner;
+
+import edu.princeton.cs.algs4.StdOut;
 
 public class Deque<Item> implements Iterable<Item> {
+    private Node<Item> first;
+    private Node<Item> last;
     private int size;
-    private Node first;
-    private Node last;
 
-    class Node {
+    public Deque() {
+        first = null;
+        last = null;
+        size = 0;
+    }
+
+    private static class Node<Item> {
         Item item;
-        Node prev;
-        Node next;
+        Node<Item> prev;
+        Node<Item> next;
 
-        Node(Item item, Node prev, Node next) {
+        Node(Item item, Node<Item> prev, Node<Item> next) {
             this.item = item;
             this.prev = prev;
             this.next = next;
         }
-    }
-
-    public Deque() {
-        size = 0;
-        first = null;
-        last = null;
     }
 
     public boolean isEmpty() {
@@ -34,20 +37,27 @@ public class Deque<Item> implements Iterable<Item> {
         return size;
     }
 
-    public Item peek() {
+    public Item peekLeft() {
         if (isEmpty())
             throw new NoSuchElementException("Deque underflow");
 
         return first.item;
     }
 
+    public Item peekRight() {
+        if (isEmpty())
+            throw new NoSuchElementException("Deque underflow");
+
+        return last.item;
+    }
+
     public void pushLeft(Item item) {
         if (isEmpty()) {
-            first = new Node(item, null, null);
+            first = new Node<Item>(item, null, null);
             last = first;
         } else {
-            Node oldFirst = first;
-            first = new Node(item, null, oldFirst);
+            Node<Item> oldFirst = first;
+            first = new Node<Item>(item, null, oldFirst);
             oldFirst.prev = first;
         }
 
@@ -56,11 +66,11 @@ public class Deque<Item> implements Iterable<Item> {
 
     public void pushRight(Item item) {
         if (isEmpty()) {
-            last = new Node(item, null, null);
+            last = new Node<Item>(item, null, null);
             first = last;
         } else {
-            Node oldLast = last;
-            last = new Node(item, oldLast, null);
+            Node<Item> oldLast = last;
+            last = new Node<Item>(item, oldLast, null);
             oldLast.next = last;
         }
 
@@ -75,9 +85,9 @@ public class Deque<Item> implements Iterable<Item> {
         return removeNode(last);
     }
 
-    private Item removeNode(Node node) {
+    private Item removeNode(Node<Item> node) {
         if (isEmpty())
-            throw new IllegalStateException("List is empty, cannot access item");
+            throw new NoSuchElementException("Deque underflow");
 
         if (size == 1) {
             first = null;
@@ -99,11 +109,11 @@ public class Deque<Item> implements Iterable<Item> {
     }
 
     public Iterator<Item> iterator() {
-        return new LinkedIterator();
+        return new DequeIterator();
     }
 
-    private class LinkedIterator implements Iterator<Item> {
-        private Node current = first;
+    private class DequeIterator implements Iterator<Item> {
+        private Node<Item> current = first;
 
         public boolean hasNext() {
             return current != null;
@@ -118,5 +128,39 @@ public class Deque<Item> implements Iterable<Item> {
 
             return item;
         }
+    }
+
+    public static void main(String[] args) {
+        Deque<String> d = new Deque<>();
+        d.pushLeft("A");
+        d.pushLeft("B");
+        d.pushLeft("C");
+        d.pushLeft("D");
+        d.pushLeft("E");
+        d.pushLeft("F");
+        d.popLeft();
+        d.popLeft();
+
+        StringJoiner joiner = new StringJoiner(", ", "[", "]");
+        for (String value : d)
+            joiner.add(String.valueOf(value));
+
+        StdOut.println(joiner.toString()); // [D, C, B, A]
+
+        Deque<String> e = new Deque<>();
+        e.pushRight("A");
+        e.pushRight("B");
+        e.pushRight("C");
+        e.pushRight("D");
+        e.pushRight("E");
+        e.pushRight("F");
+        e.popRight();
+        e.popRight();
+
+        joiner = new StringJoiner(", ", "[", "]");
+        for (String value : e)
+            joiner.add(String.valueOf(value));
+
+        StdOut.println(joiner.toString()); // [A, B, C, D]
     }
 }

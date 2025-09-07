@@ -2,6 +2,9 @@ package algorithms;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.StringJoiner;
+
+import edu.princeton.cs.algs4.StdOut;
 
 @SuppressWarnings("unchecked")
 public class ResizingArrayDeque<Item> implements Iterable<Item> {
@@ -93,10 +96,10 @@ public class ResizingArrayDeque<Item> implements Iterable<Item> {
     }
 
     public Iterator<Item> iterator() {
-        return new ArrayIterator();
+        return new ResizingArrayDequeIterator();
     }
 
-    private class ArrayIterator implements Iterator<Item> {
+    private class ResizingArrayDequeIterator implements Iterator<Item> {
         private int i = 0;
 
         public boolean hasNext() {
@@ -109,5 +112,39 @@ public class ResizingArrayDeque<Item> implements Iterable<Item> {
 
             return array[i++];
         }
+    }
+
+    public static void main(String[] args) {
+        Deque<String> d = new Deque<>();
+        d.pushLeft("A");
+        d.pushLeft("B");
+        d.pushLeft("C");
+        d.pushLeft("D");
+        d.pushLeft("E");
+        d.pushLeft("F");
+        d.popLeft();
+        d.popLeft();
+
+        StringJoiner joiner = new StringJoiner(", ", "[", "]");
+        for (String value : d)
+            joiner.add(String.valueOf(value));
+
+        StdOut.println(joiner.toString()); // [D, C, B, A]
+
+        Deque<String> e = new Deque<>();
+        e.pushRight("A");
+        e.pushRight("B");
+        e.pushRight("C");
+        e.pushRight("D");
+        e.pushRight("E");
+        e.pushRight("F");
+        e.popRight();
+        e.popRight();
+
+        joiner = new StringJoiner(", ", "[", "]");
+        for (String value : e)
+            joiner.add(String.valueOf(value));
+
+        StdOut.println(joiner.toString()); // [A, B, C, D]
     }
 }
