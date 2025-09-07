@@ -30,6 +30,19 @@ public class Transaction {
         return amount;
     }
 
+    public boolean equals(Object other) {
+        if (other == this)
+            return true;
+        if (other == null)
+            return false;
+        if (other.getClass() != this.getClass())
+            return false;
+
+        Transaction that = (Transaction) other;
+
+        return (this.amount == that.amount) && (this.who.equals(that.who)) && (this.when.equals(that.when));
+    }
+
     @Override
     public String toString() {
         return String.format("%-10s %10s %8.2f", who, when, amount);
