@@ -74,21 +74,19 @@ public class RandomQueue<Item> implements Iterable<Item> {
     }
 
     private class RandomQueueIterator implements Iterator<Item> {
-        private int index;
-        private final Item[] copy;
+        private final Item[] shuffled = (Item[]) new Object[size];
+        private int index = size;
 
         public RandomQueueIterator() {
-            index = size;
-            copy = (Item[]) new Object[size];
+            for (int j = 0; j < size; j++)
+                shuffled[j] = array[j];
 
-            for (int i = 0; i < size; i++)
-                copy[i] = array[index];
-
-            for (int i = 0; i < size; i++) {
-                int x = random.nextInt(i + 1);
-                Item temp = copy[i];
-                copy[i] = copy[x];
-                copy[x] = temp;
+            // Fisher–Yates shuffle
+            for (int j = size - 1; j > 0; j--) {
+                int x = random.nextInt(j + 1);
+                Item temp = shuffled[j];
+                shuffled[j] = shuffled[x];
+                shuffled[x] = temp;
             }
         }
 
@@ -100,7 +98,7 @@ public class RandomQueue<Item> implements Iterable<Item> {
             if (!hasNext())
                 throw new NoSuchElementException();
 
-            return copy[--index];
+            return shuffled[--index];
         }
     }
 }
