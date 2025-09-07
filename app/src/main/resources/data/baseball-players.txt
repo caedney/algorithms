@@ -1,0 +1,8 @@
+Alex 66 27
+Bob 44 94
+Charlie 59 53
+David 91 97
+Edward 61 2
+Frank 42 97
+Graham 11 32
+Hank 63 46
