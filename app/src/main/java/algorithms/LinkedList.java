@@ -79,6 +79,23 @@ public class LinkedList<Item> implements Iterable<Item> {
         }
     }
 
+    public void remove(String key) {
+        // Remove nodes from the beginning if they match
+        while (first != null && first.item.equals(key)) {
+            first = first.next;
+        }
+
+        // Traverse and remove matching nodes
+        Node current = first;
+        while (current != null && current.next != null) {
+            if (current.next.item.equals(key)) {
+                current.next = current.next.next; // skip node
+            } else {
+                current = current.next;
+            }
+        }
+    }
+
     public Iterator<Item> iterator() {
         return new LinkedIterator();
     }
