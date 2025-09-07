@@ -4,40 +4,45 @@ import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
 
 public class FixedCapacityStackOfStrings {
-    private String[] a;
-    private int N;
+    private String[] array;
+    private int size;
 
-    public FixedCapacityStackOfStrings(int cap) {
-        a = new String[cap];
+    public FixedCapacityStackOfStrings(int capacity) {
+        this.array = new String[capacity];
+        this.size = 0;
     }
 
     public boolean isEmpty() {
-        return N == 0;
+        return size == 0;
+    }
+
+    public boolean isFull() {
+        return size == array.length;
     }
 
     public int size() {
-        return N;
+        return size;
     }
 
     public void push(String item) {
-        a[N++] = item;
+        array[size++] = item;
     }
 
     public String pop() {
-        return a[--N];
+        return array[--size];
     }
 
     public static void main(String[] args) {
-        FixedCapacityStackOfStrings s = new FixedCapacityStackOfStrings(100);
+        FixedCapacityStackOfStrings stack = new FixedCapacityStackOfStrings(100);
 
         while (!StdIn.isEmpty()) {
             String item = StdIn.readString();
             if (!item.equals("-")) {
-                s.push(item);
-            } else if (!s.isEmpty())
-                StdOut.print(s.pop() + " ");
+                stack.push(item);
+            } else if (!stack.isEmpty())
+                StdOut.print(stack.pop() + " ");
         }
 
-        StdOut.println("(" + s.size() + " left on stack)");
+        StdOut.println("(" + stack.size() + " left on stack)");
     }
 }
