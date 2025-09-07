@@ -81,6 +81,26 @@ public class LinkedList<Item> implements Iterable<Item> {
         size--;
     }
 
+    public void delete(int k) {
+        if (k <= 0 || k > size)
+            throw new ArrayIndexOutOfBoundsException("No item found");
+
+        if (isEmpty())
+            throw new NoSuchElementException("List is empty, cannot access item");
+
+        if (k == 1) {
+            head = head.next;
+        } else {
+            Node<Item> current = head;
+
+            for (int i = 1; current != null && i < k - 1; i++)
+                current = current.next;
+
+            if (current != null)
+                current.next = current.next.next;
+        }
+    }
+
     public String toString() {
         StringJoiner joiner = new StringJoiner(", ", "[", "]");
 
