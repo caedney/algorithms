@@ -10,6 +10,26 @@ public class Stack<Item> implements Iterable<Item> {
     private Node<Item> head;
     private int size;
 
+    public Stack() {
+        this.head = null;
+        this.size = 0;
+    }
+
+    public Stack(Stack<Item> stack) {
+        this(); // initialize empty stack
+
+        Stack<Item> temp = new Stack<>();
+
+        while (!stack.isEmpty()) {
+            Item item = stack.pop(); // remove from stack
+            this.push(item); // copy into this
+            temp.push(item); // keep backup
+        }
+
+        while (!temp.isEmpty())
+            stack.push(temp.pop()); // restore stack
+    }
+
     private static class Node<Item> {
         private Item item;
         private Node<Item> next;
@@ -18,11 +38,6 @@ public class Stack<Item> implements Iterable<Item> {
             this.item = item;
             this.next = next;
         }
-    }
-
-    public Stack() {
-        head = null;
-        size = 0;
     }
 
     public boolean isEmpty() {
@@ -59,14 +74,12 @@ public class Stack<Item> implements Iterable<Item> {
     }
 
     public String toString() {
-        StringBuilder s = new StringBuilder();
+        StringJoiner joiner = new StringJoiner(", ", "[", "]");
 
-        for (Item item : this) {
-            s.append(item);
-            s.append(' ');
-        }
+        for (Item value : this)
+            joiner.add(String.valueOf(value));
 
-        return s.toString();
+        return joiner.toString();
     }
 
     public Iterator<Item> iterator() {
@@ -76,8 +89,8 @@ public class Stack<Item> implements Iterable<Item> {
     private class StackIterator implements Iterator<Item> {
         private Node<Item> current;
 
-        public StackIterator(Node<Item> head) {
-            current = head;
+        public StackIterator(Node<Item> current) {
+            this.current = current;
         }
 
         public boolean hasNext() {
@@ -96,16 +109,16 @@ public class Stack<Item> implements Iterable<Item> {
     }
 
     public static void main(String[] args) {
-        Stack<String> stack = new Stack<String>();
+        Stack<String> stack = new Stack<>();
+        stack.push("A");
+        stack.push("B");
+        stack.push("C");
+        stack.push("D");
+        stack.push("E");
+        stack.push("F");
+        stack.pop();
+        stack.pop();
 
-        while (!StdIn.isEmpty()) {
-            String item = StdIn.readString();
-            if (!item.equals("-"))
-                stack.push(item);
-            else if (!stack.isEmpty())
-                StdOut.print(stack.pop() + " ");
-        }
-
-        StdOut.println("(" + stack.size() + " left on stack)");
+        StdOut.println(stack.toString()); // [D, C, B, A]
     }
 }
