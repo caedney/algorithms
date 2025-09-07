@@ -12,6 +12,7 @@ package algorithms;
 import java.util.Arrays;
 import java.util.Comparator;
 
+import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdOut;
 
 /**
@@ -92,6 +93,23 @@ public class Transaction implements Comparable<Transaction> {
      */
     public double amount() {
         return amount;
+    }
+
+    public static Transaction[] readTransactions(String name) {
+        In in = new In(name);
+        Queue<Transaction> q = new Queue<Transaction>();
+
+        while (!in.isEmpty()) {
+            q.enqueue(new Transaction(in.readLine()));
+        }
+
+        int n = q.size();
+        Transaction[] transactions = new Transaction[n];
+
+        for (int i = 0; i < n; i++)
+            transactions[i] = q.dequeue();
+
+        return transactions;
     }
 
     /**
