@@ -7,119 +7,86 @@ import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
 
 public class Queue<Item> implements Iterable<Item> {
-    private Node<Item> first; // beginning of queue
-    private Node<Item> last; // end of queue
-    private int n; // number of elements on queue
+    private Node<Item> front;
+    private Node<Item> back;
+    private int size;
 
-    // helper linked list class
+    public Queue() {
+        front = null;
+        back = null;
+        size = 0;
+    }
+
     private static class Node<Item> {
         private Item item;
         private Node<Item> next;
+
+        Node(Item item, Node<Item> next) {
+            this.item = item;
+            this.next = next;
+        }
     }
 
-    /**
-     * Initializes an empty queue.
-     */
-    public Queue() {
-        first = null;
-        last = null;
-        n = 0;
-    }
-
-    /**
-     * Returns true if this queue is empty.
-     *
-     * @return {@code true} if this queue is empty; {@code false} otherwise
-     */
     public boolean isEmpty() {
-        return first == null;
+        return size == 0;
     }
 
-    /**
-     * Returns the number of items in this queue.
-     *
-     * @return the number of items in this queue
-     */
     public int size() {
-        return n;
+        return size;
     }
 
-    /**
-     * Returns the item least recently added to this queue.
-     *
-     * @return the item least recently added to this queue
-     * @throws NoSuchElementException if this queue is empty
-     */
     public Item peek() {
         if (isEmpty())
             throw new NoSuchElementException("Queue underflow");
-        return first.item;
+
+        return front.item;
     }
 
-    /**
-     * Adds the item to this queue.
-     *
-     * @param item the item to add
-     */
     public void enqueue(Item item) {
-        Node<Item> oldlast = last;
-        last = new Node<Item>();
-        last.item = item;
-        last.next = null;
+        Node<Item> oldBack = back;
+        back = new Node<Item>(item, null);
 
         if (isEmpty())
-            first = last;
+            front = back;
         else
-            oldlast.next = last;
+            oldBack.next = back;
 
-        n++;
+        size++;
     }
 
-    /**
-     * Removes and returns the item on this queue that was least recently added.
-     *
-     * @return the item on this queue that was least recently added
-     * @throws NoSuchElementException if this queue is empty
-     */
     public Item dequeue() {
         if (isEmpty())
             throw new NoSuchElementException("Queue underflow");
-        Item item = first.item;
-        first = first.next;
-        n--;
+
+        Item item = front.item;
+        front = front.next;
+        size--;
+
         if (isEmpty())
-            last = null; // to avoid loitering
+            back = null; // avoid loitering
+
         return item;
     }
 
-    /**
-     * Returns a string representation of this queue.
-     *
-     * @return the sequence of items in FIFO order, separated by spaces
-     */
     public String toString() {
         StringBuilder s = new StringBuilder();
+
         for (Item item : this) {
             s.append(item);
             s.append(' ');
         }
+
         return s.toString();
     }
 
-    /**
-     * Returns an iterator that iterates over the items in this queue in FIFO order.
-     *
-     * @return an iterator that iterates over the items in this queue in FIFO order
-     */
     public Iterator<Item> iterator() {
-        return new LinkedIterator(first);
+        return new QueueIterator(front);
     }
 
-    // a linked-list iterator
-    private class LinkedIterator implements Iterator<Item> {
+    private class QueueIterator implements Iterator<Item> {
         private Node<Item> current;
 
-        public LinkedIterator(Node<Item> first) {
+        public QueueIterator(Node<Item> first) {
             current = first;
         }
 
