@@ -43,6 +43,23 @@ public class Transaction {
         return (this.amount == that.amount) && (this.who.equals(that.who)) && (this.when.equals(that.when));
     }
 
+    public static Transaction[] readTransactions(String name) {
+        In in = new In(name);
+        Queue<Transaction> q = new Queue<Transaction>();
+
+        while (!in.isEmpty()) {
+            q.enqueue(new Transaction(in.readLine()));
+        }
+
+        int n = q.size();
+        Transaction[] transactions = new Transaction[n];
+
+        for (int i = 0; i < n; i++)
+            transactions[i] = q.dequeue();
+
+        return transactions;
+    }
+
     @Override
     public String toString() {
         return String.format("%-10s %10s %8.2f", who, when, amount);
