@@ -40,6 +40,17 @@ public class ShuffleTest {
         }
     }
 
+    public static void badShuffle(int[] a) {
+        int N = a.length;
+
+        for (int i = 0; i < a.length; i++) {
+            int r = StdRandom.uniformInt(N); // random between 0 and N-1 (WRONG!)
+            int temp = a[i];
+            a[i] = a[r];
+            a[r] = temp;
+        }
+    }
+
     public static void main(String[] args) {
         int M = 5; // size of array
         int N = 1000; // number of trials
