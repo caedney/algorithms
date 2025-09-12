@@ -2,13 +2,18 @@ package algorithms;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.StringJoiner;
 
-import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
 
-public class Stack<Item> implements Iterable<Item> {
+public class LinkedStack<Item> implements Iterable<Item> {
     private Node<Item> head;
     private int size;
+
+    public LinkedStack() {
+        this.head = null;
+        this.size = 0;
+    }
 
     private static class Node<Item> {
         private Item item;
@@ -18,11 +23,6 @@ public class Stack<Item> implements Iterable<Item> {
             this.item = item;
             this.next = next;
         }
-    }
-
-    public Stack() {
-        head = null;
-        size = 0;
     }
 
     public boolean isEmpty() {
@@ -44,11 +44,11 @@ public class Stack<Item> implements Iterable<Item> {
         if (isEmpty())
             throw new NoSuchElementException("Stack underflow");
 
-        Item item = head.item; // save item to return
-        head = head.next; // delete head node
+        Item item = head.item;
+        head = head.next;
         size--;
 
-        return item; // return the saved item
+        return item;
     }
 
     public Item peek() {
@@ -59,25 +59,23 @@ public class Stack<Item> implements Iterable<Item> {
     }
 
     public String toString() {
-        StringBuilder s = new StringBuilder();
+        StringJoiner joiner = new StringJoiner(", ", "[", "]");
 
-        for (Item item : this) {
-            s.append(item);
-            s.append(' ');
-        }
+        for (Item value : this)
+            joiner.add(String.valueOf(value));
 
-        return s.toString();
+        return joiner.toString();
     }
 
     public Iterator<Item> iterator() {
-        return new StackIterator(head);
+        return new LinkedStackIterator(head);
     }
 
-    private class StackIterator implements Iterator<Item> {
+    private class LinkedStackIterator implements Iterator<Item> {
         private Node<Item> current;
 
-        public StackIterator(Node<Item> head) {
-            current = head;
+        public LinkedStackIterator(Node<Item> current) {
+            this.current = current;
         }
 
         public boolean hasNext() {
@@ -96,16 +94,16 @@ public class Stack<Item> implements Iterable<Item> {
     }
 
     public static void main(String[] args) {
-        Stack<String> stack = new Stack<String>();
+        Stack<String> stack = new Stack<>();
+        stack.push("A");
+        stack.push("B");
+        stack.push("C");
+        stack.push("D");
+        stack.push("E");
+        stack.push("F");
+        stack.pop();
+        stack.pop();
 
-        while (!StdIn.isEmpty()) {
-            String item = StdIn.readString();
-            if (!item.equals("-"))
-                stack.push(item);
-            else if (!stack.isEmpty())
-                StdOut.print(stack.pop() + " ");
-        }
-
-        StdOut.println("(" + stack.size() + " left on stack)");
+        StdOut.println(stack.toString()); // [D, C, B, A]
     }
 }

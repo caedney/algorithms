@@ -1,72 +1,140 @@
 package algorithms;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
 
 public class Queue<Item> implements Iterable<Item> {
-    private Node first;
-    private Node last;
-    private int N;
+    private Node<Item> first; // beginning of queue
+    private Node<Item> last; // end of queue
+    private int n; // number of elements on queue
 
-    private class Node {
-        Item item;
-        Node next;
+    // helper linked list class
+    private static class Node<Item> {
+        private Item item;
+        private Node<Item> next;
     }
 
+    /**
+     * Initializes an empty queue.
+     */
+    public Queue() {
+        first = null;
+        last = null;
+        n = 0;
+    }
+
+    /**
+     * Returns true if this queue is empty.
+     *
+     * @return {@code true} if this queue is empty; {@code false} otherwise
+     */
     public boolean isEmpty() {
-        return N == 0;
+        return first == null;
     }
 
+    /**
+     * Returns the number of items in this queue.
+     *
+     * @return the number of items in this queue
+     */
     public int size() {
-        return N;
+        return n;
     }
 
+    /**
+     * Returns the item least recently added to this queue.
+     *
+     * @return the item least recently added to this queue
+     * @throws NoSuchElementException if this queue is empty
+     */
+    public Item peek() {
+        if (isEmpty())
+            throw new NoSuchElementException("Queue underflow");
+        return first.item;
+    }
+
+    /**
+     * Adds the item to this queue.
+     *
+     * @param item the item to add
+     */
     public void enqueue(Item item) {
-        Node oldLast = last;
-        last = new Node();
+        Node<Item> oldlast = last;
+        last = new Node<Item>();
         last.item = item;
         last.next = null;
 
         if (isEmpty())
             first = last;
         else
-            oldLast.next = last;
+            oldlast.next = last;
 
-        N++;
+        n++;
     }
 
+    /**
+     * Removes and returns the item on this queue that was least recently added.
+     *
+     * @return the item on this queue that was least recently added
+     * @throws NoSuchElementException if this queue is empty
+     */
     public Item dequeue() {
+        if (isEmpty())
+            throw new NoSuchElementException("Queue underflow");
         Item item = first.item;
         first = first.next;
-
+        n--;
         if (isEmpty())
-            last = null;
-
-        N--;
-
+            last = null; // to avoid loitering
         return item;
     }
 
-    public Iterator<Item> iterator() {
-        return new ListIterator();
+    /**
+     * Returns a string representation of this queue.
+     *
+     * @return the sequence of items in FIFO order, separated by spaces
+     */
+    public String toString() {
+        StringBuilder s = new StringBuilder();
+        for (Item item : this) {
+            s.append(item);
+            s.append(' ');
+        }
+        return s.toString();
     }
 
-    private class ListIterator implements Iterator<Item> {
-        private Node current = first;
+    /**
+     * Returns an iterator that iterates over the items in this queue in FIFO order.
+     *
+     * @return an iterator that iterates over the items in this queue in FIFO order
+     */
+    public Iterator<Item> iterator() {
+        return new LinkedIterator(first);
+    }
+
+    // a linked-list iterator
+    private class LinkedIterator implements Iterator<Item> {
+        private Node<Item> current;
+
+        public LinkedIterator(Node<Item> first) {
+            current = first;
+        }
 
         public boolean hasNext() {
             return current != null;
         }
 
         public Item next() {
+            if (!hasNext())
+                throw new NoSuchElementException();
+
             Item item = current.item;
             current = current.next;
-            return item;
-        }
 
-        public void remove() {
+            return item;
         }
     }
 
@@ -82,9 +150,5 @@ public class Queue<Item> implements Iterable<Item> {
         }
 
         StdOut.println("(" + queue.size() + " left on queue)");
-
-        for (String str : queue) {
-            StdOut.println(str);
-        }
     }
 }
