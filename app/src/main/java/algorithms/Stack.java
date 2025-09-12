@@ -7,67 +7,91 @@ import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
 
 public class Stack<Item> implements Iterable<Item> {
-    private Node first;
-    private int N;
+    private Node<Item> head;
+    private int size;
 
-    private class Node {
-        Item item;
-        Node next;
+    private static class Node<Item> {
+        private Item item;
+        private Node<Item> next;
+
+        Node(Item item, Node<Item> next) {
+            this.item = item;
+            this.next = next;
+        }
+    }
+
+    public Stack() {
+        head = null;
+        size = 0;
     }
 
     public boolean isEmpty() {
-        return N == 0;
+        return size == 0;
     }
 
     public int size() {
-        return N;
+        return size;
     }
 
     public void push(Item item) {
-        Node oldFirst = first;
-        first = new Node();
-        first.item = item;
-        first.next = oldFirst;
-        N++;
+        Node<Item> oldHead = head;
+        head = new Node<Item>(item, oldHead);
+
+        size++;
     }
 
     public Item pop() {
-        Item item = first.item;
-        first = first.next;
-        N--;
-        return item;
+        if (isEmpty())
+            throw new NoSuchElementException("Stack underflow");
+
+        Item item = head.item; // save item to return
+        head = head.next; // delete head node
+        size--;
+
+        return item; // return the saved item
     }
 
-    /**
-     * Returns (but does not remove) the item most recently added to this stack.
-     *
-     * @return the item most recently added to this stack
-     * @throws NoSuchElementException if this stack is empty
-     */
     public Item peek() {
         if (isEmpty())
             throw new NoSuchElementException("Stack underflow");
-        return first.item;
+
+        return head.item;
+    }
+
+    public String toString() {
+        StringBuilder s = new StringBuilder();
+
+        for (Item item : this) {
+            s.append(item);
+            s.append(' ');
+        }
+
+        return s.toString();
     }
 
     public Iterator<Item> iterator() {
-        return new ListIterator();
+        return new StackIterator(head);
     }
 
-    private class ListIterator implements Iterator<Item> {
-        private Node current = first;
+    private class StackIterator implements Iterator<Item> {
+        private Node<Item> current;
+
+        public StackIterator(Node<Item> head) {
+            current = head;
+        }
 
         public boolean hasNext() {
             return current != null;
         }
 
         public Item next() {
+            if (!hasNext())
+                throw new NoSuchElementException();
+
             Item item = current.item;
             current = current.next;
-            return item;
-        }
 
-        public void remove() {
+            return item;
         }
     }
 
@@ -83,9 +107,5 @@ public class Stack<Item> implements Iterable<Item> {
         }
 
         StdOut.println("(" + stack.size() + " left on stack)");
-
-        for (String str : stack) {
-            StdOut.println(str);
-        }
     }
 }
