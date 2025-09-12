@@ -6,27 +6,29 @@ import java.util.NoSuchElementException;
 import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
 
-public class Stack<Item> implements Iterable<Item> {
-    private Node<Item> first; // top of stack
+public class LinkedStack<Item> implements Iterable<Item> {
     private int n; // size of the stack
+    private Node first; // top of stack
 
     // helper linked list class
-    private static class Node<Item> {
+    private class Node {
         private Item item;
-        private Node<Item> next;
+        private Node next;
     }
 
     /**
      * Initializes an empty stack.
      */
-    public Stack() {
+    public LinkedStack() {
         first = null;
         n = 0;
+
+        assert check();
     }
 
     /**
-     * Returns true if this stack is empty.
-     *
+     * Is this stack empty?
+     * 
      * @return true if this stack is empty; false otherwise
      */
     public boolean isEmpty() {
@@ -34,9 +36,9 @@ public class Stack<Item> implements Iterable<Item> {
     }
 
     /**
-     * Returns the number of items in this stack.
-     *
-     * @return the number of items in this stack
+     * Returns the number of items in the stack.
+     * 
+     * @return the number of items in the stack
      */
     public int size() {
         return n;
@@ -44,100 +46,137 @@ public class Stack<Item> implements Iterable<Item> {
 
     /**
      * Adds the item to this stack.
-     *
+     * 
      * @param item the item to add
      */
     public void push(Item item) {
-        Node<Item> oldfirst = first;
-        first = new Node<Item>();
+        Node oldfirst = first;
+        first = new Node();
         first.item = item;
         first.next = oldfirst;
+
         n++;
+
+        assert check();
     }
 
     /**
      * Removes and returns the item most recently added to this stack.
-     *
+     * 
      * @return the item most recently added
-     * @throws NoSuchElementException if this stack is empty
+     * @throws java.util.NoSuchElementException if this stack is empty
      */
     public Item pop() {
         if (isEmpty())
             throw new NoSuchElementException("Stack underflow");
+
         Item item = first.item; // save item to return
         first = first.next; // delete first node
         n--;
+
+        assert check();
+
         return item; // return the saved item
     }
 
     /**
      * Returns (but does not remove) the item most recently added to this stack.
-     *
+     * 
      * @return the item most recently added to this stack
-     * @throws NoSuchElementException if this stack is empty
+     * @throws java.util.NoSuchElementException if this stack is empty
      */
     public Item peek() {
         if (isEmpty())
             throw new NoSuchElementException("Stack underflow");
+
         return first.item;
     }
 
     /**
      * Returns a string representation of this stack.
-     *
-     * @return the sequence of items in this stack in LIFO order, separated by
-     *         spaces
+     * 
+     * @return the sequence of items in the stack in LIFO order, separated by spaces
      */
     public String toString() {
         StringBuilder s = new StringBuilder();
-        for (Item item : this) {
-            s.append(item);
-            s.append(' ');
-        }
+
+        for (Item item : this)
+            s.append(item + " ");
+
         return s.toString();
     }
 
     /**
      * Returns an iterator to this stack that iterates through the items in LIFO
      * order.
-     *
+     * 
      * @return an iterator to this stack that iterates through the items in LIFO
-     *         order
+     *         order.
      */
     public Iterator<Item> iterator() {
-        return new LinkedIterator(first);
+        return new LinkedIterator();
     }
 
-    // the iterator
+    // a linked-list iterator
     private class LinkedIterator implements Iterator<Item> {
-        private Node<Item> current;
+        private Node current = first;
 
-        public LinkedIterator(Node<Item> first) {
-            current = first;
-        }
-
-        // is there a next item?
         public boolean hasNext() {
             return current != null;
         }
 
-        // returns the next item
         public Item next() {
             if (!hasNext())
                 throw new NoSuchElementException();
+
             Item item = current.item;
             current = current.next;
+
             return item;
         }
     }
 
+    // check internal invariants
+    private boolean check() {
+
+        // check a few properties of instance variable 'first'
+        if (n < 0) {
+            return false;
+        }
+        if (n == 0) {
+            if (first != null)
+                return false;
+        } else if (n == 1) {
+            if (first == null)
+                return false;
+            if (first.next != null)
+                return false;
+        } else {
+            if (first == null)
+                return false;
+            if (first.next == null)
+                return false;
+        }
+
+        // check internal consistency of instance variable n
+        int numberOfNodes = 0;
+        for (Node x = first; x != null && numberOfNodes <= n; x = x.next)
+            numberOfNodes++;
+
+        if (numberOfNodes != n)
+            return false;
+
+        return true;
+    }
+
     /**
-     * Unit tests the {@code Stack} data type.
+     * Unit tests the {@code LinkedStack} data type.
      *
      * @param args the command-line arguments
      */
     public static void main(String[] args) {
-        Stack<String> stack = new Stack<String>();
+        LinkedStack<String> stack = new LinkedStack<String>();
+
         while (!StdIn.isEmpty()) {
             String item = StdIn.readString();
             if (!item.equals("-"))
@@ -145,6 +184,7 @@ public class Stack<Item> implements Iterable<Item> {
             else if (!stack.isEmpty())
                 StdOut.print(stack.pop() + " ");
         }
+
         StdOut.println("(" + stack.size() + " left on stack)");
     }
 }

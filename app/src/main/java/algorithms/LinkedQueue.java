@@ -6,30 +6,32 @@ import java.util.NoSuchElementException;
 import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
 
-public class Queue<Item> implements Iterable<Item> {
-    private Node<Item> first; // beginning of queue
-    private Node<Item> last; // end of queue
+public class LinkedQueue<Item> implements Iterable<Item> {
     private int n; // number of elements on queue
+    private Node first; // beginning of queue
+    private Node last; // end of queue
 
     // helper linked list class
-    private static class Node<Item> {
+    private class Node {
         private Item item;
-        private Node<Item> next;
+        private Node next;
     }
 
     /**
      * Initializes an empty queue.
      */
-    public Queue() {
+    public LinkedQueue() {
         first = null;
         last = null;
         n = 0;
+
+        assert check();
     }
 
     /**
-     * Returns true if this queue is empty.
-     *
-     * @return {@code true} if this queue is empty; {@code false} otherwise
+     * Is this queue empty?
+     * 
+     * @return true if this queue is empty; false otherwise
      */
     public boolean isEmpty() {
         return first == null;
@@ -37,7 +39,7 @@ public class Queue<Item> implements Iterable<Item> {
 
     /**
      * Returns the number of items in this queue.
-     *
+     * 
      * @return the number of items in this queue
      */
     public int size() {
@@ -46,24 +48,25 @@ public class Queue<Item> implements Iterable<Item> {
 
     /**
      * Returns the item least recently added to this queue.
-     *
+     * 
      * @return the item least recently added to this queue
-     * @throws NoSuchElementException if this queue is empty
+     * @throws java.util.NoSuchElementException if this queue is empty
      */
     public Item peek() {
         if (isEmpty())
             throw new NoSuchElementException("Queue underflow");
+
         return first.item;
     }
 
     /**
      * Adds the item to this queue.
-     *
+     * 
      * @param item the item to add
      */
     public void enqueue(Item item) {
-        Node<Item> oldlast = last;
-        last = new Node<Item>();
+        Node oldlast = last;
+        last = new Node();
         last.item = item;
         last.next = null;
 
@@ -73,55 +76,104 @@ public class Queue<Item> implements Iterable<Item> {
             oldlast.next = last;
 
         n++;
+
+        assert check();
     }
 
     /**
      * Removes and returns the item on this queue that was least recently added.
-     *
+     * 
      * @return the item on this queue that was least recently added
-     * @throws NoSuchElementException if this queue is empty
+     * @throws java.util.NoSuchElementException if this queue is empty
      */
     public Item dequeue() {
         if (isEmpty())
             throw new NoSuchElementException("Queue underflow");
+
         Item item = first.item;
         first = first.next;
         n--;
+
         if (isEmpty())
             last = null; // to avoid loitering
+
+        assert check();
+
         return item;
     }
 
     /**
      * Returns a string representation of this queue.
-     *
+     * 
      * @return the sequence of items in FIFO order, separated by spaces
      */
     public String toString() {
         StringBuilder s = new StringBuilder();
-        for (Item item : this) {
-            s.append(item);
-            s.append(' ');
-        }
+
+        for (Item item : this)
+            s.append(item + " ");
+
         return s.toString();
+    }
+
+    // check internal invariants
+    private boolean check() {
+        if (n < 0) {
+            return false;
+        } else if (n == 0) {
+            if (first != null)
+                return false;
+            if (last != null)
+                return false;
+        } else if (n == 1) {
+            if (first == null || last == null)
+                return false;
+            if (first != last)
+                return false;
+            if (first.next != null)
+                return false;
+        } else {
+            if (first == null || last == null)
+                return false;
+            if (first == last)
+                return false;
+            if (first.next == null)
+                return false;
+            if (last.next != null)
+                return false;
+
+            // check internal consistency of instance variable n
+            int numberOfNodes = 0;
+            for (Node x = first; x != null && numberOfNodes <= n; x = x.next) {
+                numberOfNodes++;
+            }
+            if (numberOfNodes != n)
+                return false;
+
+            // check internal consistency of instance variable last
+            Node lastNode = first;
+            while (lastNode.next != null)
+                lastNode = lastNode.next;
+
+            if (last != lastNode)
+                return false;
+        }
+
+        return true;
     }
 
     /**
      * Returns an iterator that iterates over the items in this queue in FIFO order.
-     *
+     * 
      * @return an iterator that iterates over the items in this queue in FIFO order
      */
     public Iterator<Item> iterator() {
-        return new LinkedIterator(first);
+        return new LinkedIterator();
     }
 
     // a linked-list iterator
     private class LinkedIterator implements Iterator<Item> {
-        private Node<Item> current;
-
-        public LinkedIterator(Node<Item> first) {
-            current = first;
-        }
+        private Node current = first;
 
         public boolean hasNext() {
             return current != null;
@@ -138,8 +190,13 @@ public class Queue<Item> implements Iterable<Item> {
         }
     }
 
+    /**
+     * Unit tests the {@code LinkedQueue} data type.
+     *
+     * @param args the command-line arguments
+     */
     public static void main(String[] args) {
-        Queue<String> queue = new Queue<String>();
+        LinkedQueue<String> queue = new LinkedQueue<String>();
 
         while (!StdIn.isEmpty()) {
             String item = StdIn.readString();
