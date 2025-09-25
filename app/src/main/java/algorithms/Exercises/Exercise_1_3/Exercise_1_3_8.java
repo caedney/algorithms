@@ -1,7 +1,6 @@
 package algorithms.Exercises.Exercise_1_3;
 
 import java.io.ByteArrayInputStream;
-import java.util.StringJoiner;
 
 import algorithms.ResizingArrayStack;
 import edu.princeton.cs.algs4.StdIn;
@@ -20,7 +19,7 @@ import edu.princeton.cs.algs4.StdOut;
  */
 public class Exercise_1_3_8 {
     public static void main(String[] args) {
-        ResizingArrayStack<String> arrayStack = new ResizingArrayStack<String>();
+        ResizingArrayStack<String> stack = new ResizingArrayStack<String>();
 
         String input = "it was - the best - of times - - - it was - the - -";
         System.setIn(new ByteArrayInputStream(input.getBytes()));
@@ -29,17 +28,12 @@ public class Exercise_1_3_8 {
             String item = StdIn.readString();
 
             if (!item.equals("-")) {
-                arrayStack.push(item);
-            } else if (!arrayStack.isEmpty())
-                arrayStack.pop();
+                stack.push(item);
+            } else if (!stack.isEmpty())
+                stack.pop();
         }
 
-        StringJoiner joiner = new StringJoiner(", ", "[", "]");
-        for (String value : arrayStack) {
-            joiner.add(value);
-        }
-
-        StdOut.println(joiner.toString());
-        StdOut.println("capacity: " + arrayStack.capacity());
+        StdOut.println(stack.toString());
+        StdOut.println("capacity: " + stack.capacity());
     }
 }

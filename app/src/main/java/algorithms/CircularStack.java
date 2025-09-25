@@ -11,8 +11,8 @@ public class CircularStack<Item> implements Iterable<Item> {
     private int size;
 
     public CircularStack() {
-        tail = null;
-        size = 0;
+        this.tail = null;
+        this.size = 0;
     }
 
     private static class Node<Item> {
@@ -35,7 +35,7 @@ public class CircularStack<Item> implements Iterable<Item> {
 
     public Item peek() {
         if (isEmpty())
-            throw new RuntimeException("Stack underflow");
+            throw new NoSuchElementException("Stack underflow");
 
         return tail.next.item;
     }
@@ -56,7 +56,7 @@ public class CircularStack<Item> implements Iterable<Item> {
 
     public Item pop() {
         if (isEmpty())
-            throw new RuntimeException("Stack underflow");
+            throw new NoSuchElementException("Stack underflow");
 
         Node<Item> head = tail.next;
 
@@ -71,6 +71,15 @@ public class CircularStack<Item> implements Iterable<Item> {
         return head.item;
     }
 
+    public String toString() {
+        StringJoiner joiner = new StringJoiner(", ", "[", "]");
+
+        for (Item value : this)
+            joiner.add(String.valueOf(value));
+
+        return joiner.toString();
+    }
+
     public Iterator<Item> iterator() {
         return new CircularStackIterator(tail.next);
     }
@@ -79,9 +88,9 @@ public class CircularStack<Item> implements Iterable<Item> {
         private Node<Item> current;
         private int index;
 
-        public CircularStackIterator(Node<Item> tail) {
-            current = tail;
-            index = 0;
+        public CircularStackIterator(Node<Item> current) {
+            this.current = current;
+            this.index = 0;
         }
 
         public boolean hasNext() {
@@ -111,10 +120,6 @@ public class CircularStack<Item> implements Iterable<Item> {
         stack.pop();
         stack.pop();
 
-        StringJoiner joiner = new StringJoiner(", ", "[", "]");
-        for (String value : stack)
-            joiner.add(String.valueOf(value));
-
-        StdOut.println(joiner.toString()); // [D, C, B, A]
+        StdOut.println(stack.toString()); // [D, C, B, A]
     }
 }

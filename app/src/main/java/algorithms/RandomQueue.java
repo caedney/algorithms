@@ -3,6 +3,9 @@ package algorithms;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Random;
+import java.util.StringJoiner;
+
+import edu.princeton.cs.algs4.StdOut;
 
 @SuppressWarnings("unchecked")
 public class RandomQueue<Item> implements Iterable<Item> {
@@ -12,9 +15,9 @@ public class RandomQueue<Item> implements Iterable<Item> {
     private Random random;
 
     public RandomQueue() {
-        array = (Item[]) new Object[INIT_CAPACITY];
-        size = 0;
-        random = new Random();
+        this.array = (Item[]) new Object[INIT_CAPACITY];
+        this.size = 0;
+        this.random = new Random();
     }
 
     public boolean isEmpty() {
@@ -69,15 +72,27 @@ public class RandomQueue<Item> implements Iterable<Item> {
         return item;
     }
 
+    public String toString() {
+        StringJoiner joiner = new StringJoiner(", ", "[", "]");
+
+        for (Item value : this)
+            joiner.add(String.valueOf(value));
+
+        return joiner.toString();
+    }
+
     public Iterator<Item> iterator() {
         return new RandomQueueIterator();
     }
 
     private class RandomQueueIterator implements Iterator<Item> {
-        private final Item[] shuffled = (Item[]) new Object[size];
-        private int index = size;
+        private final Item[] shuffled;
+        private int index;
 
         public RandomQueueIterator() {
+            this.shuffled = (Item[]) new Object[size];
+            this.index = size;
+
             for (int j = 0; j < size; j++)
                 shuffled[j] = array[j];
 
@@ -100,5 +115,17 @@ public class RandomQueue<Item> implements Iterable<Item> {
 
             return shuffled[--index];
         }
+    }
+
+    public static void main(String[] args) {
+        RandomQueue<String> queue = new RandomQueue<String>();
+        queue.enqueue("A");
+        queue.enqueue("B");
+        queue.enqueue("C");
+        queue.enqueue("D");
+        queue.enqueue("E");
+        queue.enqueue("F");
+
+        StdOut.println(queue.toString());
     }
 }

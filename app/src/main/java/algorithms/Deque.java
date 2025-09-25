@@ -7,14 +7,14 @@ import java.util.StringJoiner;
 import edu.princeton.cs.algs4.StdOut;
 
 public class Deque<Item> implements Iterable<Item> {
-    private Node<Item> first;
-    private Node<Item> last;
+    private Node<Item> left;
+    private Node<Item> right;
     private int size;
 
     public Deque() {
-        first = null;
-        last = null;
-        size = 0;
+        this.left = null;
+        this.right = null;
+        this.size = 0;
     }
 
     private static class Node<Item> {
@@ -41,24 +41,24 @@ public class Deque<Item> implements Iterable<Item> {
         if (isEmpty())
             throw new NoSuchElementException("Deque underflow");
 
-        return first.item;
+        return left.item;
     }
 
     public Item peekRight() {
         if (isEmpty())
             throw new NoSuchElementException("Deque underflow");
 
-        return last.item;
+        return right.item;
     }
 
     public void pushLeft(Item item) {
         if (isEmpty()) {
-            first = new Node<Item>(item, null, null);
-            last = first;
+            left = new Node<Item>(item, null, null);
+            right = left;
         } else {
-            Node<Item> oldFirst = first;
-            first = new Node<Item>(item, null, oldFirst);
-            oldFirst.prev = first;
+            Node<Item> oldLeft = left;
+            left = new Node<Item>(item, null, oldLeft);
+            oldLeft.prev = left;
         }
 
         size++;
@@ -66,23 +66,23 @@ public class Deque<Item> implements Iterable<Item> {
 
     public void pushRight(Item item) {
         if (isEmpty()) {
-            last = new Node<Item>(item, null, null);
-            first = last;
+            right = new Node<Item>(item, null, null);
+            left = right;
         } else {
-            Node<Item> oldLast = last;
-            last = new Node<Item>(item, oldLast, null);
-            oldLast.next = last;
+            Node<Item> oldRight = right;
+            right = new Node<Item>(item, oldRight, null);
+            oldRight.next = right;
         }
 
         size++;
     }
 
     public Item popLeft() {
-        return removeNode(first);
+        return removeNode(left);
     }
 
     public Item popRight() {
-        return removeNode(last);
+        return removeNode(right);
     }
 
     private Item removeNode(Node<Item> node) {
@@ -90,14 +90,14 @@ public class Deque<Item> implements Iterable<Item> {
             throw new NoSuchElementException("Deque underflow");
 
         if (size == 1) {
-            first = null;
-            last = null;
-        } else if (node == first) {
-            first = node.next;
-            first.prev = null;
-        } else if (node == last) {
-            last = node.prev;
-            last.next = null;
+            left = null;
+            right = null;
+        } else if (node == left) {
+            left = node.next;
+            left.prev = null;
+        } else if (node == right) {
+            right = node.prev;
+            right.next = null;
         } else {
             node.prev.next = node.next;
             node.next.prev = node.prev;
@@ -108,12 +108,25 @@ public class Deque<Item> implements Iterable<Item> {
         return node.item;
     }
 
+    public String toString() {
+        StringJoiner joiner = new StringJoiner(", ", "[", "]");
+
+        for (Item value : this)
+            joiner.add(String.valueOf(value));
+
+        return joiner.toString();
+    }
+
     public Iterator<Item> iterator() {
-        return new DequeIterator();
+        return new DequeIterator(left);
     }
 
     private class DequeIterator implements Iterator<Item> {
-        private Node<Item> current = first;
+        private Node<Item> current;
+
+        public DequeIterator(Node<Item> current) {
+            this.current = current;
+        }
 
         public boolean hasNext() {
             return current != null;
@@ -141,11 +154,7 @@ public class Deque<Item> implements Iterable<Item> {
         d.popLeft();
         d.popLeft();
 
-        StringJoiner joiner = new StringJoiner(", ", "[", "]");
-        for (String value : d)
-            joiner.add(String.valueOf(value));
-
-        StdOut.println(joiner.toString()); // [D, C, B, A]
+        StdOut.println(d.toString()); // [D, C, B, A]
 
         Deque<String> e = new Deque<>();
         e.pushRight("A");
@@ -157,10 +166,6 @@ public class Deque<Item> implements Iterable<Item> {
         e.popRight();
         e.popRight();
 
-        joiner = new StringJoiner(", ", "[", "]");
-        for (String value : e)
-            joiner.add(String.valueOf(value));
-
-        StdOut.println(joiner.toString()); // [A, B, C, D]
+        StdOut.println(e.toString());// [A, B, C, D]
     }
 }

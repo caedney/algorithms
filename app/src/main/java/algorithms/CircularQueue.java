@@ -11,8 +11,8 @@ public class CircularQueue<Item> implements Iterable<Item> {
     private int size;
 
     public CircularQueue() {
-        tail = null;
-        size = 0;
+        this.tail = null;
+        this.size = 0;
     }
 
     private static class Node<Item> {
@@ -35,7 +35,7 @@ public class CircularQueue<Item> implements Iterable<Item> {
 
     public Item peek() {
         if (isEmpty())
-            throw new RuntimeException("Queue underflow");
+            throw new NoSuchElementException("Queue underflow");
 
         return tail.next.item;
     }
@@ -57,7 +57,7 @@ public class CircularQueue<Item> implements Iterable<Item> {
 
     public Item dequeue() {
         if (isEmpty())
-            throw new RuntimeException("Queue underflow");
+            throw new NoSuchElementException("Queue underflow");
 
         Node<Item> head = tail.next;
 
@@ -73,6 +73,15 @@ public class CircularQueue<Item> implements Iterable<Item> {
         return head.item;
     }
 
+    public String toString() {
+        StringJoiner joiner = new StringJoiner(", ", "[", "]");
+
+        for (Item value : this)
+            joiner.add(String.valueOf(value));
+
+        return joiner.toString();
+    }
+
     public Iterator<Item> iterator() {
         return new CircularQueueIterator(tail.next);
     }
@@ -81,9 +90,9 @@ public class CircularQueue<Item> implements Iterable<Item> {
         private Node<Item> current;
         private int index;
 
-        public CircularQueueIterator(Node<Item> first) {
-            current = first;
-            index = 0;
+        public CircularQueueIterator(Node<Item> current) {
+            this.current = current;
+            this.index = 0;
         }
 
         public boolean hasNext() {
@@ -113,10 +122,6 @@ public class CircularQueue<Item> implements Iterable<Item> {
         queue.dequeue();
         queue.dequeue();
 
-        StringJoiner joiner = new StringJoiner(", ", "[", "]");
-        for (String value : queue)
-            joiner.add(String.valueOf(value));
-
-        StdOut.println(joiner.toString()); // [C, D, E, F]
+        StdOut.println(queue.toString()); // [C, D, E, F]
     }
 }

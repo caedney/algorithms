@@ -11,8 +11,8 @@ public class CatenableStack<Item> implements Iterable<Item> {
     private int size;
 
     public CatenableStack() {
-        tail = null;
-        size = 0;
+        this.tail = null;
+        this.size = 0;
     }
 
     private static class Node<Item> {
@@ -35,7 +35,7 @@ public class CatenableStack<Item> implements Iterable<Item> {
 
     public Item peek() {
         if (isEmpty())
-            throw new RuntimeException("Stack underflow");
+            throw new NoSuchElementException("Stack underflow");
 
         return tail.next.item;
     }
@@ -56,7 +56,7 @@ public class CatenableStack<Item> implements Iterable<Item> {
 
     public Item pop() {
         if (isEmpty())
-            throw new RuntimeException("Stack underflow");
+            throw new NoSuchElementException("Stack underflow");
 
         Node<Item> head = tail.next;
 
@@ -66,6 +66,7 @@ public class CatenableStack<Item> implements Iterable<Item> {
             tail.next = head.next; // bypass head
         }
 
+        head.next = null; // avoid loitering
         size--;
 
         return head.item;
@@ -92,6 +93,15 @@ public class CatenableStack<Item> implements Iterable<Item> {
         that.size = 0;
     }
 
+    public String toString() {
+        StringJoiner joiner = new StringJoiner(", ", "[", "]");
+
+        for (Item value : this)
+            joiner.add(String.valueOf(value));
+
+        return joiner.toString();
+    }
+
     public Iterator<Item> iterator() {
         return new CatenableStackIterator(tail.next);
     }
@@ -100,9 +110,9 @@ public class CatenableStack<Item> implements Iterable<Item> {
         private Node<Item> current;
         private int index;
 
-        public CatenableStackIterator(Node<Item> tail) {
-            current = tail;
-            index = 0;
+        public CatenableStackIterator(Node<Item> current) {
+            this.current = current;
+            this.index = 0;
         }
 
         public boolean hasNext() {
@@ -132,10 +142,6 @@ public class CatenableStack<Item> implements Iterable<Item> {
         stack.pop();
         stack.pop();
 
-        StringJoiner joiner = new StringJoiner(", ", "[", "]");
-        for (String value : stack)
-            joiner.add(String.valueOf(value));
-
-        StdOut.println(joiner.toString()); // [D, C, B, A]
+        StdOut.println(stack.toString()); // [D, C, B, A]
     }
 }

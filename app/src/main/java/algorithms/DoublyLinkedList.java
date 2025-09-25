@@ -2,31 +2,32 @@ package algorithms;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.StringJoiner;
 
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdOut;
 
 public class DoublyLinkedList<Item> implements Iterable<Item> {
+    private Node<Item> head;
+    private Node<Item> tail;
     private int size;
-    private Node first;
-    private Node last;
 
-    class Node {
+    public DoublyLinkedList() {
+        this.head = null;
+        this.tail = null;
+        this.size = 0;
+    }
+
+    private static class Node<Item> {
         Item item;
-        Node prev;
-        Node next;
+        Node<Item> prev;
+        Node<Item> next;
 
-        Node(Item item, Node prev, Node next) {
+        Node(Item item, Node<Item> prev, Node<Item> next) {
             this.item = item;
             this.prev = prev;
             this.next = next;
         }
-    }
-
-    public DoublyLinkedList() {
-        size = 0;
-        first = null;
-        last = null;
     }
 
     public boolean isEmpty() {
@@ -37,28 +38,28 @@ public class DoublyLinkedList<Item> implements Iterable<Item> {
         return size;
     }
 
-    public Item peekFirst() {
+    public Item peekHead() {
         if (isEmpty())
             throw new NoSuchElementException("Queue underflow");
 
-        return first.item;
+        return head.item;
     }
 
-    public Item peekLast() {
+    public Item peekTail() {
         if (isEmpty())
             throw new NoSuchElementException("Queue underflow");
 
-        return last.item;
+        return tail.item;
     }
 
     public void append(Item item) {
         if (isEmpty()) {
-            last = new Node(item, null, null);
-            first = last;
+            tail = new Node<Item>(item, null, null);
+            head = tail;
         } else {
-            Node oldLast = last;
-            last = new Node(item, oldLast, null);
-            oldLast.next = last;
+            Node<Item> oldTail = tail;
+            tail = new Node<Item>(item, oldTail, null);
+            oldTail.next = tail;
         }
 
         size++;
@@ -66,26 +67,26 @@ public class DoublyLinkedList<Item> implements Iterable<Item> {
 
     public void prepend(Item item) {
         if (isEmpty()) {
-            first = new Node(item, null, null);
-            last = first;
+            head = new Node<Item>(item, null, null);
+            tail = head;
         } else {
-            Node oldFirst = first;
-            first = new Node(item, null, oldFirst);
-            oldFirst.prev = first;
+            Node<Item> oldHead = head;
+            head = new Node<Item>(item, null, oldHead);
+            oldHead.prev = head;
         }
 
         size++;
     }
 
     public void insertBefore(int index, Item item) {
-        Node node = getNode(index);
+        Node<Item> node = getNode(index);
 
-        if (node == first) {
-            Node oldFirst = first;
-            first = new Node(item, null, oldFirst);
-            oldFirst.prev = first;
+        if (node == head) {
+            Node<Item> oldHead = head;
+            head = new Node<Item>(item, null, oldHead);
+            oldHead.prev = head;
         } else {
-            Node newNode = new Node(item, node.prev, node);
+            Node<Item> newNode = new Node<Item>(item, node.prev, node);
             node.prev.next = newNode;
             node.prev = newNode;
         }
@@ -94,14 +95,14 @@ public class DoublyLinkedList<Item> implements Iterable<Item> {
     }
 
     public void insertAfter(int index, Item item) {
-        Node node = getNode(index);
+        Node<Item> node = getNode(index);
 
-        if (node == last) {
-            Node oldLast = last;
-            last = new Node(item, oldLast, null);
-            oldLast.next = last;
+        if (node == tail) {
+            Node<Item> oldTail = tail;
+            tail = new Node<Item>(item, oldTail, null);
+            oldTail.next = tail;
         } else {
-            Node newNode = new Node(item, node, node.next);
+            Node<Item> newNode = new Node<Item>(item, node, node.next);
             node.next.prev = newNode;
             node.next = newNode;
         }
@@ -110,31 +111,31 @@ public class DoublyLinkedList<Item> implements Iterable<Item> {
     }
 
     public Item remove(int index) {
-        Node node = getNode(index);
+        Node<Item> node = getNode(index);
         return removeNode(node);
     }
 
-    public Item removeFirst() {
-        return removeNode(first);
+    public Item removeHead() {
+        return removeNode(head);
     }
 
-    public Item removeLast() {
-        return removeNode(last);
+    public Item removeTail() {
+        return removeNode(tail);
     }
 
-    private Item removeNode(Node node) {
+    private Item removeNode(Node<Item> node) {
         if (isEmpty())
             throw new IllegalStateException("List is empty, cannot access item");
 
         if (size == 1) {
-            first = null;
-            last = null;
-        } else if (node == first) {
-            first = node.next;
-            first.prev = null;
-        } else if (node == last) {
-            last = node.prev;
-            last.next = null;
+            head = null;
+            tail = null;
+        } else if (node == head) {
+            head = node.next;
+            head.prev = null;
+        } else if (node == tail) {
+            tail = node.prev;
+            tail.next = null;
         } else {
             node.prev.next = node.next;
             node.next.prev = node.prev;
@@ -145,11 +146,11 @@ public class DoublyLinkedList<Item> implements Iterable<Item> {
         return node.item;
     }
 
-    private Node getNode(int index) {
+    private Node<Item> getNode(int index) {
         if (index < 0 || index > size - 1)
             throw new ArrayIndexOutOfBoundsException("No available item found");
 
-        Node current = first;
+        Node<Item> current = head;
 
         for (int i = 0; current != null && i < index; i++) {
             current = current.next;
@@ -158,12 +159,25 @@ public class DoublyLinkedList<Item> implements Iterable<Item> {
         return current;
     }
 
-    public Iterator<Item> iterator() {
-        return new LinkedIterator();
+    public String toString() {
+        StringJoiner joiner = new StringJoiner(", ", "[", "]");
+
+        for (Item value : this)
+            joiner.add(String.valueOf(value));
+
+        return joiner.toString();
     }
 
-    private class LinkedIterator implements Iterator<Item> {
-        private Node current = first;
+    public Iterator<Item> iterator() {
+        return new DoublyLinkedListIterator(head);
+    }
+
+    private class DoublyLinkedListIterator implements Iterator<Item> {
+        private Node<Item> current;
+
+        public DoublyLinkedListIterator(Node<Item> current) {
+            this.current = current;
+        }
 
         public boolean hasNext() {
             return current != null;
@@ -189,11 +203,8 @@ public class DoublyLinkedList<Item> implements Iterable<Item> {
             list.append(item);
         }
 
-        StdOut.println(list.peekFirst());
-        StdOut.println(list.peekLast());
-
-        for (int value : list) {
-            StdOut.print(value + " ");
-        }
+        StdOut.println(list.peekHead());
+        StdOut.println(list.peekTail());
+        StdOut.println(list.toString());
     }
 }

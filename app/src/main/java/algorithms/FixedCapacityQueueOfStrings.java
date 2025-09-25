@@ -6,50 +6,51 @@ import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
 
 public class FixedCapacityQueueOfStrings {
-    private String[] q;
-    private int n;
-    private int first;
-    private int last;
+    private String[] array;
+    private int head;
+    private int tail;
+    private int size;
 
-    public FixedCapacityQueueOfStrings(int cap) {
-        q = new String[cap];
-        first = 0;
-        last = 0;
+    public FixedCapacityQueueOfStrings(int capacity) {
+        this.array = new String[capacity];
+        this.head = 0;
+        this.tail = 0;
+        this.size = 0;
     }
 
     public boolean isEmpty() {
-        return n == 0;
+        return size == 0;
     }
 
     public int size() {
-        return n;
+        return size;
     }
 
     public void enqueue(String string) {
-        if (n == q.length)
+        if (size == array.length)
             throw new IndexOutOfBoundsException("Queue overflow");
 
-        q[last++] = string; // add item
+        array[tail++] = string;
 
-        if (last == q.length)
-            last = 0; // wrap around
+        if (tail == array.length)
+            tail = 0; // wrap around
 
-        n++;
+        size++;
     }
 
     public String dequeue() {
         if (isEmpty())
             throw new NoSuchElementException("Queue underflow");
 
-        String string = q[0];
+        String string = array[0];
 
-        string = q[first];
-        q[first] = null; // to avoid loitering
-        n--;
-        first++;
+        string = array[head];
+        array[head] = null; // to avoid loitering
+        size--;
+        head++;
 
-        if (first == q.length)
-            first = 0; // wrap-around
+        if (head == array.length)
+            head = 0; // wrap-around
 
         return string;
     }

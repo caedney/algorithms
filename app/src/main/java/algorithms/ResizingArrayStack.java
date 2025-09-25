@@ -2,8 +2,9 @@ package algorithms;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.StringJoiner;
 
-import edu.princeton.cs.algs4.StdIn;
+import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdOut;
 
 @SuppressWarnings("unchecked")
@@ -13,8 +14,8 @@ public class ResizingArrayStack<Item> implements Iterable<Item> {
     private int size;
 
     public ResizingArrayStack() {
-        array = (Item[]) new Object[INIT_CAPACITY];
-        size = 0;
+        this.array = (Item[]) new Object[INIT_CAPACITY];
+        this.size = 0;
     }
 
     public boolean isEmpty() {
@@ -56,49 +57,51 @@ public class ResizingArrayStack<Item> implements Iterable<Item> {
         return item;
     }
 
-    public Iterator<Item> iterator() {
-        return new ReverseArrayIterator();
+    public String toString() {
+        StringJoiner joiner = new StringJoiner(", ", "[", "]");
+
+        for (Item value : this)
+            joiner.add(String.valueOf(value));
+
+        return joiner.toString();
     }
 
-    private class ReverseArrayIterator implements Iterator<Item> {
-        private int i = size - 1;
+    public Iterator<Item> iterator() {
+        return new ResizingArrayStackIterator();
+    }
+
+    private class ResizingArrayStackIterator implements Iterator<Item> {
+        private int index;
+
+        public ResizingArrayStackIterator() {
+            this.index = size - 1;
+        }
 
         public boolean hasNext() {
-            return i >= 0;
+            return index >= 0;
         }
 
         public Item next() {
             if (!hasNext())
                 throw new NoSuchElementException();
 
-            return array[i--];
+            return array[index--];
         }
     }
 
     public static void main(String[] args) {
-        ResizingArrayStack<String> collection = new ResizingArrayStack<String>();
+        In in = new In("src/data/algs4/tobe.txt");
+        ResizingArrayStack<String> stack = new ResizingArrayStack<String>();
 
-        while (!StdIn.isEmpty()) {
-            String item = StdIn.readString();
+        while (!in.isEmpty()) {
+            String item = in.readString();
             if (!item.equals("-")) {
-                collection.push(item);
-            } else if (!collection.isEmpty())
-                StdOut.print(collection.pop() + " ");
+                stack.push(item);
+            } else if (!stack.isEmpty())
+                stack.pop();
         }
 
-        StdOut.println("(" + collection.size() + " left on stack)");
-
-        // print remaining items
-        for (String s : collection) {
-            StdOut.println(s);
-        }
-
-        // foreach statment is shorthand for the following while statement
-        Iterator<String> i = collection.iterator();
-
-        while (i.hasNext()) {
-            String s = i.next();
-            StdOut.println(s);
-        }
+        StdOut.println("(" + stack.size() + " left on stack)");
+        StdOut.println(stack.toString());
     }
 }

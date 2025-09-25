@@ -26,17 +26,15 @@ public class Exercise_1_3_31 {
             list.append(item);
         }
 
-        StdOut.println("first item: " + list.peekFirst());
-        StdOut.println("last item: " + list.peekLast());
-        StdOut.println("removed first item: " + list.removeFirst());
-        StdOut.println("removed last item: " + list.removeLast());
+        StdOut.println("first item: " + list.peekHead());
+        StdOut.println("last item: " + list.peekTail());
+        StdOut.println("removed first item: " + list.removeHead());
+        StdOut.println("removed last item: " + list.removeTail());
         StdOut.println("removed item: " + list.remove(9));
 
         list.insertBefore(1, 5768);
         list.insertAfter(1, 3546);
 
-        for (int value : list) {
-            StdOut.print(value + " ");
-        }
+        StdOut.println(list.toString());
     }
 }

@@ -2,20 +2,23 @@ package algorithms;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.StringJoiner;
+
+import edu.princeton.cs.algs4.StdOut;
 
 @SuppressWarnings("unchecked")
 public class ResizingArrayQueue<Item> implements Iterable<Item> {
     private static final int INIT_CAPACITY = 1;
     private Item[] array;
-    private int front;
-    private int back;
+    private int head;
+    private int tail;
     private int size;
 
     public ResizingArrayQueue() {
-        array = (Item[]) new Object[INIT_CAPACITY];
-        front = 0;
-        back = 0;
-        size = 0;
+        this.array = (Item[]) new Object[INIT_CAPACITY];
+        this.head = 0;
+        this.tail = 0;
+        this.size = 0;
     }
 
     public boolean isEmpty() {
@@ -34,21 +37,21 @@ public class ResizingArrayQueue<Item> implements Iterable<Item> {
         Item[] newArray = (Item[]) new Object[capacity];
 
         for (int i = 0; i < size; i++)
-            newArray[i] = array[(front + i) % array.length];
+            newArray[i] = array[(head + i) % array.length];
 
         array = newArray;
-        front = 0;
-        back = size;
+        head = 0;
+        tail = size;
     }
 
     public void enqueue(Item item) {
         if (size == array.length)
             resize(2 * array.length);
 
-        array[back++] = item;
+        array[tail++] = item;
 
-        if (back == array.length)
-            back = 0; // wrap-around
+        if (tail == array.length)
+            tail = 0; // wrap-around
 
         size++;
     }
@@ -57,13 +60,13 @@ public class ResizingArrayQueue<Item> implements Iterable<Item> {
         if (isEmpty())
             throw new NoSuchElementException("Queue underflow");
 
-        Item item = array[front];
-        array[front] = null; // to avoid loitering
+        Item item = array[head];
+        array[head] = null; // to avoid loitering
         size--;
-        front++;
+        head++;
 
-        if (front == array.length)
-            front = 0; // wrap-around
+        if (head == array.length)
+            head = 0; // wrap-around
 
         if (size > 0 && size == array.length / 4)
             resize(array.length / 2);
@@ -71,25 +74,51 @@ public class ResizingArrayQueue<Item> implements Iterable<Item> {
         return item;
     }
 
+    public String toString() {
+        StringJoiner joiner = new StringJoiner(", ", "[", "]");
+
+        for (Item value : this)
+            joiner.add(String.valueOf(value));
+
+        return joiner.toString();
+    }
+
     public Iterator<Item> iterator() {
         return new ResizingArrayQueueIterator();
     }
 
     private class ResizingArrayQueueIterator implements Iterator<Item> {
-        private int i = 0;
+        private int index;
+
+        public ResizingArrayQueueIterator() {
+            this.index = 0;
+        }
 
         public boolean hasNext() {
-            return i < size;
+            return index < size;
         }
 
         public Item next() {
             if (!hasNext())
                 throw new NoSuchElementException();
 
-            Item item = array[(i + front) % array.length];
-            i++;
+            Item item = array[(index + head) % array.length];
+            index++;
 
             return item;
         }
+    }
+
+    public static void main(String[] args) {
+        ResizingArrayQueue<String> queue = new ResizingArrayQueue<>();
+        queue.enqueue("A");
+        queue.enqueue("B");
+        queue.enqueue("C");
+        queue.enqueue("D");
+        queue.enqueue("E");
+        queue.enqueue("F");
+        queue.dequeue();
+        queue.dequeue();
+        StdOut.println(queue.toString()); // [C, D, E, F]
     }
 }

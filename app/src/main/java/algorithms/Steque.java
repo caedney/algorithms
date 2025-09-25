@@ -12,9 +12,9 @@ public class Steque<Item> implements Iterable<Item> {
     private int size;
 
     public Steque() {
-        first = null;
-        last = null;
-        size = 0;
+        this.first = null;
+        this.last = null;
+        this.size = 0;
     }
 
     private static class Node<Item> {
@@ -81,6 +81,15 @@ public class Steque<Item> implements Iterable<Item> {
         size++;
     }
 
+    public String toString() {
+        StringJoiner joiner = new StringJoiner(", ", "[", "]");
+
+        for (Item value : this)
+            joiner.add(String.valueOf(value));
+
+        return joiner.toString();
+    }
+
     public Iterator<Item> iterator() {
         return new StequeIterator();
     }
@@ -114,10 +123,6 @@ public class Steque<Item> implements Iterable<Item> {
         steque.enqueue("B");
         steque.enqueue("A");
 
-        StringJoiner joiner = new StringJoiner(", ", "[", "]");
-        for (String value : steque)
-            joiner.add(String.valueOf(value));
-
-        StdOut.println(joiner.toString()); // [D, C, B, A]
+        StdOut.println(steque.toString()); // [D, C, B, A]
     }
 }

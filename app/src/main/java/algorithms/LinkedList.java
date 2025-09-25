@@ -2,58 +2,61 @@ package algorithms;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.StringJoiner;
 
-import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
 
 public class LinkedList<Item> implements Iterable<Item> {
-    private int n;
-    private Node first;
-    private Node last;
-
-    class Node {
-        Item item;
-        Node next;
-    }
+    private Node<Item> head;
+    private Node<Item> tail;
+    private int size;
 
     public LinkedList() {
-        first = null;
-        last = null;
-        n = 0;
+        this.head = null;
+        this.tail = null;
+        this.size = 0;
+    }
+
+    private static class Node<Item> {
+        private Item item;
+        private Node<Item> next;
+
+        Node(Item item, Node<Item> next) {
+            this.item = item;
+            this.next = next;
+        }
     }
 
     public boolean isEmpty() {
-        return first == null;
+        return size == 0;
     }
 
     public int size() {
-        return n;
+        return size;
     }
 
     public void enqueue(Item item) {
-        Node oldlast = last;
-        last = new Node();
-        last.item = item;
-        last.next = null;
+        Node<Item> oldTail = tail;
+        tail = new Node<Item>(item, null);
 
         if (isEmpty())
-            first = last;
+            head = tail;
         else
-            oldlast.next = last;
+            oldTail.next = tail;
 
-        n++;
+        size++;
     }
 
     public Item dequeue() {
         if (isEmpty())
             throw new NoSuchElementException("Queue underflow");
 
-        Item item = first.item;
-        first = first.next;
-        n--;
+        Item item = head.item;
+        head = head.next;
+        size--;
 
         if (isEmpty())
-            last = null; // to avoid loitering
+            tail = null; // to avoid loitering
 
         return item;
     }
@@ -63,12 +66,12 @@ public class LinkedList<Item> implements Iterable<Item> {
             throw new ArrayIndexOutOfBoundsException("No item found");
 
         if (isEmpty())
-            throw new IllegalStateException("List is empty, cannot access item");
+            throw new NoSuchElementException("Queue underflow");
 
         if (k == 1) {
-            first = first.next;
+            head = head.next;
         } else {
-            Node current = first;
+            Node<Item> current = head;
             for (int i = 1; current != null && i < k - 1; i++) {
                 current = current.next;
             }
@@ -81,12 +84,12 @@ public class LinkedList<Item> implements Iterable<Item> {
 
     public void remove(String key) {
         // Remove nodes from the beginning if they match
-        while (first != null && first.item.equals(key)) {
-            first = first.next;
+        while (head != null && head.item.equals(key)) {
+            head = head.next;
         }
 
         // Traverse and remove matching nodes
-        Node current = first;
+        Node<Item> current = head;
         while (current != null && current.next != null) {
             if (current.next.item.equals(key)) {
                 current.next = current.next.next; // skip node
@@ -97,14 +100,14 @@ public class LinkedList<Item> implements Iterable<Item> {
     }
 
     public int max() {
-        if (!(first.item instanceof Integer)) {
+        if (!(head.item instanceof Integer)) {
             return 0;
         }
 
-        return maxRecursive(first);
+        return maxRecursive(head);
     }
 
-    private int maxRecursive(Node node) {
+    private int maxRecursive(Node<Item> node) {
         if (node == null) {
             return 0;
         }
@@ -115,12 +118,25 @@ public class LinkedList<Item> implements Iterable<Item> {
         return Math.max(currentVal, restMax);
     }
 
-    public Iterator<Item> iterator() {
-        return new LinkedIterator();
+    public String toString() {
+        StringJoiner joiner = new StringJoiner(", ", "[", "]");
+
+        for (Item value : this)
+            joiner.add(String.valueOf(value));
+
+        return joiner.toString();
     }
 
-    private class LinkedIterator implements Iterator<Item> {
-        private Node current = first;
+    public Iterator<Item> iterator() {
+        return new LinkedListIterator(head);
+    }
+
+    private class LinkedListIterator implements Iterator<Item> {
+        private Node<Item> current;
+
+        public LinkedListIterator(Node<Item> current) {
+            this.current = current;
+        }
 
         public boolean hasNext() {
             return current != null;
@@ -138,16 +154,16 @@ public class LinkedList<Item> implements Iterable<Item> {
     }
 
     public static void main(String[] args) {
-        LinkedList<String> list = new LinkedList<String>();
+        LinkedQueue<String> queue = new LinkedQueue<>();
+        queue.enqueue("A");
+        queue.enqueue("B");
+        queue.enqueue("C");
+        queue.enqueue("D");
+        queue.enqueue("E");
+        queue.enqueue("F");
+        queue.dequeue();
+        queue.dequeue();
 
-        while (!StdIn.isEmpty()) {
-            String item = StdIn.readString();
-            if (!item.equals("-"))
-                list.enqueue(item);
-            else if (!list.isEmpty())
-                StdOut.print(list.dequeue() + " ");
-        }
-
-        StdOut.println("(" + list.size() + " left on list)");
+        StdOut.println(queue.toString()); // [C, D, E, F]
     }
 }

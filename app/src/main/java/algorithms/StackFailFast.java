@@ -3,6 +3,7 @@ package algorithms;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.StringJoiner;
 
 import edu.princeton.cs.algs4.StdOut;
 
@@ -12,9 +13,9 @@ public class StackFailFast<Item> implements Iterable<Item> {
     private int modificationCounter;
 
     public StackFailFast() {
-        head = null;
-        size = 0;
-        modificationCounter = 0;
+        this.head = null;
+        this.size = 0;
+        this.modificationCounter = 0;
     }
 
     private static class Node<Item> {
@@ -64,27 +65,25 @@ public class StackFailFast<Item> implements Iterable<Item> {
     }
 
     public String toString() {
-        StringBuilder s = new StringBuilder();
+        StringJoiner joiner = new StringJoiner(", ", "[", "]");
 
-        for (Item item : this) {
-            s.append(item);
-            s.append(' ');
-        }
+        for (Item value : this)
+            joiner.add(String.valueOf(value));
 
-        return s.toString();
+        return joiner.toString();
     }
 
     public Iterator<Item> iterator() {
-        return new StackIterator(head);
+        return new StackFailFastIterator(head);
     }
 
-    private class StackIterator implements Iterator<Item> {
+    private class StackFailFastIterator implements Iterator<Item> {
         private Node<Item> current;
         private int count;
 
-        public StackIterator(Node<Item> head) {
-            current = head;
-            count = modificationCounter;
+        public StackFailFastIterator(Node<Item> current) {
+            this.current = current;
+            this.count = modificationCounter;
         }
 
         public void checkComodification() {

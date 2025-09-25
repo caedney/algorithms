@@ -11,8 +11,8 @@ public class CatenableQueue<Item> implements Iterable<Item> {
     private int size;
 
     public CatenableQueue() {
-        tail = null;
-        size = 0;
+        this.tail = null;
+        this.size = 0;
     }
 
     private static class Node<Item> {
@@ -35,7 +35,7 @@ public class CatenableQueue<Item> implements Iterable<Item> {
 
     public Item peek() {
         if (isEmpty())
-            throw new RuntimeException("Queue underflow");
+            throw new NoSuchElementException("Queue underflow");
 
         return tail.next.item;
     }
@@ -57,7 +57,7 @@ public class CatenableQueue<Item> implements Iterable<Item> {
 
     public Item dequeue() {
         if (isEmpty())
-            throw new RuntimeException("Queue underflow");
+            throw new NoSuchElementException("Queue underflow");
 
         Node<Item> head = tail.next;
 
@@ -95,6 +95,15 @@ public class CatenableQueue<Item> implements Iterable<Item> {
         that.size = 0;
     }
 
+    public String toString() {
+        StringJoiner joiner = new StringJoiner(", ", "[", "]");
+
+        for (Item value : this)
+            joiner.add(String.valueOf(value));
+
+        return joiner.toString();
+    }
+
     public Iterator<Item> iterator() {
         return new CatenableQueueIterator(tail.next);
     }
@@ -103,9 +112,9 @@ public class CatenableQueue<Item> implements Iterable<Item> {
         private Node<Item> current;
         private int index;
 
-        public CatenableQueueIterator(Node<Item> tail) {
-            current = tail;
-            index = 0;
+        public CatenableQueueIterator(Node<Item> current) {
+            this.current = current;
+            this.index = 0;
         }
 
         public boolean hasNext() {
@@ -138,10 +147,6 @@ public class CatenableQueue<Item> implements Iterable<Item> {
         q.dequeue();
         q.dequeue();
 
-        StringJoiner joiner = new StringJoiner(", ", "[", "]");
-        for (String value : q)
-            joiner.add(String.valueOf(value));
-
-        StdOut.println(joiner.toString()); // [C, D, E, F]
+        StdOut.println(q.toString()); // [C, D, E, F]
     }
 }

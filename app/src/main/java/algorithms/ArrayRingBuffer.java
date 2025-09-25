@@ -2,6 +2,9 @@ package algorithms;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.StringJoiner;
+
+import edu.princeton.cs.algs4.StdOut;
 
 @SuppressWarnings("unchecked")
 public class ArrayRingBuffer<Item> implements RingBuffer<Item>, Iterable<Item> {
@@ -14,10 +17,10 @@ public class ArrayRingBuffer<Item> implements RingBuffer<Item>, Iterable<Item> {
         if (capacity < 1)
             throw new IllegalArgumentException("Capacity must be > 0");
 
-        buffer = (Item[]) new Object[capacity];
-        front = 0;
-        back = 0;
-        size = 0;
+        this.buffer = (Item[]) new Object[capacity];
+        this.front = 0;
+        this.back = 0;
+        this.size = 0;
     }
 
     public boolean isEmpty() {
@@ -67,25 +70,53 @@ public class ArrayRingBuffer<Item> implements RingBuffer<Item>, Iterable<Item> {
         return item;
     }
 
+    public String toString() {
+        StringJoiner joiner = new StringJoiner(", ", "[", "]");
+
+        for (Item value : this)
+            joiner.add(String.valueOf(value));
+
+        return joiner.toString();
+    }
+
     public Iterator<Item> iterator() {
         return new ArrayRingBufferIterator();
     }
 
     private class ArrayRingBufferIterator implements Iterator<Item> {
-        private int i = 0;
+        private int index;
+
+        public ArrayRingBufferIterator() {
+            this.index = 0;
+        }
 
         public boolean hasNext() {
-            return i < size;
+            return index < size;
         }
 
         public Item next() {
             if (!hasNext())
                 throw new NoSuchElementException();
 
-            Item item = buffer[(i + front) % buffer.length];
-            i++;
+            Item item = buffer[(index + front) % buffer.length];
+            index++;
 
             return item;
         }
+    }
+
+    public static void main(String[] args) {
+        ArrayRingBuffer<Integer> buffer = new ArrayRingBuffer<>(5);
+        buffer.enqueue(10);
+        buffer.enqueue(20);
+        buffer.enqueue(30);
+        buffer.enqueue(40);
+        buffer.enqueue(50);
+        StdOut.println(buffer.toString()); // [10, 20, 30, 40, 50]
+
+        buffer.enqueue(60);
+        buffer.enqueue(70);
+        buffer.enqueue(80);
+        StdOut.println(buffer.toString()); // [40, 50, 60, 70, 80]
     }
 }

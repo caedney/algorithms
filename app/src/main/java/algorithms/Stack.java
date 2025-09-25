@@ -11,8 +11,8 @@ public class Stack<Item> implements Iterable<Item> {
     private int size;
 
     public Stack() {
-        head = null;
-        size = 0;
+        this.head = null;
+        this.size = 0;
     }
 
     private static class Node<Item> {
@@ -59,14 +59,12 @@ public class Stack<Item> implements Iterable<Item> {
     }
 
     public String toString() {
-        StringBuilder s = new StringBuilder();
+        StringJoiner joiner = new StringJoiner(", ", "[", "]");
 
-        for (Item item : this) {
-            s.append(item);
-            s.append(' ');
-        }
+        for (Item value : this)
+            joiner.add(String.valueOf(value));
 
-        return s.toString();
+        return joiner.toString();
     }
 
     public Iterator<Item> iterator() {
@@ -76,8 +74,8 @@ public class Stack<Item> implements Iterable<Item> {
     private class StackIterator implements Iterator<Item> {
         private Node<Item> current;
 
-        public StackIterator(Node<Item> head) {
-            current = head;
+        public StackIterator(Node<Item> current) {
+            this.current = current;
         }
 
         public boolean hasNext() {
@@ -106,10 +104,6 @@ public class Stack<Item> implements Iterable<Item> {
         stack.pop();
         stack.pop();
 
-        StringJoiner joiner = new StringJoiner(", ", "[", "]");
-        for (String value : stack)
-            joiner.add(String.valueOf(value));
-
-        StdOut.println(joiner.toString()); // [D, C, B, A]
+        StdOut.println(stack.toString()); // [D, C, B, A]
     }
 }

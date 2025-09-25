@@ -2,14 +2,16 @@ package algorithms;
 
 import java.util.Stack;
 
+import edu.princeton.cs.algs4.StdOut;
+
 public class Buffer {
     private Stack<Character> left;
     private Stack<Character> right;
 
     // Create an empty buffer
     public Buffer() {
-        left = new Stack<>();
-        right = new Stack<>();
+        this.left = new Stack<>();
+        this.right = new Stack<>();
     }
 
     // Insert character c at the cursor
@@ -56,5 +58,25 @@ public class Buffer {
             stringBuilder.append(right.get(i));
 
         return stringBuilder.toString();
+    }
+
+    public static void main(String[] args) {
+        Buffer buf = new Buffer();
+        buf.insert('a');
+        buf.insert('b');
+        buf.insert('c');
+        StdOut.println(buf); // abc|
+
+        buf.left(2);
+        StdOut.println(buf); // a|bc
+
+        buf.insert('x');
+        StdOut.println(buf); // ax|bc
+
+        buf.right(1);
+        StdOut.println(buf); // axb|c
+        StdOut.println(buf.delete()); // c
+        StdOut.println(buf); // axb|
+        StdOut.println("Size: " + buf.size()); // Size: 3
     }
 }

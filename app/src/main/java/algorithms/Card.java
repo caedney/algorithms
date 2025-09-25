@@ -1,5 +1,7 @@
 package algorithms;
 
+import edu.princeton.cs.algs4.StdOut;
+
 public class Card {
     private final String rank;
     private final String suit;
@@ -27,5 +29,15 @@ public class Card {
     @Override
     public String toString() {
         return rank + suit;
+    }
+
+    public static void main(String[] args) {
+        Queue<Card> deck = new Queue<>();
+
+        for (Card card : Card.standardDeck()) {
+            deck.enqueue(card);
+        }
+
+        StdOut.println(deck.toString());
     }
 }
