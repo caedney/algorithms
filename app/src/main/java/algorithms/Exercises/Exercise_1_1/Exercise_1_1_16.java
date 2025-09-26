@@ -26,12 +26,13 @@ public class Exercise_1_1_16 {
         return exR1(n - 3) + n + exR1(n - 2) + n;
     }
 
-    public static void main() {
-        StdOut.println("Exercise 1.1.16");
-
+    public static void main(String[] args) {
         String result = exR1(6);
         // (("")3(("")1("")1)3)6((("")1("")1)4(("")2("")2)4)6
-        // 311361142246
-        StdOut.println(result);
+        StdOut.println(result); // 311361142246
+
+        result = exR1(3);
+        // ("")3(("")1("")1)3
+        StdOut.println(result); // 3113
     }
 }

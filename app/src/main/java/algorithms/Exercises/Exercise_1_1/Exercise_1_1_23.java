@@ -1,5 +1,7 @@
 package algorithms.Exercises.Exercise_1_1;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.Arrays;
 
 import edu.princeton.cs.algs4.In;
@@ -16,36 +18,36 @@ import edu.princeton.cs.algs4.StdOut;
  * </p>
  */
 public class Exercise_1_1_23 {
-    public static int rank(int key, int[] a) {
-        int lo = 0;
-        int hi = a.length - 1;
+    private class BinarySearch {
+        public static int rank(int key, int[] array) {
+            int lo = 0;
+            int hi = array.length - 1;
 
-        while (lo <= hi) {
-            int mid = lo + (hi - lo) / 2;
-            if (key < a[mid])
-                hi = mid - 1;
-            else if (key > a[mid])
-                lo = mid + 1;
-            else
-                return mid;
+            while (lo <= hi) {
+                int mid = lo + (hi - lo) / 2;
+                if (key < array[mid])
+                    hi = mid - 1;
+                else if (key > array[mid])
+                    lo = mid + 1;
+                else
+                    return mid;
+            }
+
+            return -1;
         }
-
-        return -1;
     }
 
-    public static void main(String[] args) {
-        StdOut.println("Exercise 1.1.23");
-
-        In in = new In(args[0]);
-        String included = args[1];
+    public static void main(String[] args) throws IOException {
+        System.setIn(new FileInputStream("src/data/algs4/tinyT.txt"));
+        In in = new In("src/data/algs4/tinyW.txt");
+        String included = "-";
 
         int[] whitelist = in.readAllInts();
-
         Arrays.sort(whitelist);
 
         while (!StdIn.isEmpty()) {
             int key = StdIn.readInt();
-            int ranked = rank(key, whitelist);
+            int ranked = BinarySearch.rank(key, whitelist);
 
             if (ranked > -1 && included == "+")
                 StdOut.println(key);

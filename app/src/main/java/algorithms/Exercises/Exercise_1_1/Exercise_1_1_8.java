@@ -10,9 +10,9 @@ import edu.princeton.cs.algs4.StdOut;
  * </p>
  * 
  * <ol type="a">
- * <li>System.out.println("b");</li>
- * <li>System.out.println("b" + "c");</li>
- * <li>System.out.println((char) ("a" + 4));</li>
+ * <li>StdOut.println('b');</li>
+ * <li>StdOut.println('b' + 'c');</li>
+ * <li>StdOut.println((char) ('a' + 4));</li>
  * </ol>
  * 
  * <p>
@@ -20,10 +20,22 @@ import edu.princeton.cs.algs4.StdOut;
  * </p>
  */
 public class Exercise_1_1_8 {
-    public static void main() {
-        StdOut.println("Exercise 1.1.8");
-        StdOut.println("a - b");
-        StdOut.println("b - bc");
-        StdOut.println("c - Compile-time error");
+    public static void main(String[] args) {
+        StdOut.println('b'); // b
+        // 'b' is a char literal.
+        // Java treats it as a character.
+        // Underlying value: ASCII value 98, but since it’s a char, it displays as the
+        // character 'b'.
+        StdOut.println('b' + 'c'); // 197
+        // Both 'b' and 'c' are char literals.
+        // In arithmetic, Java promotes char to int automatically.
+        // 'b' → 98, 'c' → 99
+        // Addition: 98 + 99 = 197
+        StdOut.println((char) ('a' + 4)); // e
+        // 'a' is a char literal.
+        // In arithmetic, Java promotes char to int automatically.
+        // 'a' → 97
+        // Addition: 97 + 4 = 101
+        // (char) 101 → converts back to a character → 'e'
     }
 }

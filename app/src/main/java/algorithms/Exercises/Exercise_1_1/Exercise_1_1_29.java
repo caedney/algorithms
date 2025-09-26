@@ -16,13 +16,13 @@ import edu.princeton.cs.algs4.StdOut;
  * </p>
  */
 public class Exercise_1_1_29 {
-    public static int rank(int key, int[] a) {
+    public static int rank(int key, int[] array) {
         int lo = 0;
-        int hi = a.length - 1;
+        int hi = array.length - 1;
 
         while (lo <= hi) {
             int mid = lo + (hi - lo) / 2;
-            if (key <= a[mid])
+            if (key <= array[mid])
                 hi = mid - 1;
             else
                 lo = mid + 1;
@@ -35,17 +35,16 @@ public class Exercise_1_1_29 {
         return lo;
     }
 
-    public static int count(int key, int[] a) {
+    public static int count(int key, int[] array) {
         StdOut.println("first occurrence of key or where it would be");
-        int i = rank(key, a);
+        int i = rank(key, array);
         StdOut.println("first element strictly greater than key");
-        int j = rank(key + 1, a);
+        int j = rank(key + 1, array);
 
         return j - i;
     }
 
     public static void main(String[] args) {
-        StdOut.println("Exercise 1.1.29");
         int key = 16;
         int[] array = { 1, 4, 7, 12, 15, 16, 16, 16, 18, 23, 29, 34, 39, 42 };
 

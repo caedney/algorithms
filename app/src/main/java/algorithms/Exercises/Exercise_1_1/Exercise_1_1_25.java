@@ -1,7 +1,5 @@
 package algorithms.Exercises.Exercise_1_1;
 
-import edu.princeton.cs.algs4.StdOut;
-
 /**
  * Exercise 1.1.25
  * 
@@ -79,7 +77,6 @@ import edu.princeton.cs.algs4.StdOut;
  * </p>
  */
 public class Exercise_1_1_25 {
-    public static void main() {
-        StdOut.println("Exercise 1.1.25");
+    public static void main(String[] args) {
     }
 }

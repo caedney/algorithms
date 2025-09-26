@@ -22,8 +22,7 @@ public class Exercise_1_1_30 {
         return p;
     }
 
-    public static void main() {
-        StdOut.println("Exercise 1.1.30");
+    public static void main(String[] args) {
         int N = 4;
         boolean[][] array = new boolean[N][N];
 

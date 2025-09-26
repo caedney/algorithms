@@ -25,9 +25,7 @@ import edu.princeton.cs.algs4.StdOut;
  * </ul>
  */
 public class Exercise_1_1_34 {
-    public static void main() {
-        StdOut.println("Exercise 1.1.34");
-
+    public static void main(String[] args) {
         // 1. Print the maximum and minimum numbers
         // You only need two variables: max_so_far and min_so_far.
         // As you read each number, update them if necessary.

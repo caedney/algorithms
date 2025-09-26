@@ -26,20 +26,10 @@ public class Exercise_1_1_24 {
     }
 
     public static void main(String[] args) {
-        StdOut.println("Exercise 1.1.24");
-
-        if (args.length < 2) {
-            StdOut.println("Usage: java Euclid <p> <q>");
-            return;
-        }
-
-        int p = Integer.parseInt(args[0]);
-        int q = Integer.parseInt(args[1]);
-
-        int result = gcd(p, q);
-
-        StdOut.println("GCD = " + (result == 1 ? "relatively prime" : result));
-
+        int result = gcd(105, 24);
+        StdOut.println(result); // 3
+        result = gcd(107, 29);
+        StdOut.println(result); // 1
         // Two numbers are relatively prime (or coprime) if their gcd is 1.
         // This does not mean both numbers are prime.
         // It just means they don’t share any common factor greater than 1

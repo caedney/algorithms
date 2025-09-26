@@ -20,17 +20,16 @@ import edu.princeton.cs.algs4.StdOut;
  * }
  */
 public class Exercise_1_1_12 {
-    public static void main() {
-        StdOut.println("Exercise 1.1.12");
-
+    public static void main(String[] args) {
         int[] a = new int[10];
-        for (int i = 0; i < 10; i++)
-            a[i] = 9 - i;
 
         for (int i = 0; i < 10; i++)
-            a[i] = a[a[i]];
+            a[i] = 9 - i; // a = [9, 8, 7, 6, 5, 4, 3, 2, 1, 0]
 
         for (int i = 0; i < 10; i++)
-            StdOut.println(i);
+            a[i] = a[a[i]]; // a = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+        for (int i = 0; i < 10; i++)
+            StdOut.println(i); // a = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
     }
 }

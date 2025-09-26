@@ -16,8 +16,7 @@ import edu.princeton.cs.algs4.StdOut;
  * }
  */
 public class Exercise_1_1_10 {
-    public static void main() {
-        StdOut.println("Exercise 1.1.10");
-        StdOut.println("Compile-time error. It does not allocate memory for a[] with new");
+    public static void main(String[] args) {
+        StdOut.println("error: variable a might not have been initialized a[i] = i * i;");
     }
 }

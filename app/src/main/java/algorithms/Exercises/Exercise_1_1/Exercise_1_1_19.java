@@ -17,6 +17,7 @@ public class Exercise_1_1_19 {
     public static long fib(int N) {
         if (N == 0)
             return 0;
+
         if (N == 1)
             return 1;
 
@@ -26,27 +27,25 @@ public class Exercise_1_1_19 {
     public static long fib(int N, long[] memo) {
         if (N == 0)
             return 0;
+
         if (N == 1)
             return 1;
-        if (memo[N] != 0) {
+
+        if (memo[N] != 0)
             return memo[N];
-        }
 
         memo[N] = fib(N - 1, memo) + fib(N - 2, memo);
 
         return memo[N];
     }
 
-    public static void main() {
-        StdOut.println("Exercise 1.1.19");
-
+    public static void main(String[] args) {
         int N = 100;
         long[] memo = new long[N + 1];
         memo[0] = 0;
         memo[1] = 1;
 
         fib(N, memo);
-
-        StdOut.println(N + ": " + Arrays.toString(memo));
+        StdOut.println(Arrays.toString(memo));
     }
 }

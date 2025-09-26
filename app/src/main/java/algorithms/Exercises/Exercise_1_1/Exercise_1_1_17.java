@@ -34,10 +34,7 @@ public class Exercise_1_1_17 {
         return s;
     }
 
-    public static void main() {
-        StdOut.println("Exercise 1.1.17");
-
-        // exR2(3);
+    public static void main(String[] args) {
         StdOut.println("The base case will never be reached");
     }
 }

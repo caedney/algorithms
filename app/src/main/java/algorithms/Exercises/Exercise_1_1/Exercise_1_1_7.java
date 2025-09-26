@@ -68,13 +68,14 @@ public class Exercise_1_1_7 {
         return sum;
     }
 
-    public static void main() {
-        StdOut.println("Exercise 1.1.7");
+    public static void main(String[] args) {
         double result_a = a();
-        StdOut.printf("%.5f\n", result_a);
+        StdOut.printf("%.5f\n", result_a); // 3.00009
+
         double result_b = b();
-        StdOut.println(result_b);
+        StdOut.println(result_b); // 499500.0
+
         double result_c = c();
-        StdOut.println(result_c);
+        StdOut.println(result_c); // 10000.0
     }
 }

@@ -1,7 +1,6 @@
 package algorithms.Exercises.Exercise_1_1;
 
 import edu.princeton.cs.algs4.StdDraw;
-import edu.princeton.cs.algs4.StdOut;
 
 /**
  * Exercise 1.1.32
@@ -54,8 +53,7 @@ public class Exercise_1_1_32 {
         }
     }
 
-    public static void main() {
-        StdOut.println("Exercise 1.1.32");
+    public static void main(String[] args) {
         histogram(5, 0.0, 1.0);
     }
 }

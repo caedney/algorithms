@@ -1,9 +1,5 @@
 package algorithms.Exercises.Exercise_1_1;
 
-// import java.math.BigInteger;
-
-// import com.google.common.math.BigIntegerMath;
-
 import edu.princeton.cs.algs4.StdOut;
 
 /**
@@ -29,19 +25,9 @@ import edu.princeton.cs.algs4.StdOut;
  * </p>
  */
 public class Exercise_1_1_27 {
-    /**
-     * Creates a binomial distribution.
-     * 
-     * @param N Number of trials
-     * @param k Number of successes
-     * @param p Probability of success on a single trial
-     * @throws IllegalArgumentException if {@code p < 0} or {@code p > 1}.
-     * @return Probability of k successes in N
-     */
     public static double binomial(int N, int k, double p) {
-        if (p < 0 || p > 1) {
+        if (p < 0 || p > 1)
             throw new IllegalArgumentException("Out of range");
-        }
 
         if (N == 0 || k < 0)
             return 1.0;
@@ -49,9 +35,8 @@ public class Exercise_1_1_27 {
         return (1.0 - p) * binomial(N - 1, k, p) + p * binomial(N - 1, k - 1, p);
     }
 
-    public static void main() {
-        StdOut.println("Exercise 1.1.27");
+    public static void main(String[] args) {
         double probability = binomial(10, 5, 0.5);
-        StdOut.println("Binomial distribution: " + probability);
+        StdOut.println(probability); // 1.0
     }
 }

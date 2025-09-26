@@ -26,9 +26,12 @@ public class Exercise_1_1_14 {
         return result;
     }
 
-    public static void main() {
-        StdOut.println("Exercise 1.1.14");
-        int N = 20;
-        StdOut.println("lg(" + N + ") = " + lg(N));
+    private static int mathLg(int N) {
+        return (int) (Math.log(N) / Math.log(2));
+    }
+
+    public static void main(String[] args) {
+        StdOut.println(lg(20)); // 4
+        StdOut.println(mathLg(20)); // 4
     }
 }

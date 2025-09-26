@@ -74,7 +74,7 @@ Not without doing a type conversion, but remember that Java usually does the req
 
 ### 🙋‍♂️ What happens if I use a variable before initializing it to a value?
 
-Java will report a compile-time error if there is any path through your code that would lead to use of an uninitialized variable.
+Java will report a compile-time error if there is any path through your code that would lead to the use of an uninitialized variable.
 
 ### 🙋‍♂️ What are the values of `1/0` and `1.0/0.0` as Java expressions?
 
@@ -116,7 +116,7 @@ No. Those operators are defined only for primitive types. See page 80.
 
 ### 🙋‍♂️ What is the result of division and remainder for negative integers?
 
-The quotient `a/b` rounds toward `0`; the remainder `a % b` is defined such that `(a / b) * b + a % b` is always equal to `a`. For example, `-14/3` and `14/-3` are both `-4`, but `-14 % 3` is `-2` and `14 % - 3` is `2`.
+The quotient `a/b` rounds toward `0`; the remainder `a % b` is defined such that `(a / b) * b + a % b` is always equal to `a`. For example, `-14/3` and `14/-3` are both `-4`, but `-14 % 3` is `-2` and `14 % -3` is `2`.
 
 1. Division (/)
 
@@ -145,7 +145,7 @@ System.out.println(-7 % -3); // -1 (same sign as -7)
 ### 🙋‍♂️ Why do we say (`a && b`) and not (`a & b`)?
 
 The operators `&`, `|`, and `^` are _bitwise_ logical operations for integer types that do _and_, _or_, and _exclusive or_ (respectively) on each bit position. Thus the value of `10&6` is `14` and the value of `10^6` is `12`. We use these operators rarely (but occasionally) in this book.
-The operators `&&` and `||` are valid only in boolean expressions are included separately because of _short-circuiting_: an expression is evaluated left-to-right and the evaluation stops when the value is known.
+The operators `&&` and `||` are valid only in boolean expressions and are included separately because of _short-circuiting_: an expression is evaluated left-to-right and the evaluation stops when the value is known.
 
 ### 🙋‍♂️ Is ambiguity in nested `if` statements a problem?
 

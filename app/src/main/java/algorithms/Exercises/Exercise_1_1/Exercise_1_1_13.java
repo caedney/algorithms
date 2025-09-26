@@ -11,29 +11,26 @@ import edu.princeton.cs.algs4.StdOut;
  * </p>
  */
 public class Exercise_1_1_13 {
-    public static void main() {
-        StdOut.println("Exercise 1.1.13");
-
+    public static void main(String[] args) {
         int[][] array = { { 1, 2, 3 }, { 4, 5, 6 } };
-
-        int M = array.length; // number of rows
-        int N = array[0].length; // number of columns
+        int rowsCount = array.length;
+        int colsCount = array[0].length;
 
         StdOut.println("Original array:");
-        for (int i = 0; i < M; i++) {
-            for (int j = 0; j < N; j++) {
-                StdOut.print("    " + array[i][j] + " ");
-            }
+
+        for (int i = 0; i < rowsCount; i++) {
+            for (int j = 0; j < colsCount; j++)
+                StdOut.print("  " + array[i][j] + "  ");
+
             StdOut.println();
         }
 
-        StdOut.println("Transposed array:");
+        StdOut.println("Transposed array:"); // swap rows and columns
 
-        // Transpose: swap rows and columns
-        for (int j = 0; j < N; j++) {
-            for (int i = 0; i < M; i++) {
-                StdOut.print("    " + array[i][j] + " ");
-            }
+        for (int j = 0; j < colsCount; j++) {
+            for (int i = 0; i < rowsCount; i++)
+                StdOut.print("  " + array[i][j] + "  ");
+
             StdOut.println();
         }
     }

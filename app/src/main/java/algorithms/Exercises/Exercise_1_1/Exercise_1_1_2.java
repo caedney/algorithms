@@ -17,11 +17,10 @@ import edu.princeton.cs.algs4.StdOut;
  * </ol>
  */
 public class Exercise_1_1_2 {
-    public static void main() {
-        StdOut.println("Exercise 1.1.2");
-        StdOut.println("(1 + 2.236) / 2 = " + ((1 + 2.236) / 2));
-        StdOut.println("1 + 2 + 3 + 4.0 = " + (1 + 2 + 3 + 4.0));
-        StdOut.printf("4.1 >= 4 = %b\n", 4.1 >= 4);
-        StdOut.println("1 + 2 + '3' = " + (1 + 2 + "3"));
+    public static void main(String[] args) {
+        StdOut.println((1 + 2.236) / 2); // 1.618
+        StdOut.println(1 + 2 + 3 + 4.0); // 10.0
+        StdOut.println(4.1 >= 4); // true
+        StdOut.println(1 + 2 + "3"); // 33
     }
 }

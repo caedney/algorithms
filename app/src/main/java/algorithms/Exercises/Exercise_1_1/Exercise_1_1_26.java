@@ -57,8 +57,7 @@ public class Exercise_1_1_26 {
         StdOut.printf("%d %d %d\n", a, b, c);
     }
 
-    public static void main() {
-        StdOut.println("Exercise 1.1.26");
-        sortNumbers(5, 12, 3);
+    public static void main(String[] args) {
+        sortNumbers(5, 12, 3); // 3, 5, 12
     }
 }

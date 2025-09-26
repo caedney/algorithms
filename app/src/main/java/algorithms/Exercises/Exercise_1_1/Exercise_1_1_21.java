@@ -1,5 +1,7 @@
 package algorithms.Exercises.Exercise_1_1;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Scanner;
 
 import edu.princeton.cs.algs4.StdOut;
@@ -17,16 +19,16 @@ import edu.princeton.cs.algs4.StdOut;
  * </p>
  */
 public class Exercise_1_1_21 {
-    public static void main(String[] args) {
-        StdOut.println("Exercise 1.1.21");
+    public static void main(String[] args) throws IOException {
+        File file = new File("src/main/resources/data/baseball-players.txt");
+        Scanner scanner = new Scanner(file);
 
-        Scanner scanner = new Scanner(System.in);
-
-        StdOut.printf("%-15s %10s %10s %12s%n", "Name", "Value1", "Value2", "Result");
-        StdOut.println("----------------------------------------------------------");
+        StdOut.printf("%-10s %10s %10s %12s%n", "Name", "Value1", "Value2", "Result");
+        StdOut.println("---------------------------------------------");
 
         while (scanner.hasNextLine()) {
             String line = scanner.nextLine().trim();
+
             if (line.isEmpty())
                 continue; // Skip empty lines
 
@@ -37,7 +39,7 @@ public class Exercise_1_1_21 {
 
             double result = (value2 != 0) ? (double) value1 / value2 : Double.NaN;
 
-            StdOut.printf("%-15s %10d %10d %12.3f%n", name, value1, value2, result);
+            StdOut.printf("%-10s %10d %10d %12.3f%n", name, value1, value2, result);
 
             lineScanner.close();
         }

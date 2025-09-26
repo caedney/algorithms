@@ -16,29 +16,27 @@ import edu.princeton.cs.algs4.StdOut;
  */
 public class Exercise_1_1_15 {
     private static int[] histogram(int[] a, int M) {
+        if (M <= 0)
+            throw new IllegalArgumentException("M must be positive");
+
         int[] counts = new int[M];
 
         for (int value : a) {
-            if (value >= 0 && value < M) { // ensure the value is in the expected range
+            if (value >= 0 && value < M) // ensure the value is in the expected range
                 counts[value]++;
-            } else {
-                throw new IllegalArgumentException("Array contains value out of range 0 to " + (M - 1));
-            }
+            else
+                throw new IllegalArgumentException("Invalid value: " + value + ". Expected range: 0.." + (M - 1));
         }
 
         return counts;
     }
 
-    public static void main() {
-        StdOut.println("Exercise 1.1.15");
-
+    public static void main(String[] args) {
         int[] a = { 0, 2, 1, 3, 2, 1, 0, 2 };
         int M = 4;
-
         int[] hist = histogram(a, M);
 
-        for (int i = 0; i < hist.length; i++) {
+        for (int i = 0; i < hist.length; i++)
             StdOut.println(i + ": " + hist[i]);
-        }
     }
 }

@@ -1,7 +1,6 @@
 package algorithms.Exercises.Exercise_1_1;
 
 import edu.princeton.cs.algs4.StdDraw;
-import edu.princeton.cs.algs4.StdOut;
 
 /**
  * Exercise 1.1.31
@@ -15,13 +14,6 @@ import edu.princeton.cs.algs4.StdOut;
  * </p>
  */
 public class Exercise_1_1_31 {
-    /**
-     * Creates random connections between a circle.
-     * 
-     * @param N int value
-     * @param p double between 0.0 and 1.0
-     * @throws IllegalArgumentException if {@code p < 0.0} or {@code p > 1.0}.
-     */
     public static void draw(int N, double p) throws IllegalArgumentException {
         if (p < 0.0 || p > 1.0) {
             throw new IllegalArgumentException("Out of range");
@@ -52,8 +44,7 @@ public class Exercise_1_1_31 {
         }
     }
 
-    public static void main() {
-        StdOut.println("Exercise 1.1.31");
+    public static void main(String[] args) {
         draw(12, 0.5);
     }
 }

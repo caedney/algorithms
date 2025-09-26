@@ -16,38 +16,37 @@ import edu.princeton.cs.algs4.StdOut;
  * </p>
  */
 public class Exercise_1_1_22 {
-    public static int rank(int key, int[] a, int lo, int hi, int depth) {
-        printTrace(lo, hi, depth);
+    private class BinarySearch {
+        public static int rank(int key, int[] a, int lo, int hi, int depth) {
+            printTrace(lo, hi, depth);
 
-        if (lo > hi)
-            return -1; // not found
+            if (lo > hi)
+                return -1; // not found
 
-        int mid = lo + (hi - lo) / 2;
+            int mid = lo + (hi - lo) / 2;
 
-        if (key < a[mid])
-            return rank(key, a, lo, mid - 1, depth + 1);
-        else if (key > a[mid])
-            return rank(key, a, mid + 1, hi, depth + 1);
-        else
-            return mid; // found
+            if (key < a[mid])
+                return rank(key, a, lo, mid - 1, depth + 1);
+            else if (key > a[mid])
+                return rank(key, a, mid + 1, hi, depth + 1);
+            else
+                return mid; // found
+        }
 
+        private static void printTrace(int lo, int hi, int depth) {
+            for (int i = 0; i < depth; i++)
+                StdOut.print("  ");
+
+            StdOut.println("lo=" + lo + " hi=" + hi);
+        }
     }
 
-    private static void printTrace(int lo, int hi, int depth) {
-        for (int i = 0; i < depth; i++)
-            StdOut.print("  "); // 2 spaces per level of depth
-
-        StdOut.println("lo=" + lo + " hi=" + hi);
-    }
-
-    public static void main() {
-        StdOut.println("Exercise 1.1.22");
-
-        int[] a = { 1, 3, 5, 7, 9, 11, 13, 15, 17, 19 };
-        Arrays.sort(a); // Ensure array is sorted (required for binary search)
+    public static void main(String[] args) {
+        int[] array = { 1, 3, 5, 7, 9, 11, 13, 15, 17, 19 };
+        Arrays.sort(array); // Ensure array is sorted (required for binary search)
 
         int key = 7;
-        int result = rank(key, a, 0, a.length - 1, 0);
+        int result = BinarySearch.rank(key, array, 0, array.length - 1, 0);
 
         StdOut.println();
 
@@ -55,6 +54,5 @@ public class Exercise_1_1_22 {
             StdOut.println("Found key " + key + " at index " + result);
         else
             StdOut.println("Key " + key + " not found.");
-
     }
 }

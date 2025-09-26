@@ -37,75 +37,6 @@ import edu.princeton.cs.algs4.StdOut;
  * </p>
  */
 public class Exercise_1_1_35 {
-    /**
-     * <table>
-     * <thead>
-     * <tr>
-     * <th>Sum (k)</th>
-     * <th>Count (disk[k])</th>
-     * </tr>
-     * </thead> <tbody>
-     * <tr>
-     * <td>2</td>
-     * <td>1</td>
-     * </tr>
-     * <tr>
-     * <td>3</td>
-     * <td>2</td>
-     * </tr>
-     * <tr>
-     * <td>4</td>
-     * <td>3</td>
-     * </tr>
-     * <tr>
-     * <td>5</td>
-     * <td>4</td>
-     * </tr>
-     * <tr>
-     * <td>6</td>
-     * <td>5</td>
-     * </tr>
-     * <tr>
-     * <td>7</td>
-     * <td>6</td>
-     * </tr>
-     * <tr>
-     * <td>7</td>
-     * <td>6</td>
-     * </tr>
-     * <tr>
-     * <td>8</td>
-     * <td>5</td>
-     * </tr>
-     * <tr>
-     * <td>9</td>
-     * <td>4</td>
-     * </tr>
-     * <tr>
-     * <td>9</td>
-     * <td>4</td>
-     * </tr>
-     * <tr>
-     * <td>10</td>
-     * <td>3</td>
-     * </tr>
-     * <tr>
-     * <td>11</td>
-     * <td>2</td>
-     * </tr>
-     * <tr>
-     * <td>12</td>
-     * <td>1</td>
-     * </tr>
-     * </tbody>
-     * </table>
-     * 
-     * <p>
-     * Sum all counts: 1 + 2 + 3 + 4 + 5 + 6 + 5 + 4 + 3 + 2 + 1 = 36
-     * </p>
-     * 
-     * @return double[] dist
-     */
     public static double[] calculateDistribution() {
         int SIDES = 6;
         double POSSIBLE_OUTCOMES = SIDES * SIDES;
@@ -153,14 +84,11 @@ public class Exercise_1_1_35 {
         return bd.doubleValue();
     }
 
-    public static void main() {
-        StdOut.println("Exercise 1.1.35");
-
+    public static void main(String[] args) {
         double[] exact = calculateDistribution();
         StdOut.println("exact " + Arrays.toString(exact));
 
         double[] empirical = simulateDistribution(2, 6, 1000000);
         StdOut.println("empirical " + Arrays.toString(empirical));
-
     }
 }

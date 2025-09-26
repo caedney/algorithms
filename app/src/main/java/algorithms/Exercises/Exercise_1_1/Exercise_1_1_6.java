@@ -20,7 +20,7 @@ import edu.princeton.cs.algs4.StdOut;
  * }
  */
 public class Exercise_1_1_6 {
-    private static int fib(int N) {
+    private static int fibonacci(int N) {
         int f = 0;
         int g = 1;
 
@@ -32,10 +32,8 @@ public class Exercise_1_1_6 {
         return g;
     }
 
-    public static void main() {
-        StdOut.println("Exercise 1.1.6");
-        for (int i = 0; i <= 10; i += 1) {
-            StdOut.println(fib(i));
-        }
+    public static void main(String[] args) {
+        for (int i = 0; i <= 10; i += 1)
+            StdOut.print(fibonacci(i) + " "); // 0 1 1 2 3 5 8 13 21 34 55
     }
 }

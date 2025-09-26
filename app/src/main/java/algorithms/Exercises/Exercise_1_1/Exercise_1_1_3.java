@@ -12,16 +12,14 @@ import edu.princeton.cs.algs4.StdOut;
  */
 public class Exercise_1_1_3 {
     private static String checkEquality(int x, int y, int z) {
-        if (x == y && y == z) {
+        if (x == y && y == z)
             return "equal";
-        }
 
         return "not equal";
     }
 
-    public static void main() {
-        StdOut.println("Exercise 1.1.3");
+    public static void main(String[] args) {
         String result = checkEquality(10, 10, 11);
-        StdOut.println("arguments are " + result);
+        StdOut.println("Arguments are " + result);
     }
 }
