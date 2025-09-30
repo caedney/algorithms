@@ -1,5 +1,8 @@
 package algorithms.Exercises.Exercise_1_1;
 
+import algorithms.ShuffleTest;
+import edu.princeton.cs.algs4.StdOut;
+
 /**
  * Exercise 1.1.36
  * 
@@ -15,5 +18,26 @@ package algorithms.Exercises.Exercise_1_1;
  */
 public class Exercise_1_1_36 {
     public static void main(String[] args) {
+        int M = 5; // size of array
+        int N = 1000; // number of trials
+        int[][] counts = new int[M][M]; // counts[i][j] = #times i ends in pos j
+        int[] a = new int[M];
+
+        for (int trial = 0; trial < N; trial++) {
+            for (int i = 0; i < M; i++)
+                a[i] = i; // initialize
+
+            ShuffleTest.shuffle(a);
+
+            for (int j = 0; j < M; j++)
+                counts[a[j]][j]++; // record results
+        }
+
+        for (int i = 0; i < M; i++) {
+            for (int j = 0; j < M; j++)
+                StdOut.printf("%7d", counts[i][j]);
+
+            StdOut.println();
+        }
     }
 }
