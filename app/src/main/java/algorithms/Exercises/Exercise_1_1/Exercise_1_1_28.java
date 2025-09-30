@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import algorithms.BinarySearch;
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
@@ -19,23 +20,6 @@ import edu.princeton.cs.algs4.StdOut;
  * </p>
  */
 public class Exercise_1_1_28 {
-    public static int rank(int key, int[] array) {
-        int lo = 0;
-        int hi = array.length - 1;
-
-        while (lo <= hi) {
-            int mid = lo + (hi - lo) / 2;
-            if (key < array[mid])
-                hi = mid - 1;
-            else if (key > array[mid])
-                lo = mid + 1;
-            else
-                return mid;
-        }
-
-        return -1;
-    }
-
     public static void main(String[] args) throws IOException {
         System.setIn(new FileInputStream("src/data/algs4/tinyT.txt"));
         In in = new In("src/data/algs4/tinyW.txt");
@@ -52,7 +36,7 @@ public class Exercise_1_1_28 {
         while (!StdIn.isEmpty()) {
             int key = StdIn.readInt();
 
-            if (rank(key, whitelist) < 0)
+            if (BinarySearch.rank(key, whitelist) < 0)
                 StdOut.println(key);
         }
     }
