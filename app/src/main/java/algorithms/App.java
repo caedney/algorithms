@@ -3,17 +3,14 @@
  */
 package algorithms;
 
-import java.io.FileInputStream;
-import java.io.IOException;
+import edu.princeton.cs.algs4.StdOut;
 
 public class App {
     public static String getGreeting() {
         return "Hello, World!";
     }
 
-    public static void main(String[] args) throws IOException {
-        String[] binarySearchArgs = { "src/data/algs4/tinyW.txt" };
-        System.setIn(new FileInputStream("src/data/algs4/tinyT.txt"));
-        BinarySearch.main(binarySearchArgs);
+    public static void main(String[] args) {
+        StdOut.println(getGreeting());
     }
 }
