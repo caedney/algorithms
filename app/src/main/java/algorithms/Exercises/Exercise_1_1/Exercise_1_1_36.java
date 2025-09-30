@@ -19,7 +19,7 @@ import edu.princeton.cs.algs4.StdOut;
 public class Exercise_1_1_36 {
     public static void main(String[] args) {
         int M = 5; // size of array
-        int N = 1000; // number of trials
+        int N = 100000; // number of trials
         int[][] counts = new int[M][M]; // counts[i][j] = #times i ends in pos j
         int[] a = new int[M];
 

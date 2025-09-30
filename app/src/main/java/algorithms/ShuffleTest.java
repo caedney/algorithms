@@ -5,23 +5,18 @@ import edu.princeton.cs.algs4.StdRandom;
 
 public class ShuffleTest {
     public static double uniform(double a, double b) {
-        // return a + StdRandom.random() * (b - a);
         return a + StdRandom.uniformDouble() * (b - a);
     }
 
     public static int uniform(int N) {
-        // return (int) (StdRandom.random() * N);
         return StdRandom.uniformInt(N);
     }
 
     public static int uniform(int lo, int hi) {
-        // return lo + StdRandom.uniform(hi - lo);
         return lo + StdRandom.uniformInt(hi - lo);
     }
 
     public static int discrete(double[] a) {
-        // Entries in all must sum to 1
-        // double r = StdRandom.random();
         double r = StdRandom.uniformDouble();
         double sum = 0.0;
 
@@ -38,9 +33,7 @@ public class ShuffleTest {
         int N = a.length;
 
         for (int i = 0; i < N; i++) {
-            // Exchange a[i] with random element in a[i..N-1]
-            // int r = i + StdRandom.uniform(N - i);
-            int r = i + StdRandom.uniformInt(N - i);
+            int r = i + StdRandom.uniformInt(N - i); // random between i and N-1
             int temp = a[i];
             a[i] = a[r];
             a[r] = temp;
