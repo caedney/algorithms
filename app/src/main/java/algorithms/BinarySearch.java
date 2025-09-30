@@ -1,7 +1,7 @@
 package algorithms;
 
 import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.FileNotFoundException;
 import java.util.Arrays;
 
 import edu.princeton.cs.algs4.In;
@@ -26,7 +26,7 @@ public class BinarySearch {
         return -1;
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws FileNotFoundException {
         System.setIn(new FileInputStream("src/data/algs4/tinyT.txt"));
         In in = new In("src/data/algs4/tinyW.txt");
 
