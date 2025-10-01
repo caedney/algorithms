@@ -2,6 +2,7 @@ package algorithms.Exercises.Exercise_1_2;
 
 import java.util.Random;
 
+import edu.princeton.cs.algs4.Point2D;
 import edu.princeton.cs.algs4.StdOut;
 
 /**
@@ -14,27 +15,6 @@ import edu.princeton.cs.algs4.StdOut;
  * </p>
  */
 public class Exercise_1_2_1 {
-    private static class Point2D {
-        double x, y;
-
-        Point2D(double x, double y) {
-            this.x = x;
-            this.y = y;
-        }
-
-        double distanceTo(Point2D that) {
-            double dx = this.x - that.x;
-            double dy = this.y - that.y;
-
-            return Math.sqrt(dx * dx + dy * dy);
-        }
-
-        @Override
-        public String toString() {
-            return "(" + x + ", " + y + ")";
-        }
-    }
-
     public static void main(String[] args) {
         if (args.length != 1)
             throw new IllegalArgumentException("Must use one argument");
@@ -44,9 +24,8 @@ public class Exercise_1_2_1 {
 
         // Generate N random points
         Point2D[] points = new Point2D[N];
-        for (int i = 0; i < N; i++) {
+        for (int i = 0; i < N; i++)
             points[i] = new Point2D(rand.nextDouble(), rand.nextDouble());
-        }
 
         // Compute closest pair distance
         double minDist = Double.POSITIVE_INFINITY;
@@ -55,6 +34,7 @@ public class Exercise_1_2_1 {
         for (int i = 0; i < N; i++) {
             for (int j = i + 1; j < N; j++) {
                 double dist = points[i].distanceTo(points[j]);
+
                 if (dist < minDist) {
                     minDist = dist;
                     p1 = points[i];
@@ -63,7 +43,6 @@ public class Exercise_1_2_1 {
             }
         }
 
-        // Output result
         StdOut.println("Closest pair distance = " + minDist);
         StdOut.println("Between points " + p1 + " and " + p2);
     }
