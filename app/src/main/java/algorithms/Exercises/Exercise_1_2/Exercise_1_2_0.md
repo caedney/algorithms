@@ -62,7 +62,7 @@ That code works fine, but Java saves us the trouble of writing it by automatical
 ### 🙋‍♂️ What is a _pointer_?
 
 Good question. Perhaps that should be `NullReferenceException`. Like a Java reference, you can think of a _pointer_ as a machine address. In many programming languages, the pointer is a primitive data type that programmers can manipulate in many ways. But programming with pointers is notoriously error-prone, so operations provided for pointers need to be carefully designed to help programmers avoid errors.
-Java takes this point of view to an extreme (that is favored by many modern program-ming-language designers). In Java, there is only _one_ way to create a reference (`new`) and only _one_ way to change a reference (with an assignment statement). That is, the only things that a programmer can do with references are to create them and copy them. In programming-language jargon, Java references are known as _safe pointers_, because Java can guarantee that each reference points to an object of the specified type (and it can determine which objects are not in use, for garbage collection). Programmers used to writing code that directly manipulates pointers think of Java as having no pointers at all, but people still debate whether it is really desirable to have unsafe pointers.
+Java takes this point of view to an extreme (that is favored by many modern programming-language designers). In Java, there is only _one_ way to create a reference (`new`) and only _one_ way to change a reference (with an assignment statement). That is, the only things that a programmer can do with references are to create them and copy them. In programming-language jargon, Java references are known as _safe pointers_, because Java can guarantee that each reference points to an object of the specified type (and it can determine which objects are not in use, for garbage collection). Programmers used to writing code that directly manipulates pointers think of Java as having no pointers at all, but people still debate whether it is really desirable to have unsafe pointers.
 
 ### 🙋‍♂️ Where can I find more details on how Java implements references and does garbage collection?
 
@@ -74,7 +74,12 @@ Not much: it just saves some typing. You could type `java.util.Arrays` instead o
 
 ### 🙋‍♂️ What is the problem with implementation inheritance?
 
-Subtyping makes modular programming more difficult for two reasons. First, any change in the superclass affects all subclasses. The subclass cannot be developed _independently_ of the superclass; indeed, it is _completely dependent_ on the superclass. This problem is known as the _fragile base class_ problem. Second, the subclass code, having access to instance variables, can subvert the intention of the superclass code. For example, the designer of a class like `Counter` for a voting system may take great care to make it so that `Counter` can only increment the tally by one (remember Al Gore's problem). But a subclass, with full access to the instance variable, can change it to any value whatever.
+(i.e., using extends to inherit code from a superclass)
+
+Subtyping makes modular programming more difficult for two reasons:
+
+1. Any change in the superclass affects all subclasses. The subclass cannot be developed _independently_ of the superclass; indeed, it is _completely dependent_ on the superclass. This problem is known as the _fragile base class_ problem.
+2. The subclass code, having access to instance variables, can subvert the intention of the superclass code. For example, the designer of a class like `Counter` for a voting system may take great care to make it so that `Counter` can only increment the tally by one (remember Al Gore's problem). But a subclass, with full access to the instance variable, can change it to any value whatever.
 
 ### 🙋‍♂️ How do I make a class immutable?
 
