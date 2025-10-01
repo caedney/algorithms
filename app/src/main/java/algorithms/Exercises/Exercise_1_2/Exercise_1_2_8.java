@@ -1,5 +1,7 @@
 package algorithms.Exercises.Exercise_1_2;
 
+import edu.princeton.cs.algs4.StdOut;
+
 /**
  * Exercise 1.2.8
  * 
@@ -18,6 +20,32 @@ package algorithms.Exercises.Exercise_1_2;
  * </p>
  */
 public class Exercise_1_2_8 {
+    private static void printArray(String name, int[] arr) {
+        StdOut.print(name + "[");
+
+        for (int i = 0; i < arr.length; i++) {
+            StdOut.print(arr[i]);
+            if (i < arr.length - 1)
+                StdOut.print(", ");
+        }
+
+        StdOut.println("]");
+    }
+
     public static void main(String[] args) {
+        int[] a = { 1, 2, 3 };
+        int[] b = { 9, 8, 7 };
+
+        StdOut.println("Before swap:");
+        printArray("a = ", a);
+        printArray("b = ", b);
+
+        int[] t = a;
+        a = b;
+        b = t;
+
+        StdOut.println("\nAfter swap:");
+        printArray("a = ", a);
+        printArray("b = ", b);
     }
 }
