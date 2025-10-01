@@ -29,6 +29,19 @@ public class Transaction {
         return amount;
     }
 
+    public boolean equals(Object other) {
+        if (other == this)
+            return true;
+        if (other == null)
+            return false;
+        if (other.getClass() != this.getClass())
+            return false;
+
+        Transaction that = (Transaction) other;
+
+        return (this.amount == that.amount) && (this.who.equals(that.who)) && (this.when.equals(that.when));
+    }
+
     public static Transaction[] readTransactions(String name) {
         In in = new In(name);
         Queue<Transaction> q = new Queue<Transaction>();
