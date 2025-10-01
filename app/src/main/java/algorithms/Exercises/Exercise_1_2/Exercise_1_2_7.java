@@ -30,8 +30,6 @@ public class Exercise_1_2_7 {
         String a = s.substring(0, N / 2);
         String b = s.substring(N / 2, N);
 
-        StdOut.println(a + b);
-
         return mystery(b) + mystery(a);
     }
 
