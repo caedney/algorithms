@@ -18,7 +18,6 @@ import edu.princeton.cs.algs4.StdOut;
  */
 public class Exercise_1_2_6 {
     private static boolean isCircularShift(String s, String t) {
-        // ACTGACGACTGACG TGACGAC indexof t is 2
         return s.length() == t.length() && (s + s).indexOf(t) > -1;
     }
 
