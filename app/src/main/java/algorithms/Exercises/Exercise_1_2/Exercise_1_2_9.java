@@ -1,5 +1,7 @@
 package algorithms.Exercises.Exercise_1_2;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.Arrays;
 
 import edu.princeton.cs.algs4.Counter;
@@ -37,11 +39,11 @@ public class Exercise_1_2_9 {
         return -1;
     }
 
-    public static void main(String[] args) {
-        In in = new In(args[0]);
+    public static void main(String[] args) throws FileNotFoundException {
+        System.setIn(new FileInputStream("src/data/algs4/tinyT.txt"));
+        In in = new In("src/data/algs4/tinyW.txt");
 
         int[] whitelist = in.readAllInts();
-
         Arrays.sort(whitelist);
         Counter counter = new Counter("Counter");
 
