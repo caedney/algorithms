@@ -16,9 +16,6 @@ import edu.princeton.cs.algs4.StdOut;
  */
 public class Exercise_1_2_1 {
     public static void main(String[] args) {
-        if (args.length != 1)
-            throw new IllegalArgumentException("Must use one argument");
-
         int N = Integer.parseInt(args[0]);
         Random random = new Random();
 
