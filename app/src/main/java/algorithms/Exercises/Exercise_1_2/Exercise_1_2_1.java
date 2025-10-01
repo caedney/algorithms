@@ -20,12 +20,12 @@ public class Exercise_1_2_1 {
             throw new IllegalArgumentException("Must use one argument");
 
         int N = Integer.parseInt(args[0]);
-        Random rand = new Random();
+        Random random = new Random();
 
         // Generate N random points
         Point2D[] points = new Point2D[N];
         for (int i = 0; i < N; i++)
-            points[i] = new Point2D(rand.nextDouble(), rand.nextDouble());
+            points[i] = new Point2D(random.nextDouble(), random.nextDouble());
 
         // Compute closest pair distance
         double minDist = Double.POSITIVE_INFINITY;
