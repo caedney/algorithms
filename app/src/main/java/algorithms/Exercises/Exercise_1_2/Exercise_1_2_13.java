@@ -1,6 +1,6 @@
 package algorithms.Exercises.Exercise_1_2;
 
-import algorithms.Exercises.Exercise_1_2.Exercise_1_2_14.Transaction;
+import algorithms.Transaction;
 import edu.princeton.cs.algs4.StdOut;
 
 /**
