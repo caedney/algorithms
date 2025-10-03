@@ -5,9 +5,8 @@ public class Rational {
     long denominator;
 
     public Rational(long numerator, long denominator) {
-        if (denominator == 0) {
+        if (denominator == 0)
             throw new ArithmeticException("denominator is zero");
-        }
 
         long g = gcd(numerator, denominator);
         this.numerator = numerator / g;
@@ -45,6 +44,7 @@ public class Rational {
     public Rational times(Rational b) {
         Rational c = new Rational(this.numerator, b.denominator);
         Rational d = new Rational(b.numerator, this.denominator);
+
         return new Rational(c.numerator * d.numerator, c.denominator * d.denominator);
     }
 
@@ -59,6 +59,7 @@ public class Rational {
     public boolean equals(Rational that) {
         if (that == null)
             return false;
+
         if (that.getClass() != this.getClass())
             return false;
 
@@ -68,8 +69,10 @@ public class Rational {
     public int compareTo(Rational b) {
         long lhs = this.numerator * b.denominator;
         long rhs = this.denominator * b.numerator;
+
         if (lhs < rhs)
             return -1;
+
         if (lhs > rhs)
             return +1;
 
