@@ -1,92 +1,77 @@
 package algorithms;
 
+import java.math.BigInteger;
+
 import edu.princeton.cs.algs4.StdOut;
 
 public class Rational {
-    long numerator;
-    long denominator;
+    private final BigInteger numerator;
+    private final BigInteger denominator;
 
-    public Rational(long numerator, long denominator) {
-        if (denominator == 0)
+    public Rational(int numerator, int denominator) {
+        this(BigInteger.valueOf(numerator), BigInteger.valueOf(denominator));
+    }
+
+    public Rational(BigInteger numerator, BigInteger denominator) {
+        if (denominator.equals(BigInteger.ZERO))
             throw new ArithmeticException("denominator is zero");
 
-        long g = gcd(numerator, denominator);
-        this.numerator = numerator / g;
-        this.denominator = denominator / g;
+        // Normalize sign so denominator is always positive
+        if (denominator.signum() < 0) {
+            numerator = numerator.negate();
+            denominator = denominator.negate();
+        }
+
+        // Reduce fraction
+        BigInteger gcd = numerator.gcd(denominator);
+        this.numerator = numerator.divide(gcd);
+        this.denominator = denominator.divide(gcd);
+
+        assert this.denominator.signum() > 0 : "Denominator must be positive";
+        assert numerator.gcd(denominator).equals(BigInteger.ONE) : "Rational not in lowest terms";
     }
 
-    private static long gcd(long p, long q) {
-        if (q == 0)
-            return p;
-
-        return gcd(q, p % q);
+    public Rational plus(Rational other) {
+        BigInteger num = this.numerator.multiply(other.denominator).add(other.numerator.multiply(this.denominator));
+        BigInteger den = this.denominator.multiply(other.denominator);
+        return new Rational(num, den);
     }
 
-    public Rational plus(Rational that) {
-        long f = gcd(this.numerator, that.numerator);
-        long g = gcd(this.denominator, that.denominator);
-
-        Rational s = new Rational(
-                (this.numerator / f) * (that.denominator / g) + (that.numerator / f) * (this.denominator / g),
-                this.denominator * (that.denominator / g));
-
-        s.numerator *= f;
-
-        return s;
+    public Rational minus(Rational other) {
+        BigInteger num = this.numerator.multiply(other.denominator)
+                .subtract(other.numerator.multiply(this.denominator));
+        BigInteger den = this.denominator.multiply(other.denominator);
+        return new Rational(num, den);
     }
 
-    public Rational negate() {
-        return new Rational(-numerator, denominator);
+    public Rational times(Rational other) {
+        BigInteger num = this.numerator.multiply(other.numerator);
+        BigInteger den = this.denominator.multiply(other.denominator);
+        return new Rational(num, den);
     }
 
-    public Rational minus(Rational b) {
-        return this.plus(b.negate());
+    public Rational divides(Rational other) {
+        assert !other.numerator.equals(BigInteger.ZERO) : "Division by zero";
+
+        BigInteger num = this.numerator.multiply(other.denominator);
+        BigInteger den = this.denominator.multiply(other.numerator);
+        return new Rational(num, den);
     }
 
-    public Rational times(Rational b) {
-        Rational c = new Rational(this.numerator, b.denominator);
-        Rational d = new Rational(b.numerator, this.denominator);
-
-        return new Rational(c.numerator * d.numerator, c.denominator * d.denominator);
-    }
-
-    public Rational reciprocal() {
-        return new Rational(denominator, numerator);
-    }
-
-    public Rational divides(Rational b) {
-        return this.times(b.reciprocal());
-    }
-
-    public boolean equals(Rational that) {
-        if (that == null)
+    @Override
+    public boolean equals(Object other) {
+        if (!(other instanceof Rational))
             return false;
 
-        if (that.getClass() != this.getClass())
-            return false;
-
-        return this.compareTo(that) == 0;
-    }
-
-    public int compareTo(Rational b) {
-        long lhs = this.numerator * b.denominator;
-        long rhs = this.denominator * b.numerator;
-
-        if (lhs < rhs)
-            return -1;
-
-        if (lhs > rhs)
-            return +1;
-
-        return 0;
+        Rational r = (Rational) other;
+        return numerator.equals(r.numerator) && denominator.equals(r.denominator);
     }
 
     @Override
     public String toString() {
-        if (denominator == 1)
-            return numerator + "";
-        else
-            return numerator + "/" + denominator;
+        if (denominator.equals(BigInteger.ONE))
+            return numerator.toString();
+        return numerator + "/" + denominator;
     }
 
     public static void main(String[] args) {
