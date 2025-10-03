@@ -1,32 +1,46 @@
 package algorithms;
 
+import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
-import edu.princeton.cs.algs4.StdRandom;
 
 public class Accumulator {
-    private double total;
+    private double m;
+    private double s;
     private int N;
 
-    public void addDataValue(double val) {
+    public void addDataValue(double x) {
         N++;
-        total += val;
+        s = s + 1.0 * (N - 1) / N * (x - m) * (x - m);
+        m = m + (x - m) / N;
     }
 
     public double mean() {
-        return total / N;
+        return m;
+    }
+
+    public double var() {
+        return s / (N - 1);
+    }
+
+    public double stddev() {
+        return Math.sqrt(var());
     }
 
     public String toString() {
-        return "Mean (" + N + " values): " + String.format("%7.5f", mean());
+        return "N = " + N + ", mean = " + mean() + ", stddev = " + stddev() + ", var = " + var();
     }
 
     public static void main(String[] args) {
-        int T = Integer.parseInt(args[0]);
-        Accumulator a = new Accumulator();
+        Accumulator stats = new Accumulator();
 
-        for (int t = 0; t < T; t++)
-            a.addDataValue(StdRandom.uniformDouble());
+        while (!StdIn.isEmpty()) {
+            double x = StdIn.readDouble();
+            stats.addDataValue(x);
+        }
 
-        StdOut.println(a);
+        StdOut.printf("mean   = %.5f\n", stats.mean());
+        StdOut.printf("stddev = %.5f\n", stats.stddev());
+        StdOut.printf("var    = %.5f\n", stats.var());
+        StdOut.println(stats);
     }
 }
