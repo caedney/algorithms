@@ -1,5 +1,9 @@
 package algorithms.Exercises.Exercise_1_2;
 
+import algorithms.Date;
+import algorithms.Transaction;
+import edu.princeton.cs.algs4.StdOut;
+
 /**
  * Exercise 1.2.19
  * 
@@ -45,15 +49,11 @@ package algorithms.Exercises.Exercise_1_2;
  * </table>
  */
 public class Exercise_1_2_19 {
-    public int Date(String date) {
-        String[] fields = date.split("/");
-        int month = Integer.parseInt(fields[0]);
-        int day = Integer.parseInt(fields[1]);
-        int year = Integer.parseInt(fields[2]);
-
-        return month + day + year;
-    }
-
     public static void main(String[] args) {
+        Date date = new Date("22/05/1939");
+        StdOut.println(date); // 22/05/1939
+
+        Transaction transaction = new Transaction("Turing 22/05/1939 11.99");
+        StdOut.println(transaction); // Turing 22/5/1939 11.99
     }
 }
