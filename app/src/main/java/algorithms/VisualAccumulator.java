@@ -6,7 +6,7 @@ import edu.princeton.cs.algs4.StdRandom;
 
 public class VisualAccumulator {
     private double total;
-    private int N;
+    private int size;
 
     public VisualAccumulator(int trials, double max) {
         StdDraw.setXscale(0, trials);
@@ -15,20 +15,20 @@ public class VisualAccumulator {
     }
 
     public void addDataValue(double val) {
-        N++;
+        size++;
         total += val;
         StdDraw.setPenColor(StdDraw.DARK_GRAY);
-        StdDraw.point(N, val);
+        StdDraw.point(size, val);
         StdDraw.setPenColor(StdDraw.RED);
-        StdDraw.point(N, total / N);
+        StdDraw.point(size, total / size);
     }
 
     public double mean() {
-        return total / N;
+        return total / size;
     }
 
     public String toString() {
-        return "Mean (" + N + " values): " + String.format("%7.5f", mean());
+        return "Mean (" + size + " values): " + String.format("%7.5f", mean());
     }
 
     public static void main(String[] args) {
