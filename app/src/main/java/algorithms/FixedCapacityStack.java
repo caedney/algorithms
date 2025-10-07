@@ -5,58 +5,60 @@ import edu.princeton.cs.algs4.StdOut;
 
 @SuppressWarnings("unchecked")
 public class FixedCapacityStack<Item> {
-    private Item[] a;
-    private int N;
+    private Item[] array;
+    private int size;
 
-    public FixedCapacityStack(int cap) {
-        a = (Item[]) new Object[cap];
+    public FixedCapacityStack(int capacity) {
+        this.array = (Item[]) new Object[capacity];
+        this.size = 0;
     }
 
     public boolean isEmpty() {
-        return N == 0;
+        return size == 0;
     }
 
     public int size() {
-        return N;
+        return size;
     }
 
     public void resize(int max) {
         Item[] temp = (Item[]) new Object[max];
 
-        for (int i = 0; i < N; i++)
-            temp[i] = a[i];
+        for (int i = 0; i < size; i++)
+            temp[i] = array[i];
 
-        a = temp;
+        array = temp;
     }
 
     public void push(Item item) {
-        if (N == a.length)
-            resize(2 * a.length);
-        a[N++] = item;
+        if (size == array.length)
+            resize(2 * array.length);
+
+        array[size++] = item;
     }
 
     public Item pop() {
-        Item item = a[--N];
+        Item item = array[--size];
 
-        a[N] = null;
+        array[size] = null;
 
-        if (N > 0 && N == a.length / 4)
-            resize(a.length / 2);
+        if (size > 0 && size == array.length / 4)
+            resize(array.length / 2);
 
         return item;
     }
 
     public static void main(String[] args) {
-        FixedCapacityStack<String> s = new FixedCapacityStack<String>(100);
+        FixedCapacityStack<String> stack = new FixedCapacityStack<String>(100);
 
         while (!StdIn.isEmpty()) {
             String item = StdIn.readString();
             if (!item.equals("-")) {
-                s.push(item);
-            } else if (!s.isEmpty())
-                StdOut.print(s.pop() + " ");
+                stack.push(item);
+            } else if (!stack.isEmpty())
+                StdOut.print(stack.pop() + " ");
         }
 
-        StdOut.println("(" + s.size() + " left on stack)");
+        StdOut.println("(" + stack.size() + " left on stack)");
     }
 }
