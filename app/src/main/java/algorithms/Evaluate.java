@@ -46,6 +46,7 @@ public class Evaluate {
                 vals.push(Double.parseDouble(s));
             }
         }
+
         StdOut.println(vals.pop());
     }
 }
