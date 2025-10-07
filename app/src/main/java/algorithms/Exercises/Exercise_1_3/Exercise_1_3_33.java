@@ -1,7 +1,5 @@
 package algorithms.Exercises.Exercise_1_3;
 
-import java.util.StringJoiner;
-
 import algorithms.Deque;
 import algorithms.ResizingArrayDeque;
 import edu.princeton.cs.algs4.In;
@@ -15,6 +13,7 @@ import edu.princeton.cs.algs4.StdOut;
  * like a stack or a queue but supports adding and removing items at both ends.
  * A deque stores a collection of items and supports the following API:
  * </p>
+ * 
  * {@code public class Deque<Item> implements Iterable<Item>}
  * <table>
  * <tbody>
@@ -71,12 +70,11 @@ public class Exercise_1_3_33 {
             deque.pushRight(item);
         }
 
-        StdOut.println("removed from left: " + deque.popLeft());
-        StdOut.println("removed from left: " + deque.popRight());
+        StdOut.println("removed from left:  " + deque.popLeft());
+        StdOut.println("removed from right: " + deque.popRight());
 
-        for (int value : deque) {
+        for (int value : deque)
             StdOut.print(value + " ");
-        }
 
         StdOut.println("\n\nResizingArrayDeque");
         ResizingArrayDeque<Integer> arrayDeque = new ResizingArrayDeque<Integer>();
@@ -92,12 +90,7 @@ public class Exercise_1_3_33 {
         arrayDeque.popLeft();
         arrayDeque.popRight();
 
-        StringJoiner joiner = new StringJoiner(", ", "[", "]");
-        for (Integer value : arrayDeque) {
-            joiner.add(String.valueOf(value));
-        }
-
-        StdOut.println(joiner.toString());
+        StdOut.println(arrayDeque);
         StdOut.println("capacity: " + arrayDeque.capacity());
     }
 }
