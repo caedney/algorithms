@@ -7,14 +7,29 @@ import java.util.StringJoiner;
 import edu.princeton.cs.algs4.StdOut;
 
 public class Queue<Item> implements Iterable<Item> {
-    private Node<Item> front;
-    private Node<Item> back;
+    private Node<Item> head;
+    private Node<Item> tail;
     private int size;
 
     public Queue() {
-        front = null;
-        back = null;
-        size = 0;
+        this.head = null;
+        this.tail = null;
+        this.size = 0;
+    }
+
+    public Queue(Queue<Item> queue) {
+        this(); // initialize empty queue
+
+        Queue<Item> temp = new Queue<>();
+
+        while (!queue.isEmpty()) {
+            Item item = queue.dequeue(); // remove from queue
+            this.enqueue(item); // copy into this
+            temp.enqueue(item); // keep backup
+        }
+
+        while (!temp.isEmpty())
+            queue.enqueue(temp.dequeue()); // restore queue
     }
 
     private static class Node<Item> {

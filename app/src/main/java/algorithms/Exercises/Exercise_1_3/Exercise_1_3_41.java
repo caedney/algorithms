@@ -1,7 +1,6 @@
 package algorithms.Exercises.Exercise_1_3;
 
-import java.util.Iterator;
-
+import algorithms.Queue;
 import edu.princeton.cs.algs4.StdOut;
 
 /**
@@ -20,101 +19,6 @@ import edu.princeton.cs.algs4.StdOut;
  * </p>
  */
 public class Exercise_1_3_41 {
-    public static class Queue<Item> implements Iterable<Item> {
-        private Node<Item> front;
-        private Node<Item> back;
-        private int size;
-
-        public Queue() {
-            front = null;
-            back = null;
-            size = 0;
-        }
-
-        public Queue(Queue<Item> queue) {
-            this(); // initialize empty queue
-
-            Queue<Item> temp = new Queue<>();
-
-            while (!queue.isEmpty()) {
-                Item item = queue.dequeue(); // remove from queue
-                this.enqueue(item); // copy into this
-                temp.enqueue(item); // keep backup
-            }
-
-            while (!temp.isEmpty())
-                queue.enqueue(temp.dequeue()); // restore queue
-        }
-
-        private static class Node<Item> {
-            private Item item;
-            private Node<Item> next;
-
-            Node(Item item, Node<Item> next) {
-                this.item = item;
-                this.next = next;
-            }
-        }
-
-        public boolean isEmpty() {
-            return size == 0;
-        }
-
-        public int size() {
-            return size;
-        }
-
-        public void enqueue(Item item) {
-            Node<Item> newNode = new Node<Item>(item, null);
-
-            if (isEmpty()) {
-                front = newNode;
-                back = newNode;
-            } else {
-                back.next = newNode;
-                back = newNode;
-            }
-
-            size++;
-        }
-
-        public Item dequeue() {
-            if (isEmpty())
-                throw new RuntimeException("Queue underflow");
-
-            Item item = front.item;
-            front = front.next;
-            size--;
-
-            if (isEmpty())
-                back = null;
-
-            return item;
-        }
-
-        public Iterator<Item> iterator() {
-            return new QueueIterator(front);
-        }
-
-        private class QueueIterator implements Iterator<Item> {
-            private Node<Item> current;
-
-            public QueueIterator(Node<Item> front) {
-                current = front;
-            }
-
-            public boolean hasNext() {
-                return current != null;
-            }
-
-            public Item next() {
-                Item item = current.item;
-                current = current.next;
-                return item;
-            }
-        }
-    }
-
     public static void main(String[] args) {
         Queue<Integer> q = new Queue<>();
         q.enqueue(1);
