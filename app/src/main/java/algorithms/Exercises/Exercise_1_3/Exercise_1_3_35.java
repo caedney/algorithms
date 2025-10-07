@@ -11,6 +11,7 @@ import edu.princeton.cs.algs4.StdOut;
  * <i>Random queue</i>. A <i>random queue</i> stores a collection of items and
  * supports the following API:
  * </p>
+ * 
  * {@code public class RandomQueue<Item>}
  * <table>
  * <tbody>
@@ -43,6 +44,7 @@ import edu.princeton.cs.algs4.StdOut;
  * </tr>
  * </tbody>
  * </table>
+ * 
  * <p>
  * Write a class {@code RandomQueue} that implements this API. <i>Hint</i>: Use
  * an array representation (with resizing). To remove an item, swap one at a
@@ -57,17 +59,15 @@ public class Exercise_1_3_35 {
         RandomQueue<Card> deck = new RandomQueue<>();
 
         // enqueue all 52 cards
-        for (Card card : Card.standardDeck()) {
+        for (Card card : Card.standardDeck())
             deck.enqueue(card);
-        }
 
         // deal 4 hands of 13 cards
         for (int hand = 1; hand <= 4; hand++) {
             StdOut.println("Hand " + hand + ":");
 
-            for (int i = 0; i < 13; i++) {
+            for (int i = 0; i < 13; i++)
                 StdOut.print(deck.dequeue() + " ");
-            }
 
             StdOut.println("\n");
         }
