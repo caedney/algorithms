@@ -10,15 +10,15 @@ import edu.princeton.cs.algs4.StdOut;
 public class ResizingArrayDeque<Item> implements Iterable<Item> {
     private static final int INIT_CAPACITY = 1;
     private Item[] array;
-    private int first;
-    private int last;
+    private int left;
+    private int right;
     private int size;
 
     public ResizingArrayDeque() {
-        array = (Item[]) new Object[INIT_CAPACITY];
-        size = 0;
-        first = 0;
-        last = 0;
+        this.array = (Item[]) new Object[INIT_CAPACITY];
+        this.left = 0;
+        this.right = 0;
+        this.size = 0;
     }
 
     public boolean isEmpty() {
@@ -37,19 +37,19 @@ public class ResizingArrayDeque<Item> implements Iterable<Item> {
         Item[] newArray = (Item[]) new Object[capacity];
 
         for (int i = 0; i < size; i++)
-            newArray[i] = array[(first + i) % array.length];
+            newArray[i] = array[(left + i) % array.length];
 
         array = newArray;
-        first = 0;
-        last = size;
+        left = 0;
+        right = size;
     }
 
     public void pushLeft(Item item) {
         if (size == array.length)
             resize(2 * array.length);
 
-        first = (first - 1 + array.length) % array.length; // move head left (wrap around)
-        array[first] = item;
+        left = (left - 1 + array.length) % array.length; // move head left (wrap around)
+        array[left] = item;
 
         size++;
     }
@@ -58,8 +58,8 @@ public class ResizingArrayDeque<Item> implements Iterable<Item> {
         if (size == array.length)
             resize(2 * array.length);
 
-        array[last] = item; // insert at tail
-        last = (last + 1) % array.length; // advance tail (wrap around)
+        array[right] = item; // insert at tail
+        right = (right + 1) % array.length; // advance tail (wrap around)
 
         size++;
     }
@@ -68,9 +68,9 @@ public class ResizingArrayDeque<Item> implements Iterable<Item> {
         if (isEmpty())
             throw new NoSuchElementException("Deque underflow");
 
-        Item item = array[first];
-        array[first] = null; // avoid loitering
-        first = (first + 1) % array.length;
+        Item item = array[left];
+        array[left] = null; // avoid loitering
+        left = (left + 1) % array.length;
         size--;
 
         if (size > 0 && size == array.length / 4)
@@ -83,9 +83,9 @@ public class ResizingArrayDeque<Item> implements Iterable<Item> {
         if (isEmpty())
             throw new NoSuchElementException("Deque underflow");
 
-        last = (last - 1 + array.length) % array.length; // move tail back
-        Item item = array[last]; // grab the last element
-        array[last] = null; // avoid loitering
+        right = (right - 1 + array.length) % array.length; // move tail back
+        Item item = array[right]; // grab the right element
+        array[right] = null; // avoid loitering
         size--;
 
         if (size > 0 && size == array.length / 4) {
@@ -95,27 +95,40 @@ public class ResizingArrayDeque<Item> implements Iterable<Item> {
         return item;
     }
 
+    public String toString() {
+        StringJoiner joiner = new StringJoiner(", ", "[", "]");
+
+        for (Item value : this)
+            joiner.add(String.valueOf(value));
+
+        return joiner.toString();
+    }
+
     public Iterator<Item> iterator() {
         return new ResizingArrayDequeIterator();
     }
 
     private class ResizingArrayDequeIterator implements Iterator<Item> {
-        private int i = 0;
+        private int index = 0;
+
+        public ResizingArrayDequeIterator() {
+            this.index = 0;
+        }
 
         public boolean hasNext() {
-            return i < array.length;
+            return index < array.length;
         }
 
         public Item next() {
             if (!hasNext())
                 throw new NoSuchElementException();
 
-            return array[i++];
+            return array[index++];
         }
     }
 
     public static void main(String[] args) {
-        Deque<String> d = new Deque<>();
+        ResizingArrayDeque<String> d = new ResizingArrayDeque<>();
         d.pushLeft("A");
         d.pushLeft("B");
         d.pushLeft("C");
@@ -124,14 +137,9 @@ public class ResizingArrayDeque<Item> implements Iterable<Item> {
         d.pushLeft("F");
         d.popLeft();
         d.popLeft();
+        StdOut.println(d.toString()); // [D, C, B, A]
 
-        StringJoiner joiner = new StringJoiner(", ", "[", "]");
-        for (String value : d)
-            joiner.add(String.valueOf(value));
-
-        StdOut.println(joiner.toString()); // [D, C, B, A]
-
-        Deque<String> e = new Deque<>();
+        ResizingArrayDeque<String> e = new ResizingArrayDeque<>();
         e.pushRight("A");
         e.pushRight("B");
         e.pushRight("C");
@@ -140,11 +148,6 @@ public class ResizingArrayDeque<Item> implements Iterable<Item> {
         e.pushRight("F");
         e.popRight();
         e.popRight();
-
-        joiner = new StringJoiner(", ", "[", "]");
-        for (String value : e)
-            joiner.add(String.valueOf(value));
-
-        StdOut.println(joiner.toString()); // [A, B, C, D]
+        StdOut.println(e.toString()); // [A, B, C, D]
     }
 }
