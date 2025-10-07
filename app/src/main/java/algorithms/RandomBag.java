@@ -3,24 +3,27 @@ package algorithms;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Random;
+import java.util.StringJoiner;
+
+import edu.princeton.cs.algs4.StdOut;
 
 @SuppressWarnings("unchecked")
 public class RandomBag<Item> implements Iterable<Item> {
-    private Node first;
+    private Node<Item> first;
     private int size;
     private Random random;
 
     public RandomBag() {
-        first = null;
-        size = 0;
-        random = new Random();
+        this.first = null;
+        this.size = 0;
+        this.random = new Random();
     }
 
-    private class Node {
+    private static class Node<Item> {
         Item item;
-        Node next;
+        Node<Item> next;
 
-        Node(Item item, Node next) {
+        Node(Item item, Node<Item> next) {
             this.item = item;
             this.next = next;
         }
@@ -35,9 +38,18 @@ public class RandomBag<Item> implements Iterable<Item> {
     }
 
     public void add(Item item) {
-        Node oldFirst = first;
-        first = new Node(item, oldFirst);
+        Node<Item> oldFirst = first;
+        first = new Node<Item>(item, oldFirst);
         size++;
+    }
+
+    public String toString() {
+        StringJoiner joiner = new StringJoiner(", ", "[", "]");
+
+        for (Item value : this)
+            joiner.add(String.valueOf(value));
+
+        return joiner.toString();
     }
 
     public Iterator<Item> iterator() {
@@ -45,11 +57,14 @@ public class RandomBag<Item> implements Iterable<Item> {
     }
 
     private class RandomBagIterator implements Iterator<Item> {
-        private Item[] array = (Item[]) new Object[size];
-        private int index = 0;
+        private Item[] array;
+        private int index;
 
         public RandomBagIterator() {
-            Node current = first;
+            this.array = (Item[]) new Object[size];
+            this.index = 0;
+
+            Node<Item> current = first;
             int i = 0;
 
             while (current != null) {
@@ -76,5 +91,17 @@ public class RandomBag<Item> implements Iterable<Item> {
 
             return array[index++];
         }
+    }
+
+    public static void main(String[] args) {
+        RandomBag<String> randomBag = new RandomBag<String>();
+        randomBag.add("A");
+        randomBag.add("B");
+        randomBag.add("C");
+        randomBag.add("D");
+        randomBag.add("E");
+        randomBag.add("F");
+
+        StdOut.println(randomBag.toString());
     }
 }

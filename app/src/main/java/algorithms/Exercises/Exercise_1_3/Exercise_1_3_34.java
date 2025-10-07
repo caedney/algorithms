@@ -12,6 +12,7 @@ import edu.princeton.cs.algs4.StdOut;
  * <i>Random bag</i>. A <i>random bag</i> stores a collection of items and
  * supports the following API:
  * </p>
+ * 
  * {@code public class RandomBag<Item> implements Iterable<Item>}
  * <table>
  * <tbody>
@@ -38,6 +39,7 @@ import edu.princeton.cs.algs4.StdOut;
  * </tr>
  * </tbody>
  * </table>
+ * 
  * <p>
  * Write a class {@code RandomBag} that implements this API. Note that this API
  * is the same as for {@code Bag}, except for the adjective <i>random</i>, which
@@ -58,8 +60,9 @@ public class Exercise_1_3_34 {
 
         for (int value : bag)
             StdOut.print(value + " ");
+        StdOut.println("\n");
 
-        StdOut.println("\nRandomBag");
+        StdOut.println("RandomBag");
         in = new In("src/main/resources/data/keys.txt");
         RandomBag<Integer> randomBag = new RandomBag<Integer>();
 
@@ -68,5 +71,6 @@ public class Exercise_1_3_34 {
 
         for (int value : randomBag)
             StdOut.print(value + " ");
+        StdOut.println();
     }
 }
