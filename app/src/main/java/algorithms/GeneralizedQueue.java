@@ -2,23 +2,26 @@ package algorithms;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.StringJoiner;
+
+import edu.princeton.cs.algs4.StdOut;
 
 public class GeneralizedQueue<Item> implements Iterable<Item> {
-    private Node front;
-    private Node back;
+    private Node<Item> head;
+    private Node<Item> tail;
     private int size;
 
     public GeneralizedQueue() {
-        front = null;
-        back = null;
-        size = 0;
+        this.head = null;
+        this.tail = null;
+        this.size = 0;
     }
 
-    private class Node {
+    private static class Node<Item> {
         private Item item;
-        private Node next;
+        private Node<Item> next;
 
-        Node(Item item, Node next) {
+        Node(Item item, Node<Item> next) {
             this.item = item;
             this.next = next;
         }
@@ -33,29 +36,29 @@ public class GeneralizedQueue<Item> implements Iterable<Item> {
     }
 
     public void insert(Item item) {
-        Node newNode = new Node(item, null);
+        Node<Item> newNode = new Node<Item>(item, null);
 
         if (isEmpty()) {
-            front = newNode;
-            back = newNode;
+            head = newNode;
+            tail = newNode;
         } else {
-            back.next = newNode;
-            back = newNode;
+            tail.next = newNode;
+            tail = newNode;
         }
 
         size++;
     }
 
     public Item delete(int k) {
-        Node node = getNode(k - 1);
+        Node<Item> node = getNode(k - 1);
         return removeNode(node);
     }
 
-    private Node getNode(int index) {
+    private Node<Item> getNode(int index) {
         if (index < 0 || index > size - 1)
             throw new ArrayIndexOutOfBoundsException("No available item found");
 
-        Node current = front;
+        Node<Item> current = head;
 
         for (int i = 0; current != null && i < index; i++) {
             current = current.next;
@@ -64,15 +67,15 @@ public class GeneralizedQueue<Item> implements Iterable<Item> {
         return current;
     }
 
-    private Item removeNode(Node node) {
+    private Item removeNode(Node<Item> node) {
         if (isEmpty())
             throw new IllegalStateException("List is empty, cannot access item");
 
         if (size == 1) {
-            front = null;
-            back = null;
+            head = null;
+            tail = null;
         } else {
-            Node current = front;
+            Node<Item> current = head;
 
             while (current != null && current.next != node) {
                 current = current.next;
@@ -86,15 +89,24 @@ public class GeneralizedQueue<Item> implements Iterable<Item> {
         return node.item;
     }
 
+    public String toString() {
+        StringJoiner joiner = new StringJoiner(", ", "[", "]");
+
+        for (Item value : this)
+            joiner.add(String.valueOf(value));
+
+        return joiner.toString();
+    }
+
     public Iterator<Item> iterator() {
-        return new GeneralizedQueueIterator(front);
+        return new GeneralizedQueueIterator(head);
     }
 
     private class GeneralizedQueueIterator implements Iterator<Item> {
-        private Node current;
+        private Node<Item> current;
 
-        public GeneralizedQueueIterator(Node front) {
-            current = front;
+        public GeneralizedQueueIterator(Node<Item> current) {
+            this.current = current;
         }
 
         public boolean hasNext() {
@@ -110,5 +122,17 @@ public class GeneralizedQueue<Item> implements Iterable<Item> {
 
             return item;
         }
+    }
+
+    public static void main(String[] args) {
+        GeneralizedQueue<String> queue = new GeneralizedQueue<>();
+        queue.insert("A");
+        queue.insert("B");
+        queue.insert("C");
+        queue.insert("D");
+        queue.insert("E");
+        queue.insert("F");
+        StdOut.println("Deleted item: " + queue.delete(2)); // B
+        StdOut.println(queue.toString()); // [A, C, D, E, F]
     }
 }

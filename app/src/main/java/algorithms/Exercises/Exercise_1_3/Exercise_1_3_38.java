@@ -11,6 +11,7 @@ import edu.princeton.cs.algs4.StdOut;
  * <i>Delete {@code k}th element</i>. Implement a class that supports the
  * following API:
  * </p>
+ * 
  * {@code public class GeneralizedQueue<Item>}
  * <table>
  * <tbody>
@@ -38,6 +39,7 @@ import edu.princeton.cs.algs4.StdOut;
  * </tr>
  * </tbody>
  * </table>
+ * 
  * <p>
  * First, develop an implementation that uses an array implementation, and then
  * develop one that uses a linked-list implementation. <i>Note</i>: the
@@ -59,5 +61,7 @@ public class Exercise_1_3_38 {
 
         for (int value : queue)
             StdOut.print(value + " ");
+
+        StdOut.println();
     }
 }
