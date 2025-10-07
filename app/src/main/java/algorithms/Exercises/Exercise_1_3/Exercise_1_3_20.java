@@ -26,8 +26,7 @@ public class Exercise_1_3_20 {
         StdOut.println();
         q.delete(10);
 
-        for (String string : q) {
+        for (String string : q)
             StdOut.print(string + " ");
-        }
     }
 }
