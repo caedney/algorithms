@@ -54,17 +54,17 @@ public class Queue<Item> implements Iterable<Item> {
         if (isEmpty())
             throw new NoSuchElementException("Queue underflow");
 
-        return front.item;
+        return head.item;
     }
 
     public void enqueue(Item item) {
-        Node<Item> oldBack = back;
-        back = new Node<Item>(item, null);
+        Node<Item> oldBack = tail;
+        tail = new Node<Item>(item, null);
 
         if (isEmpty())
-            front = back;
+            head = tail;
         else
-            oldBack.next = back;
+            oldBack.next = tail;
 
         size++;
     }
@@ -73,12 +73,12 @@ public class Queue<Item> implements Iterable<Item> {
         if (isEmpty())
             throw new NoSuchElementException("Queue underflow");
 
-        Item item = front.item;
-        front = front.next;
+        Item item = head.item;
+        head = head.next;
         size--;
 
         if (isEmpty())
-            back = null; // avoid loitering
+            tail = null; // avoid loitering
 
         return item;
     }
@@ -95,7 +95,7 @@ public class Queue<Item> implements Iterable<Item> {
     }
 
     public Iterator<Item> iterator() {
-        return new QueueIterator(front);
+        return new QueueIterator(head);
     }
 
     private class QueueIterator implements Iterator<Item> {
