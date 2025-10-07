@@ -1,5 +1,8 @@
 package algorithms.Exercises.Exercise_1_3;
 
+import algorithms.LinkedList;
+import edu.princeton.cs.algs4.StdOut;
+
 /**
  * Exercise 1.3.19
  * 
@@ -9,30 +12,16 @@ package algorithms.Exercises.Exercise_1_3;
  * </p>
  */
 public class Exercise_1_3_19 {
-    public class LinkedList<Item> {
-        private Node first;
-
-        private class Node {
-            Node next;
-        }
-
-        public void removeLastNode() {
-            if (first != null) {
-                if (first.next == null) // only one node
-                    first = null; // empty list
-                else {
-                    Node current = first;
-
-                    while (current.next.next != null) // Traverse to the second-to-last node
-                        current = current.next;
-
-                    current.next = null; // Remove last node
-                }
-            }
-        }
-
-    }
-
     public static void main(String[] args) {
+        LinkedList<String> queue = new LinkedList<>();
+        queue.enqueue("A");
+        queue.enqueue("B");
+        queue.enqueue("C");
+        queue.enqueue("D");
+        queue.enqueue("E");
+        queue.enqueue("F");
+        queue.removeLastNode();
+
+        StdOut.println(queue.toString()); // [A, B, C, D, E]
     }
 }

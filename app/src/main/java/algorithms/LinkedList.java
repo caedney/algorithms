@@ -96,6 +96,22 @@ public class LinkedList<Item> implements Iterable<Item> {
         }
     }
 
+    public void removeLastNode() {
+        if (isEmpty())
+            throw new NoSuchElementException("Queue underflow");
+
+        if (size == 1)
+            head = null;
+        else {
+            Node<Item> current = head;
+
+            while (current.next.next != null) // Traverse to the second-to-last node
+                current = current.next;
+
+            current.next = null; // Remove last node
+        }
+    }
+
     public int max() {
         if (!(first.item instanceof Integer)) {
             return 0;
