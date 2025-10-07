@@ -43,5 +43,6 @@ public class Exercise_1_3_39 {
         for (int value : buffer)
             StdOut.print(value + " ");
 
+        StdOut.println();
     }
 }
