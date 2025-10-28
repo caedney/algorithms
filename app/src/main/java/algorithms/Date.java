@@ -1,0 +1,73 @@
+package algorithms;
+
+public class Date implements Comparable<Date> {
+    private final int day;
+    private final int month;
+    private final int year;
+
+    public Date(int d, int m, int y) {
+        day = d;
+        month = m;
+        year = y;
+    }
+
+    public Date(String str) {
+        String[] date = str.split("/");
+
+        try {
+            day = Integer.parseInt(date[0]);
+            month = Integer.parseInt(date[1]);
+            year = Integer.parseInt(date[2]);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Date must of format DD/MM/YYYY");
+        }
+    }
+
+    public int day() {
+        return day;
+    }
+
+    public int month() {
+        return month;
+    }
+
+    public int year() {
+        return year;
+    }
+
+    @Override
+    public boolean equals(Object date) {
+        if (this == date)
+            return true;
+        if (date == null)
+            return false;
+        if (this.getClass() != date.getClass())
+            return false;
+
+        Date other = (Date) date;
+        if (this.day != other.day)
+            return false;
+        if (this.month != other.month)
+            return false;
+        if (this.year != other.year)
+            return false;
+
+        return true;
+    }
+
+    @Override
+    public int compareTo(Date other) {
+        if (this.year != other.year)
+            return this.year - other.year;
+
+        if (this.month != other.month)
+            return this.month - other.month;
+
+        return this.day - other.day;
+    }
+
+    @Override
+    public String toString() {
+        return day() + "/" + month() + "/" + year();
+    }
+}
