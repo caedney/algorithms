@@ -17,6 +17,21 @@ public class Queue<Item> implements Iterable<Item> {
         this.size = 0;
     }
 
+    public Queue(Queue<Item> queue) {
+        this(); // initialize empty queue
+
+        Queue<Item> temp = new Queue<>();
+
+        while (!queue.isEmpty()) {
+            Item item = queue.dequeue(); // remove from queue
+            this.enqueue(item); // copy into this
+            temp.enqueue(item); // keep backup
+        }
+
+        while (!temp.isEmpty())
+            queue.enqueue(temp.dequeue()); // restore queue
+    }
+
     private static class Node<Item> {
         private Item item;
         private Node<Item> next;
