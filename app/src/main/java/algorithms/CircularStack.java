@@ -1,0 +1,125 @@
+package algorithms;
+
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+import java.util.StringJoiner;
+
+import edu.princeton.cs.algs4.StdOut;
+
+public class CircularStack<Item> implements Iterable<Item> {
+    private Node<Item> tail;
+    private int size;
+
+    public CircularStack() {
+        this.tail = null;
+        this.size = 0;
+    }
+
+    private static class Node<Item> {
+        private Item item;
+        private Node<Item> next;
+
+        Node(Item item, Node<Item> next) {
+            this.item = item;
+            this.next = next;
+        }
+    }
+
+    public boolean isEmpty() {
+        return size == 0;
+    }
+
+    public int size() {
+        return size;
+    }
+
+    public Item peek() {
+        if (isEmpty())
+            throw new NoSuchElementException("Stack underflow");
+
+        return tail.next.item;
+    }
+
+    public void push(Item item) {
+        Node<Item> newNode = new Node<Item>(item, null);
+
+        if (isEmpty()) {
+            newNode.next = newNode; // point to self
+            tail = newNode; // update tail
+        } else {
+            newNode.next = tail.next; // point to head
+            tail.next = newNode; // point head to new node
+        }
+
+        size++;
+    }
+
+    public Item pop() {
+        if (isEmpty())
+            throw new NoSuchElementException("Stack underflow");
+
+        Node<Item> head = tail.next;
+
+        if (size == 1) {
+            tail = null; // empty list
+        } else {
+            tail.next = head.next; // bypass head
+        }
+
+        size--;
+
+        return head.item;
+    }
+
+    public String toString() {
+        StringJoiner joiner = new StringJoiner(", ", "[", "]");
+
+        for (Item value : this)
+            joiner.add(String.valueOf(value));
+
+        return joiner.toString();
+    }
+
+    public Iterator<Item> iterator() {
+        return new CircularStackIterator(tail.next);
+    }
+
+    private class CircularStackIterator implements Iterator<Item> {
+        private Node<Item> current;
+        private int index;
+
+        public CircularStackIterator(Node<Item> current) {
+            this.current = current;
+            this.index = 0;
+        }
+
+        public boolean hasNext() {
+            return index < size;
+        }
+
+        public Item next() {
+            if (!hasNext())
+                throw new NoSuchElementException();
+
+            Item item = current.item;
+            current = current.next;
+            index++;
+
+            return item;
+        }
+    }
+
+    public static void main(String[] args) {
+        CircularStack<String> stack = new CircularStack<>();
+        stack.push("A");
+        stack.push("B");
+        stack.push("C");
+        stack.push("D");
+        stack.push("E");
+        stack.push("F");
+        stack.pop();
+        stack.pop();
+
+        StdOut.println(stack.toString()); // [D, C, B, A]
+    }
+}
