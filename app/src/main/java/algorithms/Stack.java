@@ -15,6 +15,21 @@ public class Stack<Item> implements Iterable<Item> {
         this.size = 0;
     }
 
+    public Stack(Stack<Item> stack) {
+        this(); // initialize empty stack
+
+        Stack<Item> temp = new Stack<>();
+
+        while (!stack.isEmpty()) {
+            Item item = stack.pop(); // remove from stack
+            this.push(item); // copy into this
+            temp.push(item); // keep backup
+        }
+
+        while (!temp.isEmpty())
+            stack.push(temp.pop()); // restore stack
+    }
+
     private static class Node<Item> {
         private Item item;
         private Node<Item> next;
