@@ -101,6 +101,14 @@ public class LinkedList<Item> implements Iterable<Item> {
         }
     }
 
+    public boolean find(LinkedList<String> q, String key) {
+        for (String s : q)
+            if (s.equals(key))
+                return true;
+
+        return false;
+    }
+
     public String toString() {
         StringJoiner joiner = new StringJoiner(", ", "[", "]");
 
