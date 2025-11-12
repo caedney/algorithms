@@ -5,8 +5,7 @@ package algorithms.Exercises.Exercise_1_1;
  * 
  * <p>
  * Use mathematical induction to prove that Euclid's algorithm computes the
- * greatest common divisor of any pair of nonnegative integers <i>p</i> and
- * <i>q</i>.
+ * greatest common divisor of any pair of nonnegative integers 𝑝 and 𝑞.
  * </p>
  * 
  * <b>Euclid’s algorithm</b>
