@@ -23,7 +23,6 @@ public class StaticSETofInts {
     }
 
     public int rank(int key) {
-        // Binary search.
         int lo = 0;
         int hi = a.length - 1;
 
@@ -39,5 +38,47 @@ public class StaticSETofInts {
         }
 
         return -1;
+    }
+
+    /**
+     * Number of occurrences of key, in ~2 lg N compares worst case: (index of first
+     * element > key) minus (index of first element >= key).
+     */
+    public int howMany(int key) {
+        return upperBound(key) - lowerBound(key);
+    }
+
+    // first index i such that a[i] >= key (or a.length if none)
+    private int lowerBound(int key) {
+        int lo = 0;
+        int hi = a.length;
+
+        while (lo < hi) {
+            int mid = lo + (hi - lo) / 2;
+
+            if (a[mid] < key)
+                lo = mid + 1;
+            else
+                hi = mid;
+        }
+
+        return lo;
+    }
+
+    // first index i such that a[i] > key (or a.length if none)
+    private int upperBound(int key) {
+        int lo = 0;
+        int hi = a.length;
+
+        while (lo < hi) {
+            int mid = lo + (hi - lo) / 2;
+
+            if (a[mid] <= key)
+                lo = mid + 1;
+            else
+                hi = mid;
+        }
+
+        return lo;
     }
 }
