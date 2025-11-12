@@ -6,9 +6,9 @@ import edu.princeton.cs.algs4.StdOut;
  * Exercise 1.1.24
  * 
  * <p>
- * Give the sequence of values of <i>p</i> and <i>q</i> that are computed when
- * Euclid's algorithm is used to compute the greatest common divisor of 105 and
- * 24. Extend the code given on page 4 to develop a program {@code Euclid} that
+ * Give the sequence of values of 𝑝 and 𝑞 that are computed when Euclid's
+ * algorithm is used to compute the greatest common divisor of 105 and 24.
+ * Extend the code given on page 4 to develop a program {@code Euclid} that
  * takes two integers from the command line and computes their greatest common
  * divisor, printing out the two arguments for each call on the recursive
  * method. Use your program to compute the greatest common divisor or 1111111
