@@ -7,7 +7,7 @@ import java.util.StringJoiner;
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdOut;
 
-@SuppressWarnings("unchecked")
+@SuppressWarnings({ "unchecked", "null" })
 public class ResizingArrayStack<Item> implements Iterable<Item> {
     private static final int INIT_CAPACITY = 1;
     private Item[] array;
