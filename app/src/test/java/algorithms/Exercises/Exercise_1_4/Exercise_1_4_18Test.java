@@ -77,8 +77,7 @@ public class Exercise_1_4_18Test {
                 a[i] = i;
 
             do {
-                int i = Exercise_1_4_18.findLocalMin(a);
-                assertTrue(bruteForceIsLocalMin(a, i), "index " + i + " is not a local minimum");
+                assertAllImplementationsFindAValidLocalMinimum(a);
             } while (nextPermutation(a));
         }
     }
@@ -90,8 +89,7 @@ public class Exercise_1_4_18Test {
         for (int n : new int[] { 3, 17, 1000, 100000 }) {
             for (int trial = 0; trial < 100; trial++) {
                 int[] a = shuffledDistinct(n, random);
-                int i = Exercise_1_4_18.findLocalMin(a);
-                assertTrue(bruteForceIsLocalMin(a, i), "index " + i + " is not a local minimum");
+                assertAllImplementationsFindAValidLocalMinimum(a);
             }
         }
     }
@@ -105,6 +103,22 @@ public class Exercise_1_4_18Test {
         // and the mirror image
         int[] b = { 1, 2, 3, 4, 5, 6, 7, 8 };
         assertEquals(0, Exercise_1_4_18.findLocalMin(b));
+    }
+
+    /**
+     * Runs every implementation on the same array and checks each result against
+     * the definition. Validity is all that can be asserted: the three methods may
+     * legitimately return different local minima of the same array.
+     */
+    private static void assertAllImplementationsFindAValidLocalMinimum(int[] a) {
+        int fast = Exercise_1_4_18.findLocalMin(a);
+        assertTrue(bruteForceIsLocalMin(a, fast), "findLocalMin returned " + fast);
+
+        int slow = Exercise_1_4_18.findLocalMinSlow(a);
+        assertTrue(bruteForceIsLocalMin(a, slow), "findLocalMinSlow returned " + slow);
+
+        int brute = Exercise_1_4_18.findLocalMinBruteForce(a);
+        assertTrue(bruteForceIsLocalMin(a, brute), "findLocalMinBruteForce returned " + brute);
     }
 
     /**

@@ -23,20 +23,41 @@ package algorithms.Exercises.Exercise_1_4;
  ******************************************************************************/
 public class Exercise_1_4_18 {
     public static boolean isLocalMin(int[] a, int i) {
-        boolean leftOk = (i == 0) || a[i - 1] > a[i];
-        boolean rightOk = (i == a.length - 1) || a[i + 1] > a[i];
+        int n = a.length;
+        // @formatter:off
+        boolean leftOk  = (i == 0)     || a[i] < a[i - 1];
+        boolean rightOk = (i == n - 1) || a[i] < a[i + 1];
+        // @formatter:on
 
         return leftOk && rightOk;
     }
 
     /**
-     * Descends toward the <i>smaller</i> of the two neighbours, which costs
-     * ~3lg 𝑁 compares: <code>isLocalMin</code> makes two, then
-     * <code>a[mid + 1] < a[mid - 1]</code> makes a third to decide which
-     * neighbour that is, over at most lg 𝑁 halvings. Those first two compares
-     * already reveal which neighbours lie below <code>a[mid]</code>, and
-     * descending into either is enough — see <code>findLocalMin</code>, which
-     * drops the tie-break and reaches ~2lg 𝑁.
+     * The obvious baseline: scan left to right and return the first index that
+     * passes <code>isLocalMin</code>. Costs ~2𝑁 compares in the worst case — a
+     * strictly descending array passes every <code>leftOk</code>, fails every
+     * <code>rightOk</code>, and walks all the way to the last index. Always returns
+     * the <i>leftmost</i> local minimum, which the logarithmic versions do not
+     * promise, so tests comparing against it must check validity, not equality of
+     * indices.
+     */
+    public static int findLocalMinBruteForce(int[] a) {
+        for (int i = 0; i < a.length; i++) {
+            if (isLocalMin(a, i))
+                return i;
+        }
+
+        throw new AssertionError("unreachable: every array has a local minimum");
+    }
+
+    /**
+     * Descends toward the <i>smaller</i> of the two neighbours, which costs ~3lg 𝑁
+     * compares: <code>isLocalMin</code> makes two, then
+     * <code>a[mid + 1] < a[mid - 1]</code> makes a third to decide which neighbour
+     * that is, over at most lg 𝑁 halvings. Those first two compares already reveal
+     * which neighbours lie below <code>a[mid]</code>, and descending into either is
+     * enough — see <code>findLocalMin</code>, which drops the tie-break and reaches
+     * ~2lg 𝑁.
      */
     public static int findLocalMinSlow(int[] a) {
         int lo = 0;
@@ -59,11 +80,11 @@ public class Exercise_1_4_18 {
 
     /**
      * Descends into <i>either</i> neighbour that lies below <code>a[mid]</code>,
-     * which costs ~2lg 𝑁 compares: each comparison is acted on before the next
-     * is made, so a probe spends one compare when the left neighbour descends
-     * and two otherwise, over at most lg 𝑁 halvings. The window excludes
-     * <code>mid</code> so that it always shrinks, and a missing neighbour
-     * cannot descend, so the index guards stand in for comparing against +∞.
+     * which costs ~2lg 𝑁 compares: each comparison is acted on before the next is
+     * made, so a probe spends one compare when the left neighbour descends and two
+     * otherwise, over at most lg 𝑁 halvings. The window excludes <code>mid</code>
+     * so that it always shrinks, and a missing neighbour cannot descend, so the
+     * index guards stand in for comparing against +∞.
      */
     public static int findLocalMin(int[] a) {
         int lo = 0;
