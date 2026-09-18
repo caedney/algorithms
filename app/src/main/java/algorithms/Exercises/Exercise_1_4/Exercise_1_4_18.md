@@ -2,7 +2,7 @@
 
 _Local minimum of an array_. Write a program that, given an array `a[]` of $N$
 distinct integers, finds a _local minimum_: an index `i` such that
-`a[i-1] > a[i] < a[i+1]`. Your program should use $\sim 2 \lg N$ compares in the
+`a[i-1] < a[i] < a[i+1]`. Your program should use $\sim 2 \lg N$ compares in the
 worst case.
 
 _Answer_: Examine the middle value `a[N/2]` and its two neighbors `a[N/2 - 1]`
@@ -10,6 +10,15 @@ and `a[N/2 + 1]`. If `a[N/2]` is a local minimum, stop; otherwise search in the
 half with the smaller neighbor.
 
 ---
+
+## Correction
+
+The printed condition for a local minimum reads `a[i-1] < a[i] < a[i+1]`, which
+describes an ascending run — every interior index of a sorted array satisfies
+it, and a genuine dip never does. It should read `a[i-1] > a[i] < a[i+1]`:
+strictly smaller than both neighbours. The algs4 booksite states it as two
+separate conditions, `a[i] < a[i-1]` and `a[i] < a[i+1]`; it is not in the
+published errata.
 
 ## The problem
 

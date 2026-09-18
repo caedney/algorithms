@@ -6,7 +6,7 @@ package algorithms.Exercises.Exercise_1_4;
  * <p>
  * <i>Local minimum of an array</i>. Write a program that, given an array
  * <code>a[]</code> of 𝑁 distinct integers, finds a <i>local minimum</i>: an
- * index <code>i</code> such that <code>a[i-1] > a[i] < a[i+1]</code>. Your
+ * index <code>i</code> such that <code>a[i-1] < a[i] < a[i+1]</code>. Your
  * program should use ~2 lg 𝑁 compares in the worst case.
  * </p>
  * 
@@ -15,6 +15,13 @@ package algorithms.Exercises.Exercise_1_4;
  * neighbors <code>a[N/2 - 1]</code> and <code>a[N/2 + 1]</code>. If
  * <code>a[N/2]</code> is a local minimum, stop; otherwise search in the half
  * with the smaller neighbor.
+ * </p>
+ * 
+ * <p>
+ * <i>Correction</i>: the printed condition <code>a[i-1] &lt; a[i] &lt;
+ * a[i+1]</code> describes an ascending run, not a dip. It should read
+ * <code>a[i-1] &gt; a[i] &lt; a[i+1]</code> — strictly smaller than both
+ * neighbours.
  * </p>
  * 
  * <pre>
