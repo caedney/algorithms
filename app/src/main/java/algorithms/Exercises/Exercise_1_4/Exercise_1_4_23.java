@@ -10,6 +10,12 @@ package algorithms.Exercises.Exercise_1_4;
  * with denominators less than 𝑁 cannot differ by more than 1/𝑁².
  * </p>
  * 
+ * <p>
+ * <i>Correction</i>: the hint's inequality is printed reversed. Two distinct
+ * fractions with denominators less than 𝑁 cannot differ by <i>less</i> than
+ * 1/𝑁²; they are always further apart than that, never closer.
+ * </p>
+ * 
  * <pre>
  * ./gradlew run -PmainClass=Exercises.Exercise_1_4.Exercise_1_4_23
  * </pre>
